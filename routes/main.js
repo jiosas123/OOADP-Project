@@ -3,7 +3,7 @@ const router = express.Router();
 
 
 router.get('/', (req, res) => {
-	const title = 'Home';
+	const title = 'Listings';
 	res.render('index', { title: title }) // renders views/index.handlebars
 });
 
