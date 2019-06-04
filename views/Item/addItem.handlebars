@@ -1,0 +1,178 @@
+<br>
+<br>
+
+<div id="Ace_WholeBody">
+	<br>
+	<br>
+	<form action="../item/addItem" method="post">
+		<table id="Ace_itemTable">
+			<tr>
+				<td><label>Item Name :</label></td>
+				<td><input type="text" id="itemName" name="itemName" placeholder="Input name of item" required>
+				</td>
+				<td>
+					<input type="file" id="posterUpload" name="posterUpload"
+						accept="image/png,image/jpeg,image/jpg,image/gif" required>
+					<div class="font-weight-bold text-danger small" id="posterErr" style="display:none"></div>
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					<label>Item Price:</label>
+				</td>
+				<td>
+					<input type="number" id="itemPrice" step="any" name="itemPrice" min="1" required>
+				</td>
+				<td rowspan="2">
+					<img id="poster" src="/img/no-image.jpg" alt="" class="border img-thumbnail img-fluid"
+						style="height:250px;width:250px">
+					{{!—- Hidden field to submit URL of poster to the server --}}
+					<input id="posterURL" type="hidden" name="posterURL">
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					<label>Item Description :</label>
+				</td>
+				<td>
+					<textarea id="itemDescription" name="itemDescription" rows="5"
+						placeholder="Input Description of item" required></textarea>
+				</td>
+
+			</tr>
+			<tr>
+				<td></td>
+				<td> <label>&nbsp;&nbsp;&nbsp;</label>
+					<input class="form-check-input" type="checkbox" name="availability" id="availability"
+						value="availability" checked>
+					<label class="form-check-label" for="availability">Availability</label>
+				</td>
+				<td>
+
+				</td>
+
+
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<label>&nbsp;&nbsp;&nbsp;</label>
+					<input class="form-check-input" type="checkbox" name="Seenbyothers" id="Seenbyothers"
+						value="Seenbyothers" checked>
+
+					<label class="form-check-label" for="Seenbyothers">Seen by others</label>
+					<label id="Ace_ChangeToGray"> &nbsp;&nbsp;&nbsp; Uncheck so only you can see </label>
+
+				</td>
+				<td>
+				</td>
+
+			</tr>
+			<tr>
+				<td>
+
+				</td>
+				<td>
+					<div class="form-check form-check-inline">
+
+						<input class="form-check-input" type="radio" name="Halaltype" id="Halal" value="Halal" checked>
+
+						<label class="form-check-label" for="Halal">Halal</label>
+
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="Halaltype" id="non-Halal" value="non-Halal">
+						<label class="form-check-label" for="non-Halal">non-Halal</label>
+					</div>
+				</td>
+				<td>
+					<label>&nbsp;&nbsp;&nbsp;</label>
+					<input class="form-check-input" type="checkbox" name="Vegtype" id="Veg" value="Veg">
+					<label class="form-check-label" for="Veg">Veg</label>
+
+
+
+				</td>
+			</tr>
+
+			<tr>
+				<td><label>Days food available :</label></td>
+				<td>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="checkbox" name="DaysAvailable" id="Monday" value="Monday">
+						<label class="form-check-label" for="Monday">Monday</label>
+					</div>
+
+					<div class="form-check form-check-inline"><input class="form-check-input" type="checkbox"
+							name="DaysAvailable" id="Tueday" value="Tueday">
+						<label class="form-check-label" for="Tueday">Tueday</label>
+					</div>
+
+					<div class="form-check form-check-inline"><input class="form-check-input" type="checkbox"
+							name="DaysAvailable" id="Wednesday" value="Wednesday">
+						<label class="form-check-label" for="Wednesday">Wednesday</label>
+					</div>
+
+					<div class="form-check form-check-inline"><input class="form-check-input" type="checkbox"
+							name="DaysAvailable" id="Thursday" value="Thursday">
+						<label class="form-check-label" for="Thursday">Thursday</label>
+					</div>
+
+					<div class="form-check form-check-inline"><input class="form-check-input" type="checkbox"
+							name="DaysAvailable" id="Friday" value="Friday">
+						<label class="form-check-label" for="Friday">Friday</label>
+					</div>
+
+					<div class="form-check form-check-inline"><input class="form-check-input" type="checkbox"
+							name="DaysAvailable" id="Saturday" value="Saturday">
+						<label class="form-check-label" for="Saturday">Saturday</label>
+					</div>
+
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="checkbox" name="DaysAvailable" id="Sunday" value="Sunday">
+						<label class="form-check-label" for="Sunday">Sunday</label>
+					</div>
+
+
+				</td>
+			</tr>
+			<tr>
+				<td><label>Time food available :</label></td>
+
+			</tr>
+			<tr><td><label >Location to meet up:</label></td></tr>
+			<tr>
+						<td></td>
+				
+				<td>
+					<ul>
+						<li> <input class="form-check-input" type="radio" name="Location" id="North"
+								value="North">
+							<label class="form-check-label" for="North">North</label></li>
+						<li> <input class="form-check-input" type="radio" name="Location" id="Central"
+								value="Central">
+							<label class="form-check-label" for="Central">Central</label></li>
+						<li> <input class="form-check-input" type="radio" name="Location" id="East"
+								value="East">
+							<label class="form-check-label" for="East">East</label></li>
+						<li> <input class="form-check-input" type="radio" name="Location" id="West"
+								value="West">
+							<label class="form-check-label" for="West">West</label></li>
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td><button onclick="checker()" id="Ace_itemCreate" type="submit">Create Item</button></td>
+
+			</tr>
+			<tr>
+
+		</table>
+	</form>
+	<br>
+	<br>
+</div>

@@ -36,21 +36,12 @@
 </head>
 
 <body>
-
+	{{>_navbar}}
 	<div class="container">
-		{{> _navbar}}
 		{{> _flashmsg}} {{!-- views/partials/_flashmsg.handlebars --}}
-		{{> _message}} {{!-- views/partials/_msg.handlebars --}}
-		{{> _errors}} {{!-- views/partials/_errors.handlebars --}}
-		
+		{{>_msg}}
+		{{>_errors}}
 		{{{body}}}
-
-
-
-
-
-
-
 	</div>
 
 	<!-- Optional JavaScript -->

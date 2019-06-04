@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-sm navbar-dark mb-3" style="background-color: #28749E">
-	<div class="container">
-		<a class="navbar-brand" href="/">CarteFood</a>
+<nav class="navbar navbar-expand-sm navbar-dark  mb-3" id="testerNavBar">
+	<div class="container" >
+		<a class="navbar-brand" href="/">VidJot</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
 				  aria-expanded="false"
 				  aria-label="Toggle navigation">
@@ -21,8 +21,10 @@
 						<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbarDropdownMenuLink">Video
 							Jots</a>
 						<div class="dropdown-menu">
-							<a href="" class="dropdown-item">Videos</a>
-							<a href="" class="dropdown-item">Add Video</a>
+							{{!-- Note: ".." move 1 folder up. "." is the current folder. start with the "/" to indicte root directory --}}
+							<a href="/video/listVideos" class="dropdown-item">Videos</a>
+							<a href="/video/showAddVIdeo" class="dropdown-item">Add Video</a>
+							<a href="/item/addItem" class="dropdown-item">Add Items</a>
 						</div>
 					</li>
 					<li class="nav-item">

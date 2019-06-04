@@ -2,3 +2,26 @@
   width:130px;
   margin:auto;
 }
+
+#testerNavBar{
+  background-color: green;
+}
+#Ace_WholeBody{
+border: black solid 2px;
+}
+#floatingRight{
+  width:200px;
+  height: 200px;
+}
+#Ace_itemTable{
+  margin: auto;
+}
+#Ace_ChangeToGray{
+  color: grey;
+}
+#itemDescription{
+  width: 400px;
+}
+#Ace_itemCreate{
+  float:right;
+}

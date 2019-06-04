@@ -1,7 +1,31 @@
 <div class="jumbotron text-center">
 	<div class="container">
 		<h1 class="display-4">{{title}}</h1>
-		<p class="lead">Order food from home through our listings!</p>
+		<p class="lead">All Food Item</p>
+		{{#if item}}
+	
+		<div class="card card-body">
+			<h3 class="text-primary">All Food Item</h3>	
+			{{#each item}}
+					{{Seenbyothers }}
+			{{#if Seenbyothers }}
+			{{id }}
+			{{ itemName}}
+			<a href="../item/buying/{{id}}" class="card-link">
+				<i class="fas fa-pencil-alt"></i>
+
+			</a>
+
+		{{/if}}
+
+
+
+			{{/each}}
+		</div>
+
+		{{else}}
+		<h3>Cannot Connect to server</h3>
+		{{/if}}
 	</div>
 	<br>
 </div>
