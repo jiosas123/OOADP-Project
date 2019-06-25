@@ -44,14 +44,45 @@ router.post('/register', (req, res) => {
             password2
         });
     } else {
+
         // If all is well, checks if user is already registered
-        User.findOne({ where: { email: req.body.email } })
+        User.findOne({ where: { name: req.body.name } })
             .then(user => {
                 if (user) {
                     // If user is found, that means email has already been
                     // registered
                     res.render('user/register', {
-                        error: user.email + ' already registered',
+
+                        email,
+                        error: 'username: '+user.name + ' already registered',
+                        email,
+                        password,
+                        password2
+                    });
+                } else {
+                    // // Encrypt the password
+                    // var salt = bcrypt.genSaltSync(10);
+                    // var hashedPassword = bcrypt.hashSync(password, salt);
+                    // password = hashedPassword;
+
+                    // // Create new user record
+                    // User.create({ name, email, password })
+                    //     .then(user => {
+                    //         alertMessage(res, 'success', user.name + ' added. Please login', 'fas fa-sign-in-alt', true);
+                    //         res.redirect('/showLogin');
+                    //     })
+                    //     .catch(err => console.log(err));        
+
+
+                    // If all is well, checks if user is already registered
+        User.findOne({ where: { email: req.body.email } ||{ email: req.body.email } })
+            .then(user => {
+                if (user) {
+                    // If user is found, that means email has already been
+                    // registered
+                    res.render('user/register', {
+
+                        error: ' Email: '+user.email + ' already registered',
                         name,
                         email,
                         password,
@@ -72,6 +103,11 @@ router.post('/register', (req, res) => {
                         .catch(err => console.log(err));
                 }
             });
+                }
+            });
+
+        //----------------------------------------------------
+
     }
 });
 

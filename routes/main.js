@@ -2,18 +2,21 @@ const express = require('express');
 const router = express.Router();
 const alertMessage = require('../helpers/messenger')
 const Item = require('../models/item');
+var num;
 router.get('/', (req, res) => {
-	
-	const title = 'Video Jotter';
+num=1;
+	const title = 'Food Food';
 
 	Item.findAll({
 		
         raw: true
     }).then((item) => {
+	
+
         // pass object to listVideos.handlebar
         res.render('index', {title: title        , 
-            item: item
-        });
+            item: item, min:num, max:num+6
+		});
     }).catch(err => console.log(err));
 	 
 	
@@ -22,6 +25,29 @@ router.get('/', (req, res) => {
 	
 	})// renders views/index.handlebars*/
 });
+
+router.get('/prev', (req, res) => {
+	
+	const title = 'Food Food';
+
+	Item.findAll({
+		
+        raw: true
+    }).then((item) => {
+        // pass object to listVideos.handlebar
+        res.render('index', {title: title        , 
+            item: item , min:num-6 , max:num
+		});
+		num=num-6
+    }).catch(err => console.log(err));
+	 
+	
+	/*res.render('index', { title: title        
+	
+	
+	})// renders views/index.handlebars*/
+});
+
 
 // Logout User
 router.get('/logout', (req, res) => {

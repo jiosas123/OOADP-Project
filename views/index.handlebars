@@ -3,28 +3,54 @@
 		<h1 class="display-4">{{title}}</h1>
 		<p class="lead">All Food Item</p>
 		{{#if item}}
-	
+
 		<div class="card card-body">
-			<h3 class="text-primary">All Food Item</h3>	
-			{{#each item}}
-					{{Seenbyothers }}
+			<h3 class="text-primary">All Food Item</h3>
+			{{#each item }}
+			{{!-- testing--}}
+			{{#tester "1" "1"  operator="=="}}
 			{{#if Seenbyothers }}
-			{{id }}
-			{{ itemName}}
-			<a href="../item/buying/{{id}}" class="card-link">
-				<i class="fas fa-pencil-alt"></i>
 
-			</a>
 
-		{{/if}}
+			<img src="{{posterURL}}" alt="Poster unavailable" class="img-thumbnail img-fluid">
+			<table>
+				<tr>
+					<td>
+						{{ itemName}}
+
+					</td>
+
+
+				</tr>
+
+				<tr>
+					<td>
+
+						<a href="../item/buying/{{id}}" class="card-link">
+							<i class="fas fa-pencil-alt">Buy ME</i>
+
+						</a>
+					</td>
+				</tr>
+
+
+
+			</table>
+
+
+			{{/if}}
+
+		{{/tester}}
 
 
 
 			{{/each}}
 		</div>
 
+
+
 		{{else}}
-		<h3>Cannot Connect to server</h3>
+		<h3>Food Bank Empty</h3>
 		{{/if}}
 	</div>
 	<br>

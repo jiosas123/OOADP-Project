@@ -8,15 +8,16 @@
 	<br>
 	<label id="tester123"></label>
 	<br>
-	<form action="../item/addItem" method="post">
+	<form action="/item/saveEditedItem/{{item.id}} ?_method=PUT" method="post">
 		<table id="Ace_itemTable">
 			<tr>
 				<td><label>Item Name :</label></td>
-				<td><input type="text" id="itemName" name="itemName" placeholder="Input name of item" required>
+				<td><input type="text" id="itemName" name="itemName" placeholder="Input name of item" required
+						value={{item.itemName}}>
 				</td>
 				<td>
 					<input type="file" id="posterUpload" name="posterUpload"
-						accept="image/png,image/jpeg,image/jpg,image/gif" required>
+						accept="image/png,image/jpeg,image/jpg,image/gif">
 					<div class="font-weight-bold text-danger small" id="posterErr" style="display:none"></div>
 				</td>
 			</tr>
@@ -26,14 +27,13 @@
 					<label>Item Price:</label>
 				</td>
 				<td>
-					<input type="number" id="itemPrice" step="any" name="itemPrice" min="0" max="500" required>
+					<input type="number" id="itemPrice" step="any" name="itemPrice" min="1" max="500" required
+						value={{item.itemPrice}}>
 				</td>
 				<td rowspan="2">
-					<img id="poster" src="/img/no-image.jpg" alt="" class="border img-thumbnail img-fluid"
+					<img id="poster" src="{{ item.posterURL}}" alt="" class="border img-thumbnail img-fluid"
 						style="height:250px;width:250px">
-					{{!—- Hidden field to submit URL of poster to the server --}}
-					<input id="posterURL" type="hidden" name="posterURL">
-
+					<input id="posterURL" type="hidden" name="posterURL" value="{{item.posterURL}}">
 				</td>
 			</tr>
 
@@ -43,7 +43,7 @@
 				</td>
 				<td>
 					<textarea id="itemDescription" name="itemDescription" rows="5"
-						placeholder="Input Description of item" required></textarea>
+						placeholder="Input Description of item" required>{{ item.itemDescription}}</textarea>
 				</td>
 
 			</tr>
@@ -51,14 +51,12 @@
 				<td></td>
 				<td> <label>&nbsp;&nbsp;&nbsp;</label>
 					<input class="form-check-input" type="checkbox" name="availability" id="availability"
-						value="availability" checked>
+						value="availability" {{   item.available}}>
 					<label class="form-check-label" for="availability">Availability</label>
 					 <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 					 <label for="Quantity">Quantity</label>
-					<input  type="number" name="Quantity" id="Quantity"	min= "0" max ="100"value="0"  required>
+					<input  type="number" name="Quantity" id="Quantity"	min= "0" max ="100"value={{ item.Quantity}} required>
 					<label id="Ace_ChangeToGray" for="Quantity">Roughly how many you can sell </label>
-					
-					
 				</td>
 				<td>
 
@@ -71,7 +69,7 @@
 				<td>
 					<label>&nbsp;&nbsp;&nbsp;</label>
 					<input class="form-check-input" type="checkbox" name="Seenbyothers" id="Seenbyothers"
-						value="Seenbyothers" checked>
+						value="Seenbyothers" {{item.can}}>
 
 					<label class="form-check-label" for="Seenbyothers">Seen by others</label>
 					<label id="Ace_ChangeToGray"> &nbsp;&nbsp;&nbsp; Uncheck so only you can see </label>
@@ -88,19 +86,21 @@
 				<td>
 					<div class="form-check form-check-inline">
 
-						<input class="form-check-input" type="radio" name="Halaltype" id="Halal" value="Halal" checked>
+						<input class="form-check-input" type="radio" name="Halaltype" id="Halal" value="Halal"
+							{{ radioCheck item.Halaltype 'Halal'}}>
 
 						<label class="form-check-label" for="Halal">Halal</label>
 
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="Halaltype" id="non-Halal" value="non-Halal">
+						<input class="form-check-input" type="radio" name="Halaltype" id="non-Halal" value="non-Halal"
+							{{radioCheck item.Halaltype 'non-Halal'}}>
 						<label class="form-check-label" for="non-Halal">non-Halal</label>
 					</div>
 				</td>
 				<td>
 					<label>&nbsp;&nbsp;&nbsp;</label>
-					<input class="form-check-input" type="checkbox" name="Vegtype" id="Veg" value="Veg">
+					<input class="form-check-input" type="checkbox" name="Vegtype" id="Veg" value="Veg" {{ item.vegi}}>
 					<label class="form-check-label" for="Veg">Veg</label>
 
 
@@ -113,35 +113,40 @@
 					<div class="form-check form-check-inline">
 
 						<input class="form-check-input" type="radio" name="Cuisine" id="Chinese" value="Chinese"
-							checked>
+								{{radioCheck item.Cuisine 'Chinese'}}>
 
 						<label class="form-check-label" for="Chinese">Chinese</label>
 
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="Cuisine" id="Malay" value="Malay">
+						<input class="form-check-input" type="radio" name="Cuisine" id="Malay" value="Malay" 
+									{{radioCheck item.Cuisine 'Malay'}}>
 						<label class="form-check-label" for="Malay">Malay</label>
 					</div>
 					<div class="form-check form-check-inline">
 
-						<input class="form-check-input" type="radio" name="Cuisine" id="Indian" value="Indian">
+						<input class="form-check-input" type="radio" name="Cuisine" id="Indian" value="Indian"
+									{{radioCheck item.Cuisine 'Indian'}}>
 
 						<label class="form-check-label" for="Indian">Indian</label>
 
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="Cuisine" id="Western" value="Western">
+						<input class="form-check-input" type="radio" name="Cuisine" id="Western" value="Western"
+									{{radioCheck item.Cuisine 'Western'}}>
 						<label class="form-check-label" for="Western">Western</label>
 					</div>
 					<div class="form-check form-check-inline">
 
-						<input class="form-check-input" type="radio" name="Cuisine" id="Japanese" value="Japanese">
+						<input class="form-check-input" type="radio" name="Cuisine" id="Japanese" value="Japanese"
+									{{radioCheck item.Cuisine 'Japanese'}}>
 
 						<label class="form-check-label" for="Japanese">Japanese</label>
 
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="Cuisine" id="Korean" value="Korean">
+						<input class="form-check-input" type="radio" name="Cuisine" id="Korean" value="Korean"
+									{{radioCheck item.Cuisine 'Korean'}}>
 						<label class="form-check-label" for="Korean">Korean</label>
 					</div>
 
@@ -153,43 +158,46 @@
 				<td>
 					<div class="form-check form-check-inline">
 						<input class="form-check-input" type="checkbox" name="DaysAvailable" id="Monday" value="Monday"
-							onclick="ensureOneCheck('DaysAvailable', 'DaysErr', 'Ace_itemCreate')" checked>
+							{{ item.dayMonday}} onclick="ensureOneCheck('DaysAvailable', 'DaysErr', 'Ace_itemCreate')">
 						<label class="form-check-label" for="Monday">Monday</label>
 					</div>
 
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="checkbox" name="DaysAvailable" id="Tuesday"
-							value="Tuesday" onclick="ensureOneCheck('DaysAvailable', 'DaysErr', 'Ace_itemCreate')">
-						<label class="form-check-label" for="Tueday">Tuesday</label>
+						<input class="form-check-input" type="checkbox" name="DaysAvailable" id="Tueday" value="Tueday"
+							{{ item.dayTuesday}} onclick="ensureOneCheck('DaysAvailable', 'DaysErr', 'Ace_itemCreate')">
+						<label class="form-check-label" for="Tueday">Tueday</label>
 					</div>
 
 					<div class="form-check form-check-inline">
 						<input class="form-check-input" type="checkbox" name="DaysAvailable" id="Wednesday"
-							value="Wednesday" onclick="ensureOneCheck('DaysAvailable', 'DaysErr', 'Ace_itemCreate')">
+							value="Wednesday" {{ item.dayWednesday}}
+							onclick="ensureOneCheck('DaysAvailable', 'DaysErr', 'Ace_itemCreate')">
 						<label class="form-check-label" for="Wednesday">Wednesday</label>
 					</div>
 
 					<div class="form-check form-check-inline">
 						<input class="form-check-input" type="checkbox" name="DaysAvailable" id="Thursday"
-							value="Thursday" onclick="ensureOneCheck('DaysAvailable', 'DaysErr', 'Ace_itemCreate')">
+							value="Thursday" {{ item.dayThursday}}
+							onclick="ensureOneCheck('DaysAvailable', 'DaysErr', 'Ace_itemCreate')">
 						<label class="form-check-label" for="Thursday">Thursday</label>
 					</div>
 
 					<div class="form-check form-check-inline">
 						<input class="form-check-input" type="checkbox" name="DaysAvailable" id="Friday" value="Friday"
-							onclick="ensureOneCheck('DaysAvailable', 'DaysErr', 'Ace_itemCreate')">
+							{{ item.dayFriday}} onclick="ensureOneCheck('DaysAvailable', 'DaysErr', 'Ace_itemCreate')">
 						<label class="form-check-label" for="Friday">Friday</label>
 					</div>
 
 					<div class="form-check form-check-inline">
 						<input class="form-check-input" type="checkbox" name="DaysAvailable" id="Saturday"
-							value="Saturday" onclick="ensureOneCheck('DaysAvailable', 'DaysErr', 'Ace_itemCreate')">
+							value="Saturday" {{ item.daySaturday}}
+							onclick="ensureOneCheck('DaysAvailable', 'DaysErr', 'Ace_itemCreate')">
 						<label class="form-check-label" for="Saturday">Saturday</label>
 					</div>
 
 					<div class="form-check form-check-inline">
 						<input class="form-check-input" type="checkbox" name="DaysAvailable" id="Sunday" value="Sunday"
-							onclick="ensureOneCheck('DaysAvailable', 'DaysErr', 'Ace_itemCreate')">
+							{{ item.daySunday}} onclick="ensureOneCheck('DaysAvailable', 'DaysErr', 'Ace_itemCreate')">
 						<label class="form-check-label" for="Sunday">Sunday</label>
 					</div>
 					<p class="font-weight-bold text-info" id="DaysErr" style="display:none">
@@ -212,18 +220,20 @@
 					<ul>
 						<li>
 							<input class="form-check-input" type="checkbox" name="LocationD" id="North" value="North"
-								onclick="ensureOneCheck('LocationD', 'LocationErr', 'Ace_itemCreate')" checked>
+								onclick="ensureOneCheck('LocationD', 'LocationErr', 'Ace_itemCreate')"
+								{{item.NorthLO }}>
 							<label class="form-check-label" for="North">North</label></li>
 						<li> <input class="form-check-input" type="checkbox" name="LocationD" id="Central"
-								value="Central" onclick="ensureOneCheck('LocationD', 'LocationErr', 'Ace_itemCreate')">
+								value="Central" onclick="ensureOneCheck('LocationD', 'LocationErr', 'Ace_itemCreate')"
+								{{item.CentralLO }}>
 
 							<label class="form-check-label" for="Central">Central</label></li>
 						<li> <input class="form-check-input" type="checkbox" name="LocationD" id="East" value="East"
-								onclick="ensureOneCheck('LocationD', 'LocationErr', 'Ace_itemCreate')">
+								onclick="ensureOneCheck('LocationD', 'LocationErr', 'Ace_itemCreate')" {{item.EastLO }}>
 
 							<label class="form-check-label" for="East">East</label></li>
 						<li> <input class="form-check-input" type="checkbox" name="LocationD" id="West" value="West"
-								onclick="ensureOneCheck('LocationD', 'LocationErr', 'Ace_itemCreate')">
+								onclick="ensureOneCheck('LocationD', 'LocationErr', 'Ace_itemCreate')" {{item.WestLO }}>
 
 							<label class="form-check-label" for="West">West</label></li>
 
@@ -238,8 +248,7 @@
 				<td></td>
 				<td></td>
 				<td><button id="Ace_itemCreate" type="submit"
-						onclick="ensureOneCheck('DaysAvailable', 'DaysErr', 'Ace_itemCreate')" )>Create Item</button>
-				</td>
+						onclick="ensureOneCheck('DaysAvailable', 'DaysErr', 'Ace_itemCreate')" )>Edit Item</button></td>
 
 			</tr>
 			<tr>
