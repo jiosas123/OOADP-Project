@@ -108,8 +108,6 @@ function checkOptions(item) {
     // video.englishLang = (video.language.search('English') >= 0) ? 'checked' : '';
     // video.malayLang = (video.language.search('Malay') >= 0) ? 'checked' : '';
     // video.tamilLang = (video.language.search('Tamil') >= 0) ? 'checked' : '';
-//avalibility
-    item.available= (item.availability.search('availability') >= 0) ? 'checked' : '';
 //canBeSeenByOthers
     item.can=(item.Seenbyothers.search('Seenbyothers') >= 0) ? 'checked' : '';
 // veg??

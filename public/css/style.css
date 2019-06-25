@@ -26,3 +26,8 @@ background-color: white;
 #Ace_itemCreate{
   float:right;
 }
+#Ace_HeaderADD_Edit{
+
+  font-size: 2em;
+  font-weight: bold;
+}

@@ -6,7 +6,7 @@
 
 <div id="Ace_WholeBody">
 	<br>
-	<label id="tester123"></label>
+	<label id="Ace_HeaderADD_Edit">Edit of Item name: {{item.itemName}} by {{item.username}}</label>
 	<br>
 	<form action="/item/saveEditedItem/{{item.id}} ?_method=PUT" method="post">
 		<table id="Ace_itemTable">
@@ -50,8 +50,8 @@
 			<tr>
 				<td>
 
-	 <label for="Quantity">Quantity</label>
-					<input  type="number" name="Quantity" id="Quantity"	min= "0" max ="100"value={{ item.Quantity}} required>
+		 <label for="Quantity">Quantity :</label>
+				
 					
 					
 				</td>
@@ -112,7 +112,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><label>Cuisine</label></td>
+				<td><label>Cuisine :</label></td>
 				<td>
 					<div class="form-check form-check-inline">
 
