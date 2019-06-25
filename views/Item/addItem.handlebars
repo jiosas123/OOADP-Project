@@ -48,20 +48,17 @@
 
 			</tr>
 			<tr>
-				<td></td>
-				<td> <label>&nbsp;&nbsp;&nbsp;</label>
-					<input class="form-check-input" type="checkbox" name="availability" id="availability"
-						value="availability" checked>
-					<label class="form-check-label" for="availability">Availability</label>
-					 <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-					 <label for="Quantity">Quantity</label>
-					<input  type="number" name="Quantity" id="Quantity"	min= "0" max ="100"value="0"  required>
-					<label id="Ace_ChangeToGray" for="Quantity">Roughly how many you can sell </label>
-					
+				<td >
+								 <label for="Quantity">Quantity</label>
+		
+				
 					
 				</td>
-				<td>
-
+	
+				<td>		
+					
+						<input  type="number" name="Quantity" id="Quantity"	min= "0" max ="100" value="0"  required>
+	 <label id="Ace_ChangeToGray" >Roughly how many you can sell </label>
 				</td>
 
 
@@ -199,7 +196,34 @@
 				</td>
 			</tr>
 			<tr>
-				<td><label>Time food available :</label></td>
+				<td><label>Time food available :</label>
+					
+				
+				</td>
+				<td>
+							<div class="form-check form-check-inline">
+						<input class="form-check-input" type="checkbox" name="timeAvailable" id="morning"
+							value="morning" onclick="ensureOneCheck('timeAvailable', 'TimeErr', 'Ace_itemCreate')" checked>
+						<label class="form-check-label" for="morning">morning(9am-12pm)</label>
+					</div>
+
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="checkbox" name="timeAvailable" id="afternoon" value="afternoon"
+							onclick="ensureOneCheck('timeAvailable', 'TimeErr', 'Ace_itemCreate')">
+						<label class="form-check-label" for="afternoon">afternoon(12pm-4pm)</label>
+					</div>
+
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="checkbox" name="timeAvailable" id="evening"
+							value="evening" onclick="ensureOneCheck('timeAvailable', 'TimeErr', 'Ace_itemCreate')">
+						<label class="form-check-label" for="evening">evening(4pm-8pm)</label>
+					</div>
+
+					
+					<p class="font-weight-bold text-info" id="TimeErr" style="display:none">
+						Please select one of the time slot
+					</p>
+				</td>
 
 			</tr>
 			<tr>

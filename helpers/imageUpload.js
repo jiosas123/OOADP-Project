@@ -21,7 +21,7 @@ const upload = multer({
 }).single('posterUpload'); // Must be the name as the HTML file upload input
 // Check File Type
 function checkFileType(file, callback) {
-    console.log("test M here upload")
+
     // Allowed file extensions
     const filetypes = /jpeg|jpg|png|gif/;
     // Test extension

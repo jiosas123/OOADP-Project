@@ -1,68 +1,57 @@
-<div class="jumbotron text-center" style="background-color: #388FB0;border-radius: 0; padding: 0;">
-	<div class="container" id="toptext">
+<div class="jumbotron text-center">
+	<div class="container">
 		<h1 class="display-4">{{title}}</h1>
-		<p class="lead">Order food from home through our listings!</p>
+		<p class="lead">All Food Item</p>
+		{{#if item}}
+
+		<div class="card card-body">
+			<h3 class="text-primary">All Food Item</h3>
+			{{#each item }}
+			{{!-- testing--}}
+			{{#tester "1" "1"  operator="=="}}
+			{{#if Seenbyothers }}
+
+
+			<img src="{{posterURL}}" alt="Poster unavailable" class="img-thumbnail img-fluid">
+			<table>
+				<tr>
+					<td>
+						{{ itemName}}
+
+					</td>
+
+
+				</tr>
+
+				<tr>
+					<td>
+
+						<a href="../item/buying/{{id}}" class="card-link">
+							<i class="fas fa-pencil-alt">Buy ME</i>
+
+						</a>
+					</td>
+				</tr>
+
+
+
+			</table>
+
+
+			{{/if}}
+
+		{{/tester}}
+
+
+
+			{{/each}}
+		</div>
+
+
+
+		{{else}}
+		<h3>Food Bank Empty</h3>
+		{{/if}}
 	</div>
 	<br>
-	<div id="topb">
-        <a href="#" id="filt"><button onclick="togglefilt()">Filter</button></a>
-        <button id="sort" onclick="togglesort()">Sort</button>
-        <a href="#" id="check"><button>Checkout <br> 0 item(s) in cart</button></a>
-    </div>
-	{{#each listing}}
-		<div class="listing" id='{{this.listingID}}'>
-			<img class="listing-img" src="{{{listingImg}}}"/>
-            <input type="image" class="unfav" src="unfav.png" onclick="fav(this)">
-			{{#unless this.listingAmt}}
-				<div class="amount out">0x</div>
-			{{else}}
-				<div class="amount {{this.listingAmt}}">{{this.listingAmt}}x</div>
-			{{/unless}}
-			<div class="listing-body" id="{{this.listingPrc}}">
-				<a href="#" class="product-name">{{this.listingName}}</a>
-				{{#unless this.listingAmt}}
-					<button class="out">${{this.listingPrc}} each<br> Out of stock</button>
-				{{else}}
-					<button class="available" onclick="buy(this)">${{this.listingPrc}} each<br> Add to Cart</button>
-				{{/unless}}
-			</div>
-		</div>
-	{{/each}}
 </div>
-<script>
-	var foods = 0
-    function buy(that){
-        var amoun = Number(prompt("Enter amount you wish to buy."))
-        if (amoun <= that.parentNode.previousElementSibling.classList.item(1) && amoun > 0){
-            that.className = "in-cart " + amoun
-            that.childNodes[2].textContent = "Remove?"
-            that.onmouseover = function() {that.childNodes[2].textContent = "Remove?"}
-            that.onmouseout = function() {that.childNodes[2].textContent = amoun + " in-cart"}
-            foods += Number(amoun)
-            checko = document.getElementById("check")
-            checko.childNodes[0].innerHTML = "Checkout <br>" + foods + " item(s) in cart"
-            that.setAttribute("onClick", "javascript: cancel(this)")
-        }
-    }
-    function cancel(that){
-        var amoun = that.className.split(" ")
-        that.className = "available"
-        that.childNodes[2].textContent = "Add to cart"
-        that.onmouseover = function(){}
-        that.onmouseout = function(){}
-        foods -= Number(amoun[amoun.length-1])
-        checko = document.getElementById("check")
-        checko.childNodes[0].innerHTML = "Checkout <br>" + foods + " item(s) in cart"
-        that.setAttribute( "onClick", "javascript: buy(this)")
-    }
-    function fav(that){
-        that.className = "fav"
-        that.src = "fav.png"
-        that.setAttribute( "onClick", "javascript: unfav(this)")
-    }
-    function unfav(that){
-        that.className = "unfav"
-        that.src = "unfav.png"
-        that.setAttribute( "onClick", "javascript: fav(this)")
-    }
-</script>

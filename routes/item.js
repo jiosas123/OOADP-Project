@@ -44,7 +44,6 @@ router.post('/addItem', ensureAuthenticated, (req, res) => {
     let posterURL = req.body.posterURL;
     let userId = req.user.id;
     let Seenbyothers = req.body.Seenbyothers === undefined ? '' : req.body.Seenbyothers.toString();
-    let availability = req.body.availability === undefined ? '' : req.body.availability.toString();
     let itemPrice = req.body.itemPrice;
     let Halaltype = req.body.Halaltype;
     let Vegtype = req.body.Vegtype === undefined ? '' : req.body.Vegtype.toString();
@@ -54,13 +53,14 @@ router.post('/addItem', ensureAuthenticated, (req, res) => {
     let dateTimeItem= date;
     let Cuisine = req.body.Cuisine
     let Quantity= req.body.Quantity;
+    let timeAvailable = req.body.timeAvailable.toString();
+    console.log(timeAvailable+"lollllllllllllllllllllllllllllllllllllllllllll")
     Item.create({
         itemName,
         posterURL,
         itemDescription,
         userId,
         Seenbyothers,
-        availability,
         itemPrice,
         Halaltype,
         Vegtype,
@@ -69,7 +69,8 @@ router.post('/addItem', ensureAuthenticated, (req, res) => {
         LocationD,
         dateTimeItem,
         Cuisine,
-        Quantity
+        Quantity,
+        timeAvailable
 
         /*
         title,
@@ -127,6 +128,13 @@ function checkOptions(item) {
     item.CentralLO =(item.LocationD.search('Central') >= 0) ? 'checked' : '';
     item.EastLO =(item.LocationD.search('East') >= 0) ? 'checked' : '';
     item.WestLO =(item.LocationD.search('West') >= 0) ? 'checked' : '';
+
+    item.morning=(item.timeAvailable.search('morning') >= 0) ? 'checked' : '';
+    
+    item.afternoon=(item.timeAvailable.search('afternoon') >= 0) ? 'checked' : '';
+    
+    item.evening=(item.timeAvailable.search('evening') >= 0) ? 'checked' : '';
+//timeAvalible
     // Subtitles
     // video.chineseSub = (video.subtitles.search('Chinese') >= 0) ? 'checked' : '';
     // video.englishSub = (video.subtitles.search('English') >= 0) ? 'checked' : '';
@@ -178,7 +186,7 @@ router.put('/saveEditedItem/:id', ensureAuthenticated, (req, res) => {
     let posterURL = req.body.posterURL;
     let userId = req.user.id;
     let Seenbyothers = req.body.Seenbyothers === undefined ? '' : req.body.Seenbyothers.toString();
-    let availability = req.body.availability === undefined ? '' : req.body.availability.toString();
+  
     let itemPrice = req.body.itemPrice;
     let Halaltype = req.body.Halaltype;
     let Vegtype = req.body.Vegtype === undefined ? '' : req.body.Vegtype.toString();
@@ -188,13 +196,15 @@ router.put('/saveEditedItem/:id', ensureAuthenticated, (req, res) => {
     let dateTimeItem= date;
     let Cuisine = req.body.Cuisine;
     let Quantity = req.body.Quantity;
+    let timeAvailable = req.body.timeAvailable.toString();
+    
     Item.update({
         itemName,
         posterURL,
         itemDescription,
         userId,
         Seenbyothers,
-        availability,
+    
         itemPrice,
         Halaltype,
         Vegtype,
@@ -203,7 +213,8 @@ router.put('/saveEditedItem/:id', ensureAuthenticated, (req, res) => {
         LocationD,
         dateTimeItem,
         Cuisine,
-        Quantity
+        Quantity,
+        timeAvailable
     }, {
             where: {
                 id: itemID

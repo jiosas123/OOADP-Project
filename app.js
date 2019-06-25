@@ -62,6 +62,10 @@ app.engine('handlebars', exphbs({
 		formatDate: formatDate,
 		radioCheck: radioCheck,
 		replaceCommas: replaceCommas,
+
+		//this is something Ace testing to check for id to compare the id, no worries it wont effect you
+		//kong khai you can use this for the mutiple page but it only compares string 
+		//run in handlebars #tester blah blah blah 
 		tester:function(lvalue, rvalue, options) {
 
 			if (arguments.length < 3)
@@ -79,24 +83,15 @@ app.engine('handlebars', exphbs({
 				'>=':       function(l,r) { return l >= r; },
 				'typeof':   function(l,r) { return typeof l == r; }
 			}
-			console.log(operator);
-			console.log("tetsttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
-			
 			if (!operators[operator])
 				throw new Error("Handlerbars Helper 'compare' doesn't know the operator "+operator);
 		
 			var result = operators[operator](lvalue,rvalue);
-			console.log(result);
-			console.log("tetsttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
+
 			if( result ) {
-				console.log(options.fn(this));
-				console.log("tetsttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
-				
 				return options.fn(this);
 				//return true;
 			} else {
-				console.log(options.inverse(this));
-				console.log("tetsttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");	
 				return options.inverse(this);
 				//return false;
 			}
@@ -151,7 +146,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static('public/img'))
 
 app.use(flash());
 

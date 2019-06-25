@@ -19,9 +19,7 @@ const Item = db.define('item', {
     Seenbyothers: {
         type: Sequelize.STRING
     },
-    availability: {
-        type: Sequelize.STRING
-    },
+
     itemPrice: {
         type: Sequelize.STRING
     },
@@ -51,6 +49,9 @@ const Item = db.define('item', {
     },
     Quantity:{
         type: Sequelize.INTEGER
+    },
+    timeAvailable:{
+        type: Sequelize.STRING
     }
     
     // ,

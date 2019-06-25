@@ -22,10 +22,6 @@ function ensureOneCheck(checkBoxName, messageId, submitId) {
 
 
 
-function checker() {
-	console.log("testing123");
-}
-
 function getOMdbMovie() {
 	const title = document.getElementById('title').value;
 	const poster = document.getElementById('poster');
