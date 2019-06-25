@@ -178,6 +178,7 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
                 res.json({ file: '/img/no-image.jpg', err: err });
             } else {
                 res.json({ file: `/uploads/${req.user.id}/${req.file.filename}` });
+                
             }
         }
     });

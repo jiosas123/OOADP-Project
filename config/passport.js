@@ -29,8 +29,8 @@ function localStrategy(passport) {
     // Serializes (stores) user id into session upon successful
     // authentication
     passport.serializeUser((user, done) => {
-        done(null, user.id,user.name); // user.id is used to identify authenticated user
-    });
+        done(null, user.id,); // user.id is used to identify authenticated user
+    });//user.name
 
     // User object is retrieved by userId from session and
     // put into req.user

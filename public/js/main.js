@@ -1,6 +1,7 @@
 function ensureOneCheck(checkBoxName, messageId, submitId) {
 
 	const checkBoxes = document.getElementsByName(checkBoxName);
+
 	let checkCount = 0;
 	for (let i = 0; i < checkBoxes.length; i++) {
 		if (checkBoxes[i].checked)
@@ -15,9 +16,13 @@ function ensureOneCheck(checkBoxName, messageId, submitId) {
 		document.getElementById(submitId).disabled = false;
 		return true;
 	}
+
 }
 
-function checker(){
+
+
+
+function checker() {
 	console.log("testing123");
 }
 
@@ -47,35 +52,14 @@ function getOMdbMovie() {
 			}
 		}).catch(error => { omdbErr.innerHTML = error; })
 }
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
+
 
 $('#posterUpload').on('change', function () {
 	let image = $("#posterUpload")[0].files[0];
 	let formdata = new FormData();
 	formdata.append('posterUpload', image);
 	$.ajax({
-		url: '/video/upload',
+		url: '/item/upload',
 		type: 'POST',
 		data: formdata,
 		contentType: false,

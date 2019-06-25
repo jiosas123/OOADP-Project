@@ -16,6 +16,7 @@ router.get('/', (req, res) => {
 	res.render('index', { title: title, listing: result}) // renders views/index.handlebars
 });
 
+
 // Logout User
 router.get('/logout', (req, res) => {
 	req.logout();

@@ -16,6 +16,18 @@ const db = require('./config/db'); // db.js config file
 const passport = require('passport');
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 * Loads routes file main.js in routes directory. The main.js determines which function
 * will be called based on the HTTP request and URL.
@@ -49,7 +61,52 @@ app.engine('handlebars', exphbs({
 	helpers: {
 		formatDate: formatDate,
 		radioCheck: radioCheck,
-		replaceCommas: replaceCommas
+		replaceCommas: replaceCommas,
+		tester:function(lvalue, rvalue, options) {
+
+			if (arguments.length < 3)
+				throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
+		
+			var operator = options.hash.operator || "==";
+		
+			var operators = {
+				'==':       function(l,r) { return l == r; },
+				'===':      function(l,r) { return l === r; },
+				'!=':       function(l,r) { return l != r; },
+				'<':        function(l,r) { return l < r; },
+				'>':        function(l,r) { return l > r; },
+				'<=':       function(l,r) { return l <= r; },
+				'>=':       function(l,r) { return l >= r; },
+				'typeof':   function(l,r) { return typeof l == r; }
+			}
+			console.log(operator);
+			console.log("tetsttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
+			
+			if (!operators[operator])
+				throw new Error("Handlerbars Helper 'compare' doesn't know the operator "+operator);
+		
+			var result = operators[operator](lvalue,rvalue);
+			console.log(result);
+			console.log("tetsttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
+			if( result ) {
+				console.log(options.fn(this));
+				console.log("tetsttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
+				
+				return options.fn(this);
+				//return true;
+			} else {
+				console.log(options.inverse(this));
+				console.log("tetsttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");	
+				return options.inverse(this);
+				//return false;
+			}
+		
+		
+		}
+
+
+
+
 	},
 	defaultLayout: 'main' // Specify default template views/layout/main.handlebar 
 }));
@@ -136,9 +193,9 @@ app.listen(port, () => {
 });
 
 // Bring in database connection
-const vidjotDB = require('./config/DBConnection');
+const BoyDB = require('./config/DBConnection');
 // Connects to MySQL database
-vidjotDB.setUpDB(false); // To set up database with new tables set (true)
+BoyDB.setUpDB(false); // To set up database with new tables set (true)
 // Passport Config
 const authenticate = require('./config/passport');
 authenticate.localStrategy(passport);

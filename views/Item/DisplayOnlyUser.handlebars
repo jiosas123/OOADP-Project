@@ -1,0 +1,38 @@
+{{#if item}}
+
+		<div class="card card-body">
+			<h3 class="text-primary">All Food Item</h3>
+			{{#each item}}
+
+			<img src="{{posterURL}}" alt="Poster unavailable" class="img-thumbnail img-fluid">
+			<table>
+				<tr>
+					<td>
+						{{ itemName}}
+
+					</td>
+
+
+				</tr>
+
+				<tr>
+					<td>
+
+						<a href="../item/edit/{{id}}" class="card-link">
+							<i class="fas fa-pencil-alt">Edit ME</i>
+
+						</a>
+					</td>
+				</tr>
+
+
+
+			</table>
+
+
+			{{/each}}
+		</div>
+
+		{{else}}
+		<h3>Food Bank Empty</h3>
+		{{/if}}

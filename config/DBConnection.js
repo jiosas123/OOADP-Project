@@ -6,7 +6,7 @@ const item = require('../models/item')
 const setUpDB = (drop) => {
     mySQLDB.authenticate()
         .then(() => {
-            console.log('Vidjot database connected');
+            console.log('foodfood database connected');
         })
         .then(() => {
             /*

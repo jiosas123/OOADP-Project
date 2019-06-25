@@ -36,7 +36,27 @@ const Item = db.define('item', {
     },
     likes: {
         type: Sequelize.STRING
+    },     
+    DaysAvailable:{
+        type: Sequelize.STRING
+    },
+    LocationD:{
+        type: Sequelize.STRING
+    },
+    dateTimeItem:{
+        type: Sequelize.DATEONLY
+    },
+    Cuisine:{
+        type: Sequelize.STRING
+    },
+    Quantity:{
+        type: Sequelize.INTEGER
     }
+    
+    // ,
+    // location:{
+    //     type: Sequelize.STRING
+    // }
 
 
 });
