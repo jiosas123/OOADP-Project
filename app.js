@@ -94,6 +94,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(express.static('public/img'))
 
 app.use(flash());
 

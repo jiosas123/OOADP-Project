@@ -1,26 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const alertMessage = require('../helpers/messenger')
-const Item = require('../models/item');
-router.get('/', (req, res) => {
-	
-	const title = 'Video Jotter';
+const sequelize = require('../config/DBConfig')
 
-	Item.findAll({
-		
-        raw: true
-    }).then((item) => {
-        // pass object to listVideos.handlebar
-        res.render('index', {title: title        , 
-            item: item
-        });
-    }).catch(err => console.log(err));
-	 
-	
-	/*res.render('index', { title: title        
-	
-	
-	})// renders views/index.handlebars*/
+var result =[];
+sequelize.query("SELECT * FROM listings.listing", { type: sequelize.QueryTypes.SELECT}).then(results => {
+	setvalue(results)
+})
+function setvalue(value){
+	result = value
+}
+
+router.get('/', (req, res) => {
+	const title = 'Listings';
+	res.render('index', { title: title, listing: result}) // renders views/index.handlebars
 });
 
 // Logout User
