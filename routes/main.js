@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const alertMessage = require('../helpers/messenger')
 const Item = require('../models/item');
+const sequelize = require('../config/DBConfig');
 var num;
 
 var result =[];
