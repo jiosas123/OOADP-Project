@@ -54,7 +54,6 @@ router.post('/addItem', ensureAuthenticated, (req, res) => {
     let Cuisine = req.body.Cuisine
     let Quantity= req.body.Quantity;
     let timeAvailable = req.body.timeAvailable.toString();
-    console.log(timeAvailable+"lollllllllllllllllllllllllllllllllllllllllllll")
     Item.create({
         itemName,
         posterURL,
@@ -95,7 +94,6 @@ router.post('/addItem', ensureAuthenticated, (req, res) => {
 
 
 router.get('/buying/:id', ensureAuthenticated, (req, res) => {
-    console.log("tssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
     res.redirect('/video/listVideos');
 
 
@@ -150,7 +148,6 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
     }).then((item) => {
         if (req.user.id == item.userId) {
 
-            console.log("testerertererere");
             checkOptions(item);
             // call views/video/editVideo.handlebar to render the edit video page
             res.render('Item/Edit_Item', {

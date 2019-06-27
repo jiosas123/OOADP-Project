@@ -5,18 +5,20 @@ const Item = require('../models/item');
 const sequelize = require('../config/DBConfig');
 var num;
 
-var result =[];
-sequelize.query("SELECT * FROM foodfood.items", { type: sequelize.QueryTypes.SELECT}).then(results => {
-	setvalue(results)
-})
-function setvalue(value){
-	result = value
-}
 
 router.get('/', (req, res) => {
+	var lists = new Promise(function(resolve){
+		var result =[];
+		sequelize.query("SELECT * FROM foodfood.items", { type: sequelize.QueryTypes.SELECT}).then(results => {
+			result = results
+			resolve(result)
+		})
+	})
 	num=1;
 	const title = 'Listings';
-	res.render('index', { title: title, listing: result}) // renders views/index.handlebars
+	lists.then(function(value){
+		res.render('index', { title: title, listing: value}) // renders views/index.handlebars)
+	})
 });
 
 router.get('/prev', (req, res) => {
