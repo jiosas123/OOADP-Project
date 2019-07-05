@@ -276,4 +276,32 @@ router.get('/displayUserItem', ensureAuthenticated, (req, res) => {
     }).catch(err => console.log(err));
 })
 
+const Sequelize = require('sequelize');
+
+router.get("/search/ajax/:query", ensureAuthenticated, (req,res) => {
+    let query = req.params.query;
+    Item.findAll ({
+        where:  {
+            userId: req.user.id,
+            itemName: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("itemName")), 'LIKE', '%'+ query + '%')
+        },
+        order: [
+            ['itemName','ASC']
+        ],
+        raw:true 
+    }).then ((items) => {
+        res.json({
+            items: items
+        })
+        }).catch (err => console.log(err));
+    })
+
+router.get('/search', ensureAuthenticated, (req,res) =>
+{
+res.render('item/search', {});
+})
+
+
+
+
 module.exports = router;
