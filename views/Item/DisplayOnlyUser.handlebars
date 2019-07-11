@@ -1,6 +1,6 @@
 <div class="container">
 	<input id="query"></input>
-	<input id="search" type="button" value="search"/>
+	<input id="search" type="button" value="search" class="btn-primary"/>
 	<div class="card card-body">
 		<h3 class="text-primary">Food Listings</h3>
 		<div id="card" class="card border-primary mb-2 w-100 mx-auto">
@@ -34,30 +34,30 @@
 									<div class="col-sm-12 col-md-12 col-lg-8">
 										<div class="row"> {{!-- subtitles, language... --}}
 											<div class="col-sm-12 col-md-6 col-lg-3">
-												<p class="font-italic">Subtitles</p>
+												<p class="font-italic">Item Price</p>
 												<p class="text-info">
 													${item.itemPrice}
 												</p>
 											</div>
 											<div class="col-sm-12 col-md-6 col-lg-4">
-												<p class="font-italic">Language</p>
+												<p class="font-italic">Cuisine</p>
 												<p class="text-info">
 													${item.Cuisine}
 												</p>
 											</div>
 											<div class="col-sm-12 col-md-6 col-lg-2">
-												<p class="font-italic">Class</p>
-												<p class="text-info">${item.Halaltype}</p>
+												<p class="font-italic">Item Attributes:</p>
+												<p class="text-info">${item.Halaltype}<br>${item.Vegtype}</p>
 											</div>
 											<div class="col-sm-12 col-md-6 col-lg-3">
-												<p class="font-italic">Date Release</p>
+												<p class="font-italic">Items in Stock</p>
 												<p class="text-info">${item.Quantity}</p>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-sm-12 col-md-6 col-lg-10">
-												<p class="font-italic">Starring</p>
-												<p class="text-info">${item.timeAvailable}</p>
+												<p class="font-italic">Available During:</p>
+												<p class="text-info">${item.DaysAvailable}<br>${item.timeAvailable}</p>
 											</div>
 										</div>
 									</div>
@@ -80,7 +80,7 @@
 								<div class="card-header" id="headingOne${item.id}">
 									<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne${item.id}"
 										aria-expanded="false" aria-controls="collapseOne${item.id}">
-										Story<i class="fas fa-chevron-down"></i>
+										Item Description<i class="fas fa-chevron-down"></i>
 									</button>
 
 								</div>
@@ -88,7 +88,7 @@
 								<div id="collapseOne${item.id}" class="collapse" aria-labelledby="headingOne${item.id}"
 									data-parent="#storyAccordion${item.id}">
 									<div class="card-body">
-										${item.story}
+										${item.itemDescription}
 									</div>
 								</div>
 							</div>
@@ -96,7 +96,8 @@
 							`
 							$("#card").append(row);
 						})
-					}
+					} 
+					
 				})
 			})
 		})
