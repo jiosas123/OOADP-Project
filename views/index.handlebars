@@ -18,7 +18,7 @@
         <button id="sortPriceD" class="desce sorts">Price<br>(Descending)</button>
     </div>
     <div id="filts">
-        <button id="filt0s"> Toggle out-of-stock listings (on)</button>
+        <button id="filt0s" class="filts" onclick="filtout(this)"> Toggle out-of-stock listings (on)</button>
     </div>
         {{#each listing}}
      
@@ -81,6 +81,7 @@
         var foods = 0
         var s = document.getElementById("sorts")
         var f = document.getElementById("filts")
+        var o = document.getElementsByClassName("out")
         s.style.display = "none"
         f.style.display = "none"
         function buy(that) {
@@ -168,6 +169,20 @@
     <script>
         var selected = []
         var all = []
+        function filtout(that){
+            for(i=0; i<o.length; i++){
+                o[i].parentNode.style.display = "none"
+            }
+            that.textContent = "Toggle out-of-stock listings (off)"
+            that.setAttribute( "onclick", "javascript: filtin(this)")
+        }
+        function filtin(that){
+            for(i=0; i<o.length; i++){
+                o[i].parentNode.style.display = "inline-block"
+            }
+            that.textContent = "Toggle out-of-stock listings (on)"
+            that.setAttribute( "onclick", "javascript: filtout(this)")
+        }
         $("#sortAlphA").click(function () {
             var x = $(".listing")
             var y = $(".in-cart")

@@ -52,7 +52,7 @@ body{
   margin-right: 50px;
   float:left;
 }
-#filt button{
+#filt button, .filts{
   background-color: gray;
   color: white;
 }
@@ -63,7 +63,7 @@ body{
 .sorts{
   color: #888888;
 }
-#topb button, .sorts {
+#topb button, .sorts, .filts {
   border: none;
   padding: 15px 32px;
   text-align: center;
