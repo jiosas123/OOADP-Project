@@ -466,6 +466,45 @@ router.get('/displayItemDesciption/:id',(req,res)=>{
 });
 
 
+router.put('/boughtItem/:id', (req, res) => {
+    var itemID = req.params.id;       
+     var amountbought = req.body.amountToBuy;
+    Cart.findOne({
+
+        where: {
+            id: itemID
+        }
+    }).then((cart) => {
+
+        console.log(amountbought)
+        console.log(cart.Quantity)
+        var final = cart.Quantity - amountbought;
+        console.log(final)
+        console.log('asdhahsshdshhdhs')
+        Item.update({
+            Quantity: final
+        }, {
+                where: {
+                    id: cart.itemID
+                }
+            })
+        Cart.update({
+            Quantity: final
+        }, {
+                where: {
+                    id: itemID
+                }
+            })
+
+              function myFunc(arg) {	
+            alertMessage(res, 'success', 'Ordered ' + amountbought +" set"+ ' of ' + cart.itemName)
+            res.redirect('/item/ShowAllCart')
+        }
+              
+              setTimeout(myFunc, 500, 'funky');
+    })
+})
+
 
 
 
