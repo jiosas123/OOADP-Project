@@ -169,6 +169,33 @@
     <script>
         var selected = []
         var all = []
+        var every = []
+        function getEvery(){
+            var mrthn9 = false
+            var e = document.getElementsByClassName("listing")
+            every = e
+            for(i=0; i<e.length; i++){
+                if(i<9){
+                    continue
+                }
+                else{
+                    mrthn9 = true
+                    e[i].style.display = "none"
+                }
+            }
+            if(mrthn9){
+                var bac = document.createElement("button")
+                var forw = document.createElement("button")
+                var pgno = document.createElement("p")
+                var bacr = document.createTextNode("<")
+                var forwr = document.createTextNode(">")
+                var pgnum = document.createTextNode("1")
+                bac.id = "bac"
+                forw.id = "forw"
+                pgno.id = "pgno"
+            }
+        }
+        getEvery();
         function filtout(that){
             for(i=0; i<o.length; i++){
                 o[i].parentNode.style.display = "none"

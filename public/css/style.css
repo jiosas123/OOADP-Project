@@ -131,6 +131,7 @@ body{
 }
 .listing-body{
   background-color: #E5E5E8;
+  width: 100%;
 }
 .product-name{
   color: #888888;
@@ -141,6 +142,12 @@ body{
 }
 #filts p{
   display: none;
+}
+#inf tr td, #inf tr th{
+  border-color: black;
+}
+#inf{
+  margin-bottom: 40px;
 }
 #testerNavBar{
   background-color: #28749E;
