@@ -1,15 +1,10 @@
-<br>
-
-
-
-<br>
 
 <div id="Ace_WholeBody">
 	<br>
-	<label id="Ace_HeaderADD_Edit">Edit of Item name: {{item.itemName}} by {{item.username}}</label>
-	<br>
+
 	<form action="/item/saveEditedItem/{{item.id}} ?_method=PUT" method="post">
 		<table id="Ace_itemTable">
+			<tr><td>	<label id="Ace_HeaderADD_Edit">Edit of Item name: {{item.itemName}} by {{item.username}}</label></td></tr>
 			<tr>
 				<td><label>Item Name :</label></td>
 				<td><input type="text" id="itemName" name="itemName" placeholder="Input name of item" required
@@ -27,7 +22,7 @@
 					<label>Item Price:</label>
 				</td>
 				<td>
-					<input type="number" id="itemPrice" step="any" name="itemPrice" min="1" max="500" required
+					<input type="number" id="itemPrice" step="any" name="itemPrice" min="0.5" max="500" required
 						value={{item.itemPrice}}>
 				</td>
 				<td rowspan="2">

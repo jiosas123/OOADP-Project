@@ -3,9 +3,15 @@ const db = require('../config/DBConfig');
 /* Creates a user(s) table in MySQL Database.
 Note that Sequelize automatically pleuralizes the entity name as the table name
 */
-const Item = db.define('item', {
+const Cart = db.define('cart', {
     itemName: {
         type: Sequelize.STRING
+    },
+    itemID: {
+        type: Sequelize.STRING
+    },
+    currentUser:{
+        type: Sequelize.STRING 
     },
     itemDescription: {
         type: Sequelize.STRING(2000)
@@ -52,16 +58,6 @@ const Item = db.define('item', {
     },
     timeAvailable:{
         type: Sequelize.STRING
-    },
-    existed:{
-        type: Sequelize.STRING   
     }
-    
-    // ,
-    // location:{
-    //     type: Sequelize.STRING
-    // }
-
-
 });
-module.exports = Item;
+module.exports = Cart;

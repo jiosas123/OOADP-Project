@@ -1,0 +1,101 @@
+<div class='container'>
+
+    <div class="card card-body">
+
+        <div class='row' style='font-size:1.5em'>
+            <div class='col-lg-7'>
+                <label> Item: {{item.itemName}}</label> <label>&nbsp;&nbsp;&nbsp;</label><label> Quantity:
+                    {{item.Quantity}}</label>
+                <br>
+                <label>Created by: {{item.username}}</label>
+                <br>
+                <a href="{{item.posterURL}}" data-title="{{title}}" data-toggle="lightbox">
+                    <img src="{{item.posterURL}}" alt="Poster unavailable" class="img-thumbnail img-fluid">
+                </a>
+            </div>
+  
+            
+<div class='col-lg-5'>
+                <br>
+                {{#if item.VegType}}
+                <label>Vegetarian: Yes</label>
+                {{else}}
+                <label>Vegetarian: No</label>
+
+                {{/if}}
+                <br>
+                <br>
+
+                <label>{{item.Halaltype}}</label>
+                <br>
+                <br>
+                <label>Cuisine: {{item.Cuisine}}</label>
+                <br>
+                <br>
+                <label>Days Available: {{item.DaysAvailable}}</label>
+                <br>
+                <br>
+                <label>Timing: {{item.timeAvailable}}</label>
+                <br>
+                <br>
+                <label>Location : {{item.LocationD}}</label>
+
+
+            </div>
+        </div>
+    <div class='row'>
+
+          <div class='col-lg-12'>
+                <lable>
+                    Desciption:
+                </lable>
+                <br>
+                <textarea rows="15" class="form-control" disabled> {{item.itemDescription}}
+                </textarea>
+
+            </div>
+
+    </div>
+
+
+
+
+        <div class='row'>
+            <div class='col-lg-12'>
+                <div class="listing-body">
+                {{#unless item.Quantity}}
+                                
+                          <button class="out">${{item.itemPrice}} each<br> Out of stock</button>
+                    {{else}}
+                    {{#if item.existed}}
+
+                    <a id="test2" class="noUnderLine" href="../deleteInCart2/{{item.id}}"
+                        style="text-decoration:none;">
+                        <div class="in-cart" style="text-decoration:none;">${{item.itemPrice}}
+                            each<br>
+                            <span id="sentHere"></span>
+                            <span class="noUnderLine" id="wordChange"> In_cart</span style="text-decoration:none;">
+
+                        </div>
+                    </a>
+                    {{else}}
+
+                    <a id="test12" class="noUnderLine" href="../addToCart/{{item.id}}"
+                        style="text-decoration:none;">
+                        <div class="available" style="text-decoration:none; ">
+                            <span>${{item.itemPrice}} each<br> Add to Cart</span style="text-decoration:none; ">
+
+                        </div>
+                    </a>
+
+                    {{/if}}
+
+
+
+
+                {{/unless}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

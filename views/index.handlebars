@@ -1,128 +1,174 @@
 <div id="main" class="jumbotron text-center" style="background-color: #388FB0;border-radius: 0; padding: 0;">
-	<div class="container" id="toptext">
-		<h1 class="display-4">{{title}}</h1>
-		<p class="lead">Order food from home through our listings!</p>
-	</div>
-	<br>
-	<div id="topb">
-		<a id="filt"><button onclick="togglefilt()">Filter</button></a>
-		<button id="sort" onclick="togglesort()">Sort</button>
-		<a href="#" id="check"><button>Checkout <br> 0 item(s) in cart</button></a>
-	</div>
-	<div id="sorts">
-		<button id="sortAlphA" class="desce sorts">Alphabetically<br>(Descending)</button>
-		<button id="sortAlphD" class="asc sorts">Alphabetically<br>(Ascending)</button>
-		<button id="sortIDA" class="asc sorts">ID<br>(Ascending)</button>
-		<button id="sortIDD" class="desce sorts">ID<br>(Descending)</button>
-		<button id="sortPriceA" class="asc sorts">Price<br>(Ascending)</button>
-		<button id="sortPriceD" class="desce sorts">Price<br>(Descending)</button>
-	</div>
-	<div id="filts">
-		<button id="filt0s"> Toggle out-of-stock listings (on)</button>
-	</div>
-	{{#each listing}}
-		<div class="listing" id='{{this.id}}'>
-			<img class="listing-img" src="{{{this.posterURL}}}"/>
-			<input type="image" class="unfav" src="unfav.png" onclick="favC(this)" onmouseover="unfavH(this)" onmouseout="unfavUH(this)">
-			{{#unless this.Quantity}}
-				<div class="amount out">0x</div>
-			{{else}}
-				<div class="amount {{this.Quantity}}">{{this.Quantity}}x</div>
-			{{/unless}}
-			<div class="listing-body" id="{{this.itemPrice}}">
-				<a href="#" class="product-name">{{this.itemName}}</a>
-				{{#unless this.Quantity}}
-					<button class="out">${{this.itemPrice}} each<br> Out of stock</button>
-				{{else}}
-					<button class="available" onclick="buy(this)">${{this.itemPrice}} each<br> Add to Cart</button>
-				{{/unless}}
-			</div>
-		</div>
-	{{/each}}
-</div>
-<script>
-	var foods = 0
-    var s = document.getElementById("sorts")
-    var f = document.getElementById("filts")
-    s.style.display = "none"
-    f.style.display = "none"
-    function buy(that){
-        var amoun = Number(prompt("Enter amount you wish to buy."))
-        if (amoun <= that.parentNode.previousElementSibling.classList.item(1) && amoun > 0){
-            that.className = "in-cart " + amoun
-            that.childNodes[2].textContent = "Remove?"
-            that.onmouseover = function() {that.childNodes[2].textContent = "Remove?"}
-            that.onmouseout = function() {that.childNodes[2].textContent = amoun + " in-cart"}
-            foods += Number(amoun)
+    <div class="container" id="toptext">
+        <h1 class="display-4">{{title}}</h1>
+        <p class="lead">Order food from home through our listings!</p>
+    </div>
+    <br>
+    <div id="topb">
+        <a id="filt"><button onclick="togglefilt()">Filter</button></a>
+        <button id="sort" onclick="togglesort()">Sort</button>
+        <a href="../item/ShowAllCart" id="check"><button>Checkout <br> {{total}} item(s) in cart</button></a>
+    </div>
+    <div id="sorts">
+        <button  id="sortAlphA" class="desce sorts">Alphabetically<br>(Descending)</button>
+        <button id="sortAlphD" class="asc sorts">Alphabetically<br>(Ascending)</button>
+        <button id="sortIDA" class="asc sorts">ID<br>(Ascending)</button>
+        <button id="sortIDD" class="desce sorts">ID<br>(Descending)</button>
+        <button id="sortPriceA" class="asc sorts">Price<br>(Ascending)</button>
+        <button id="sortPriceD" class="desce sorts">Price<br>(Descending)</button>
+    </div>
+    <div id="filts">
+        <button id="filt0s"> Toggle out-of-stock listings (on)</button>
+    </div>
+        {{#each listing}}
+     
+        <div class="listing" id="{{this.id}}">
+            <a href='../item/displayItemDesciption/{{this.id}}'>
+            <img class="listing-img" src="{{{this.posterURL}}}" />
+            </a>
+            <input type="image" class="unfav" src="unfav.png" onclick="favC(this)" onmouseover="unfavH(this)"
+                onmouseout="unfavUH(this)">
+            {{#unless this.Quantity}}
+            <div class="amount out">0x</div>
+            {{else}}
+            <div class="amount {{this.Quantity}}">{{this.Quantity}}x</div>
+            {{/unless}}
+            <div class="listing-body" id="{{this.itemPrice}}">
+                <a href="#" class="product-name">{{this.itemName}}</a>
+                {{#unless this.Quantity}}
+         
+                <div class='out'>
+            ${{this.itemPrice}} each<br> Out of stock
+                </div>
+                {{else}}
+                {{#if existed}}
+
+                <a id='test2' class="noUnderLine" href="../item/deleteInCart2/{{id}}" style="text-decoration:none;">
+                    <div class="in-cart"  style="text-decoration:none;">
+                        <span class='test'>${{this.itemPrice}} each </span>
+                        <br>
+                        <span id='test4'class="noUnderLine" > In_cart</span style="text-decoration:none;">
+                    
+                    </div>
+                </a>
+                {{else}}
+
+                <a id="test12" class="noUnderLine" href="../item/addToCart/{{id}}" style="text-decoration:none;">
+                    <div class="available" style="text-decoration:none;">
+                        <span>${{this.itemPrice}} each<br> Add to Cart</span style="text-decoration:none;">
+
+                    </div>
+                </a>
+
+                {{/if}}
+                {{/unless}}
+            </div>
+        </div>
+  
+
+        {{/each}}
+
+
+
+    </div>
+    <script>
+//window.onload = function() {
+  //if(!window.location.hash) {
+    //    window.location = window.location + '#';
+    //   window.location.reload();
+  //  }
+//} 
+        var foods = 0
+        var s = document.getElementById("sorts")
+        var f = document.getElementById("filts")
+        s.style.display = "none"
+        f.style.display = "none"
+        function buy(that) {
+
+
+
+            // var amoun = Number(prompt("Enter amount you wish to buy."))
+            if (amoun <= that.parentNode.previousElementSibling.classList.item(1) && amoun > 0) {
+                that.className = "in-cart " + amoun
+                that.childNodes[2].textContent = "Remove?"
+                that.onmouseover = function () { that.childNodes[2].textContent = "Remove?" }
+                //  that.onmouseout = function () { that.childNodes[2].textContent = amoun + " in-cart" }
+                foods += Number(amoun)
+                checko = document.getElementById("check")
+                checko.childNodes[0].innerHTML = "Checkout <br>" + foods + " item(s) in cart"
+                // that.setAttribute("onClick", "javascript: cancel(this)")
+            }
+
+
+        }
+        function cancel(that) {
+
+
+            var amoun = that.className.split(" ")
+            that.className = "available"
+            that.childNodes[2].textContent = "Add to cart"
+            that.onmouseover = function () { }
+            that.onmouseout = function () { }
+            foods -= Number(amoun[amoun.length - 1])
             checko = document.getElementById("check")
             checko.childNodes[0].innerHTML = "Checkout <br>" + foods + " item(s) in cart"
-            that.setAttribute("onClick", "javascript: cancel(this)")
+            that.setAttribute("onClick", "javascript: buy(this)")
+
+
         }
-    }
-    function cancel(that){
-        var amoun = that.className.split(" ")
-        that.className = "available"
-        that.childNodes[2].textContent = "Add to cart"
-        that.onmouseover = function(){}
-        that.onmouseout = function(){}
-        foods -= Number(amoun[amoun.length-1])
-        checko = document.getElementById("check")
-        checko.childNodes[0].innerHTML = "Checkout <br>" + foods + " item(s) in cart"
-        that.setAttribute( "onClick", "javascript: buy(this)")
-    }
-    function favC(that){
-		that.style.opacity = 1
-        that.className = "fav"
-        that.src = "fav.png"
-        that.setAttribute( "onClick", "javascript: unfavC(this)")
-		that.setAttribute( "onmouseover", "javascript: favH(this)")
-		that.setAttribute( "onmouseout", "javascript: favUH(this)")
-    }
-    function unfavC(that){
-		that.style.opacity = 1
-        that.className = "unfav"
-        that.src = "unfav.png"
-        that.setAttribute( "onClick", "javascript: favC(this)")
-		that.setAttribute( "onmouseover", "javascript: unfavH(this)")
-		that.setAttribute( "onmouseout", "javascript: unfavUH(this)")
-    }
-	function favH(that){
-		that.src = "unfav.png"
-		that.style.opacity = 0.7
-	}
-	function favUH(that){
-		that.src = "fav.png"
-		that.style.opacity = 1
-	}
-	function unfavH(that){
-		that.src = "fav.png"
-		that.style.opacity = 0.4
-	}
-	function unfavUH(that){
-		that.src = "unfav.png"
-		that.style.opacity = 1
-	}
-    function togglesort(){
-        if (s.style.display === "none") {
-            f.style.display = "none"
-            s.style.display = "block"
-        } else {
-        s.style.display = "none"
+        function favC(that) {
+            that.style.opacity = 1
+            that.className = "fav"
+            that.src = "fav.png"
+            that.setAttribute("onClick", "javascript: unfavC(this)")
+            that.setAttribute("onmouseover", "javascript: favH(this)")
+            that.setAttribute("onmouseout", "javascript: favUH(this)")
         }
+        function unfavC(that) {
+            that.style.opacity = 1
+            that.className = "unfav"
+            that.src = "unfav.png"
+            that.setAttribute("onClick", "javascript: favC(this)")
+            that.setAttribute("onmouseover", "javascript: unfavH(this)")
+            that.setAttribute("onmouseout", "javascript: unfavUH(this)")
         }
-    function togglefilt(){
-        if (f.style.display === "none") {
-            s.style.display = "none"
-            f.style.display = "block"
-        } else {
-        f.style.display = "none"
+        function favH(that) {
+            that.src = "unfav.png"
+            that.style.opacity = 0.7
         }
-    }
-</script>
-<script>
-	var selected = []
-    var all = []
-        $("#sortAlphA").click(function() {
+        function favUH(that) {
+            that.src = "fav.png"
+            that.style.opacity = 1
+        }
+        function unfavH(that) {
+            that.src = "fav.png"
+            that.style.opacity = 0.4
+        }
+        function unfavUH(that) {
+            that.src = "unfav.png"
+            that.style.opacity = 1
+        }
+        function togglesort() {
+            if (s.style.display === "none") {
+                f.style.display = "none"
+                s.style.display = "block"
+            } else {
+                s.style.display = "none"
+            }
+        }
+        function togglefilt() {
+            if (f.style.display === "none") {
+                s.style.display = "none"
+                f.style.display = "block"
+            } else {
+                f.style.display = "none"
+            }
+        }
+    </script>
+    <script>
+        var selected = []
+        var all = []
+        $("#sortAlphA").click(function () {
             var x = $(".listing")
             var y = $(".in-cart")
             for (i = 0; i < y.length; i++) {
@@ -143,17 +189,18 @@
             })
             for (i = 0; i < all.length; i++) {
                 var listing = all[i]
-                for (u=0; u<selected.length; u++){
-                    if (listing === selected[u]){
+                for (u = 0; u < selected.length; u++) {
+                    if (listing === selected[u]) {
                         document.getElementById("main").appendChild(selected[u].div)
                         break
-                    }}
+                    }
+                }
                 document.getElementById("main").appendChild(listing.div)
             }
             all.length = 0
             selected.length = 0
         })
-    $("#sortAlphD").click(function() {
+        $("#sortAlphD").click(function () {
             var x = $(".listing")
             var y = $(".in-cart")
             for (i = 0; i < y.length; i++) {
@@ -175,23 +222,24 @@
             all.reverse()
             for (i = 0; i < all.length; i++) {
                 var listing = all[i]
-                for (u=0; u<selected.length; u++){
-                    if (listing === selected[u]){
+                for (u = 0; u < selected.length; u++) {
+                    if (listing === selected[u]) {
                         document.getElementById("main").appendChild(selected[u].div)
                         break
-                    }}
+                    }
+                }
                 document.getElementById("main").appendChild(listing.div)
             }
             all.length = 0
             selected.length = 0
         })
-    $("#sortIDA").click(function() {
+        $("#sortIDA").click(function () {
             var x = $(".listing")
             var y = $(".in-cart")
             for (i = 0; i < y.length; i++) {
                 selected.push({
                     div: y[i].closest(".listing"),
-                    id: y[i].closest(".listing").attr("id")
+                    id: y[i].closest(".listing").getAttribute("id")
                 })
             }
             for (i = 0; i < x.length; i++) {
@@ -206,23 +254,24 @@
             })
             for (i = 0; i < all.length; i++) {
                 var listing = all[i]
-                for (u=0; u<selected.length; u++){
-                    if (listing === selected[u]){
+                for (u = 0; u < selected.length; u++) {
+                    if (listing === selected[u]) {
                         document.getElementById("main").appendChild(selected[u].div)
                         break
-                    }}
+                    }
+                }
                 document.getElementById("main").appendChild(listing.div)
             }
             all.length = 0
             selected.length = 0
         })
-    $("#sortIDD").click(function() {
+        $("#sortIDD").click(function () {
             var x = $(".listing")
             var y = $(".in-cart")
             for (i = 0; i < y.length; i++) {
                 selected.push({
                     div: y[i].closest(".listing"),
-                    id: y[i].closest(".listing").attr("id")
+                    id: y[i].closest(".listing").getAttribute("id")
                 })
             }
             for (i = 0; i < x.length; i++) {
@@ -238,23 +287,24 @@
             all.reverse()
             for (i = 0; i < all.length; i++) {
                 var listing = all[i]
-                for (u=0; u<selected.length; u++){
-                    if (listing === selected[u]){
+                for (u = 0; u < selected.length; u++) {
+                    if (listing === selected[u]) {
                         document.getElementById("main").appendChild(selected[u].div)
                         break
-                    }}
+                    }
+                }
                 document.getElementById("main").appendChild(listing.div)
             }
             all.length = 0
             selected.length = 0
         })
-    $("#sortPriceA").click(function() {
+        $("#sortPriceA").click(function () {
             var x = $(".listing")
             var y = $(".in-cart")
             for (i = 0; i < y.length; i++) {
                 selected.push({
                     div: y[i].closest(".listing"),
-                    price: y[i].closest(".listing-body").attr("id")
+                    price: y[i].closest(".listing-body").getAttribute("id")
                 })
             }
             for (i = 0; i < x.length; i++) {
@@ -269,23 +319,24 @@
             })
             for (i = 0; i < all.length; i++) {
                 var listing = all[i]
-                for (u=0; u<selected.length; u++){
-                    if (listing === selected[u]){
+                for (u = 0; u < selected.length; u++) {
+                    if (listing === selected[u]) {
                         document.getElementById("main").appendChild(selected[u].div)
                         break
-                    }}
+                    }
+                }
                 document.getElementById("main").appendChild(listing.div)
             }
             all.length = 0
             selected.length = 0
         })
-    $("#sortPriceD").click(function() {
+        $("#sortPriceD").click(function () {
             var x = $(".listing")
             var y = $(".in-cart")
             for (i = 0; i < y.length; i++) {
                 selected.push({
                     div: y[i].closest(".listing"),
-                    price: y[i].closest(".listing-body").attr("id")
+                    price: y[i].closest(".listing-body").getAttribute("id")
                 })
             }
             for (i = 0; i < x.length; i++) {
@@ -301,14 +352,15 @@
             all.reverse()
             for (i = 0; i < all.length; i++) {
                 var listing = all[i]
-                for (u=0; u<selected.length; u++){
-                    if (listing === selected[u]){
+                for (u = 0; u < selected.length; u++) {
+                    if (listing === selected[u]) {
                         document.getElementById("main").appendChild(selected[u].div)
                         break
-                    }}
+                    }
+                }
                 document.getElementById("main").appendChild(listing.div)
             }
             all.length = 0
             selected.length = 0
         })
-</script>
+    </script>

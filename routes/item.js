@@ -6,7 +6,7 @@ const Item = require('../models/item');
 const ensureAuthenticated = require('../helpers/auth');
 const fs = require('fs');
 const upload = require('../helpers/imageUpload');
-
+const Cart = require('../models/cart');
 
 router.get('/addItem', ensureAuthenticated, (req, res) => {
 
@@ -85,7 +85,7 @@ router.post('/addItem', ensureAuthenticated, (req, res) => {
 
 
     }).then((item) => {
-        res.redirect('/');
+        res.redirect('/home');
     })
         .catch(err => console.log(err))
 
@@ -225,6 +225,245 @@ router.put('/saveEditedItem/:id', ensureAuthenticated, (req, res) => {
 
 
 
+router.get('/ShowAllCart', ensureAuthenticated, (req, res) => {
+
+    const title = req.user.name + " Cart"
+    Cart.findAndCountAll({
+        where: {
+            currentUser: req.user.id
+
+        }
+
+        , order: [
+            ['itemName', 'ASC']
+        ],
+        raw: true
+    }).then((cart) => {
+
+        //
+        Cart.findAll({
+            where: {
+                currentUser: req.user.id
+
+            }
+
+            , order: [
+                ['itemName', 'ASC']
+            ],
+            raw: true
+        }).then((cartAll) => {
+            res.render('Item/CartHolder', { title: title, cart: cartAll, total: cart.count }) // renders views/index.handlebars)
+
+
+        })
+        //
+
+    })
+
+
+
+
+
+
+
+});
+
+router.get('/addToCart/:id', ensureAuthenticated, (req, res) => {
+   console.log("tyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+
+    var itemID = req.params.id;
+    Item.findOne({
+        where: {
+            id: itemID
+        }
+    }).then((item) => {
+
+        var currentUser = req.user.id;
+        let itemName = item.itemName;
+        let itemDescription = item.itemDescription;
+        let posterURL = item.posterURL;
+        let userId = item.userId;
+        let Seenbyothers = item.Seenbyothers
+        let itemPrice = item.itemPrice;
+        let Halaltype = item.Halaltype;
+        let Vegtype = item.Vegtype;
+        let username = item.name;
+        let LocationD = item.LocationD;
+        let DaysAvailable = item.DaysAvailable;
+        let dateTimeItem = item.dateTimeItem;
+        let Cuisine = item.Cuisine;
+        let Quantity = item.Quantity; // this one need change 
+        let timeAvailable = item.timeAvailable;
+
+        Cart.create({
+    
+            itemID,
+            currentUser,
+            itemName,
+            itemDescription,
+            posterURL,
+            userId,
+            Seenbyothers,
+            itemPrice,
+
+            Halaltype,
+            Vegtype,
+
+            username,
+            LocationD,
+            DaysAvailable,
+            dateTimeItem,
+            Cuisine,
+
+            Quantity,
+            timeAvailable,
+
+
+        }).then((cart) => {
+            Item.update({
+                existed: 'existed'
+            }, {
+                    where: {
+                        id: itemID
+                    }
+                }).then(() => {
+                    // After saving, redirect to router.get(/listVideos...) to retrieve all updated
+                    // videos
+
+                    alertMessage(res, 'success', 'item ID  ' + itemID + ' successfully Added into Cart.', 'fa fa-hand-peace-o', true);
+
+                    res.redirect('/home');
+                }).catch(err => console.log(err));
+
+
+            // For icons to use, go to https://glyphsearch.com/
+                    console.log("hjjhjhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+        }).catch(err => console.log(err));
+    })
+});
+
+router.get('/deleteInCart/:id', ensureAuthenticated, (req, res) => {
+
+    console.log(req.param.id+"testttttttttttttttttttttttttttttttttttttttttt")
+    var itemID = req.params.id;
+    Cart.findOne({
+        where: {
+            id: itemID
+        }
+    }).then((cart) => {
+            console.log(cart.currentUser)
+        if (cart.currentUser == req.user.id) {
+            Item.update({
+                existed: ''
+            }, {
+                    where: {
+                        id: cart.itemID
+                    }
+
+                }).then((cart) => {
+                    Cart.destroy({
+                        where: {
+                            id: itemID,
+                            currentUser:req.user.id
+                        }
+                    }).then((cart) => {
+                        // For icons to use, go to https://glyphsearch.com/
+                        alertMessage(res, 'success', 'item ID ' + itemID + ' successfully deleted.', 'fa fa-hand-peace-o', true);
+
+                        res.redirect('/item/ShowAllCart');
+                    }).catch(err => console.log(err));
+                })
+        } else {
+            // Video does not belong to the current user
+            alertMessage(res, 'danger', 'Unauthorized Access.', 'fas fa-exclamation-circle', true);
+            req.logout();
+            res.redirect('/');
+        }
+    })
+});
+
+router.get('/deleteInCart2/:id', ensureAuthenticated, (req, res) => {
+    
+    console.log(req.param.id+"testttttttttttttttttttttttttttttttttttttttttt")
+    var itemID = req.params.id;
+    Cart.findOne({
+        where: {
+            itemID: itemID,
+            currentUser:req.user.id
+        }
+    }).then((cart) => {
+            console.log(cart.currentUser)
+        if (cart.currentUser == req.user.id) {
+            Item.update({
+                existed: ''
+            }, {
+                    where: {
+                        id: itemID
+                    }
+
+                }).then((cart) => {
+                    Cart.destroy({
+                        where: {
+                            itemID: itemID,
+                            currentUser:req.user.id
+                        }
+                    }).then((cart) => {
+                        // For icons to use, go to https://glyphsearch.com/
+                        alertMessage(res, 'success', 'item ID ' + itemID + ' successfully deleted.', 'fa fa-hand-peace-o', true);
+
+                        res.redirect('/home');
+                    }).catch(err => console.log(err));
+                })
+        } else {
+            // Video does not belong to the current user
+            alertMessage(res, 'danger', 'Unauthorized Access.', 'fas fa-exclamation-circle', true);
+            req.logout();
+            res.redirect('/');
+        }
+    })
+});
+
+router.get('/delete/:id', ensureAuthenticated, (req, res) => {
+    var itemID = req.params.id;
+    Item.findOne({
+        where: {
+            id: itemID
+        }
+    }).then((item) => {
+        if (item.userId == req.user.id) {
+            Item.destroy({
+                where: {
+                    id: itemID
+                }
+            }).then((item) => {
+                // For icons to use, go to https://glyphsearch.com/
+                alertMessage(res, 'success', 'item ID ' + itemID + ' successfully deleted.', 'fa fa-hand-peace-o', true);
+
+                res.redirect('/item/displayUserItem');
+            }).catch(err => console.log(err));
+        } else {
+            // Video does not belong to the current user
+            alertMessage(res, 'danger', 'Unauthorized Access.', 'fas fa-exclamation-circle', true);
+            req.logout();
+            res.redirect('/');
+        }
+    })
+});
+
+router.get('/displayItemDesciption/:id',(req,res)=>{
+    var itemID = req.params.id;
+    Item.findOne({
+        where: {
+            id: itemID
+        }
+    }).then((item) => {
+        checkOptions(item)
+        res.render('Item/displayItemOnly',{
+            item
+        });
+        
+    })
+});
 
 
 

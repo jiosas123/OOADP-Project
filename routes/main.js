@@ -3,23 +3,110 @@ const router = express.Router();
 const alertMessage = require('../helpers/messenger')
 const Item = require('../models/item');
 const sequelize = require('../config/DBConfig');
-var num;
+const Cart = require('../models/cart')
 
 
 router.get('/', (req, res) => {
-	var lists = new Promise(function(resolve){
-		var result =[];
-		sequelize.query("SELECT * FROM foodfood.items", { type: sequelize.QueryTypes.SELECT}).then(results => {
+	var lists = new Promise(function (resolve) {
+		var result = [];
+		sequelize.query("SELECT * FROM foodfood.items", { type: sequelize.QueryTypes.SELECT }).then(results => {
 			result = results
 			resolve(result)
 		})
 	})
-	num=1;
+
 	const title = 'Listings';
-	lists.then(function(value){
-		res.render('index', { title: title, listing: value}) // renders views/index.handlebars)
+	lists.then(function (value) {
+			res.render('index', { title: title, listing: value, total: '0'}) // renders views/index.handlebars
 	})
 });
+
+router.get('/home', (req, res) => {
+	const title = 'Listings';
+	Cart.findAndCountAll({
+		where: {
+			currentUser: req.user.id
+
+		}
+	}).then((cart) => {
+
+		Cart.findAll({
+			where: {
+				currentUser: req.user.id
+			}
+		}).then((cartAll) => {
+			var i;
+	
+			for (i = 0; i < cartAll.length; i++) {
+				console.log(cartAll[i].id + "222222");
+				var itemID = cartAll[i].itemID;
+				Item.update({
+					existed: 'existed'
+				}, {
+						where: {
+							id: itemID,
+
+
+						}
+					})
+			
+			
+			}
+		 }).then((hi)=>{
+
+			 
+						
+						
+	function myFunc(arg) {	
+		
+		
+		var lists = new Promise(function(resolve){
+							var result=[];
+							sequelize.query("SELECT * FROM foodfood.items",{type:sequelize.QueryTypes.SELECT}).then(results=>{
+								result=results
+								resolve(result)
+
+							})
+
+						})
+						lists.then(function (value){
+							res.render('index',{title:title,listing:value,total:cart.count})
+						})
+		  }
+		  
+		  setTimeout(myFunc, 500, 'funky');
+		 })
+				
+			
+	
+	
+
+						
+
+
+		// 	console.log("im 4")
+		// 		lists.then(function (value) {
+
+
+		// 			console.log("huh3333333333333333333333333333333333333333huhuhuhuhuhuhuh")
+		// 			// renders views/index.handlebars)
+		// 			res.render('index', { title: title, listing: value, total: cart.count })
+		// 		})
+		// 	/*Item.findAll({
+		// 	}).then((testts) => {
+		// 		res.render('index', { title: title, listing: testts, total: cart.count })
+		// 	lists.then(function (value) {
+		//  // renders views/index.handlebars)
+
+		// 	})
+		// })*/
+
+
+	
+
+	})
+});
+
 
 router.get('/prev', (req, res) => {
 	
@@ -46,10 +133,49 @@ router.get('/prev', (req, res) => {
 
 // Logout User
 router.get('/logout', (req, res) => {
-	req.logout();
-	res.redirect('/');
-});
 
+
+	Cart.findAll({
+
+	}).then((cartAll) => {
+
+		var i;
+		for (i = 0; i < cartAll.length; i++) {
+			console.log(cartAll[i].itemID + "testerererer");
+
+			var itemID = cartAll[i].itemID;
+			Item.update({
+				existed: ''
+			}, {
+					where: {
+						id: itemID
+					}
+				}).then(() => {
+					// After saving, redirect to router.get(/listVideos...) to retrieve all updated
+					// videos
+				
+
+				}).catch(err => console.log(err));
+
+
+		}
+
+	}).then((hi) => {
+
+		
+
+		function myFunc(arg) {	
+		req.logout();
+		res.redirect('/');
+		
+		}
+				  
+		setTimeout(myFunc, 500, 'funky');
+	})
+
+
+
+});
 router.get('/about', (req, res) => {
 
 	let success_msg = 'Success message';
