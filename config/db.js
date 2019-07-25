@@ -2,5 +2,5 @@ module.exports = {
     host: 'localhost',
     database: 'foodfood',
     username: 'itp211',
-    password: 'Itp21119'
+    password: 'itp211'
 }

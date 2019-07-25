@@ -556,7 +556,7 @@ router.get('/displayUserItem', ensureAuthenticated, (req, res) => {
 
 const Sequelize = require('sequelize');
 
-router.get("/search/ajax/:query", ensureAuthenticated, (req,res) => {
+/*router.get("/search/ajax/:query", ensureAuthenticated, (req,res) => {
     let query = req.params.query;
     Item.findAll ({
         where:  {
@@ -572,7 +572,43 @@ router.get("/search/ajax/:query", ensureAuthenticated, (req,res) => {
             items: items
         })
         }).catch (err => console.log(err));
-    })
+    })*/
+    router.get("/search/ajax/:filter2", ensureAuthenticated, (req,res) => {
+        let filter2 = req.params.filter2;
+        Item.findAll ({
+            where:  {
+                Cuisine: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("Cuisine")),  filter2 )
+            },
+            order: [
+                ['itemName','ASC']
+            ],
+            raw:true 
+        }).then ((items) => {
+            res.json({
+                items: items
+            })
+            }).catch (err => console.log(err));
+        })
+
+    router.get("/search/ajax/:query/:filter", ensureAuthenticated, (req,res) => {
+        let query = req.params.query;
+        let filter = req.params.filter;
+        Item.findAll ({
+            where:  {
+                /*userId: req.user.id,*/
+                itemName: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("itemName")), 'LIKE', '%'+ query + '%'),
+                Cuisine: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("Cuisine")),  filter )        
+                    },
+            order: [
+                ['itemName','ASC'],
+            ],
+            raw:true 
+        }).then ((items) => {
+            res.json({
+                items: items
+            })
+            }).catch (err => console.log(err));
+        })
 
 router.get('/search', ensureAuthenticated, (req,res) =>
 {
