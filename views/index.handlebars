@@ -10,8 +10,8 @@
         <a href="../item/ShowAllCart" id="check"><button>Checkout <br> {{total}} item(s) in cart</button></a>
     </div>
     <div id="sorts">
-        <button  id="sortAlphA" class="desce sorts">Alphabetically<br>(Descending)</button>
-        <button id="sortAlphD" class="asc sorts">Alphabetically<br>(Ascending)</button>
+        <button  id="sortAlphA" class="asc sorts">Alphabetically<br>(Ascending)</button>
+        <button id="sortAlphD" class="desce sorts">Alphabetically<br>(Descending)</button>
         <button id="sortIDA" class="asc sorts">ID<br>(Ascending)</button>
         <button id="sortIDD" class="desce sorts">ID<br>(Descending)</button>
         <button id="sortPriceA" class="asc sorts">Price<br>(Ascending)</button>
@@ -45,8 +45,8 @@
 
                 <a id='test2' class="noUnderLine" href="../item/deleteInCart2/{{id}}" style="text-decoration:none;">
                     <div class="in-cart"  style="text-decoration:none;">
-                        <span class='test'>${{this.itemPrice}} each </span>
-                        <br>
+                        <span class='test'>${{this.itemPrice}} each <br> </span>
+                        
                         <span id='test4'class="noUnderLine" > In_cart</span style="text-decoration:none;">
                     
                     </div>
@@ -173,7 +173,7 @@
         function getEvery(){
             var mrthn9 = false
             var e = document.getElementsByClassName("listing")
-            every = e
+            every = [].slice.call(e)
             for(i=0; i<e.length; i++){
                 if(i<9){
                     continue
@@ -184,28 +184,102 @@
                 }
             }
             if(mrthn9){
+                var cont = document.createElement("div")
                 var bac = document.createElement("button")
                 var forw = document.createElement("button")
                 var pgno = document.createElement("p")
                 var bacr = document.createTextNode("<")
                 var forwr = document.createTextNode(">")
                 var pgnum = document.createTextNode("1")
+                cont.id = "pgsys"
                 bac.id = "bac"
                 forw.id = "forw"
                 pgno.id = "pgno"
+                bac.appendChild(bacr)
+                forw.appendChild(forwr)
+                pgno.appendChild(pgnum)
+                cont.appendChild(bac)
+                cont.appendChild(pgno)
+                cont.appendChild(forw)
+                bac.setAttribute("onclick", "javascript: pgback()")
+                forw.setAttribute("onclick", "javascript: pgfor()")
+                var main = document.getElementById("main")
+                main.appendChild(cont)
+                bac.style.display = "none"
             }
         }
         getEvery();
+        function pgback(){
+            document.getElementById("forw").style.display = "inline-block"
+            var num = (parseInt(document.getElementById("pgno").innerText) - 1)
+            for(i=0;i<every.length;i++){
+                if(num*9-9 <= i && i < num*9){
+                    every[i].style.display = "inline-block"
+                }
+                else{
+                    every[i].style.display = "none"
+                }
+            }
+            if(num == 1){
+                document.getElementById("bac").style.display = "none"
+            }
+            document.getElementById("pgno").innerText = num.toString()
+            window.scrollTo(0, 200)
+        }
+        function pgfor(){
+            document.getElementById("bac").style.display = "inline-block"
+            var num = (parseInt(document.getElementById("pgno").innerText) + 1)
+            for(i=0;i<every.length;i++){
+                if(num*9-9 <= i && i < num*9){
+                    every[i].style.display = "inline-block"
+                }
+                else{
+                    every[i].style.display = "none"
+                }
+            }
+            if(num*9 >= every.length){
+                document.getElementById("forw").style.display = "none"
+            }
+            document.getElementById("pgno").innerText = num.toString()
+            window.scrollTo(0, 200)
+        }
         function filtout(that){
+            if((every.length - o.length) < 10 && document.getElementById("pgsys") != null){
+                document.getElementById("pgsys").style.display = "none"
+            }
             for(i=0; i<o.length; i++){
-                o[i].parentNode.style.display = "none"
+                o[i].closest(".listing").style.display = "none"
+            }
+            for(i=0; i<every.length; i++){
+                if(every[i].style.display == "none"){
+                    if(every[i].children[2].classList.contains("out")){}
+                    else{
+                        every[i].style.display = "inline-block"
+                    }
+                }
+            }
+            document.getElementById("pgno").innerText = "1"
+            bac.style.display = "none"
+            if((every.length - o.length) < 10 && document.getElementById("pgsys") != null){
+                forw.style.display = "inline-block"
             }
             that.textContent = "Toggle out-of-stock listings (off)"
             that.setAttribute( "onclick", "javascript: filtin(this)")
         }
         function filtin(that){
-            for(i=0; i<o.length; i++){
-                o[i].parentNode.style.display = "inline-block"
+            if(every.length > 9 && document.getElementById("pgsys") != null) {
+                document.getElementById("pgsys").style.display = "block"
+            }
+            document.getElementById("pgno").innerText = "1"
+            bac.style.display = "none"
+            forw.style.display = "inline-block"
+            for(i=0; i<every.length; i++){
+                if(i<9){
+                    every[i].style.display = "inline-block"
+                }
+                else{
+                    every[i].style.display = "none"
+                }
             }
             that.textContent = "Toggle out-of-stock listings (on)"
             that.setAttribute( "onclick", "javascript: filtout(this)")
@@ -229,6 +303,9 @@
             all.sort(function (a, b) {
                 return a.name.localeCompare(b.name)
             })
+            every.sort(function (a, b){
+                return a.children[3].children[0].innerText.localeCompare(b.children[3].children[0].innerText)
+            })
             for (i = 0; i < all.length; i++) {
                 var listing = all[i]
                 for (u = 0; u < selected.length; u++) {
@@ -238,6 +315,22 @@
                     }
                 }
                 document.getElementById("main").appendChild(listing.div)
+            }
+            if (document.getElementById("pgsys") != null){
+                document.getElementById("pgno").innerText = "1"
+                bac.style.display = "none"
+                forw.style.display = "inline-block"
+                for(i=0; i<all.length; i++){
+                    if(i<9){
+                        all[i].div.style.display = "inline-block"
+                    }
+                    else{
+                        all[i].div.style.display = "none"
+                    }
+                }
+                var p = $("#pgsys")
+                $("#pgsys").detach()
+                document.getElementById("main").appendChild(p[0])
             }
             all.length = 0
             selected.length = 0
@@ -261,7 +354,11 @@
             all.sort(function (a, b) {
                 return a.name.localeCompare(b.name)
             })
+            every.sort(function (a, b) {
+                return a.children[3].children[0].innerText.localeCompare(b.children[3].children[0].innerText)
+            })
             all.reverse()
+            every.reverse()
             for (i = 0; i < all.length; i++) {
                 var listing = all[i]
                 for (u = 0; u < selected.length; u++) {
@@ -271,6 +368,22 @@
                     }
                 }
                 document.getElementById("main").appendChild(listing.div)
+            }
+            if (document.getElementById("pgsys") != null){
+                document.getElementById("pgno").innerText = "1"
+                bac.style.display = "none"
+                forw.style.display = "inline-block"
+                for(i=0; i<all.length; i++){
+                    if(i<9){
+                        all[i].div.style.display = "inline-block"
+                    }
+                    else{
+                        all[i].div.style.display = "none"
+                    }
+                }
+                var p = $("#pgsys")
+                $("#pgsys").detach()
+                document.getElementById("main").appendChild(p[0])
             }
             all.length = 0
             selected.length = 0
@@ -294,6 +407,9 @@
             all.sort(function (a, b) {
                 return a.id.localeCompare(b.id, 'en-US-u-kn-true')
             })
+            every.sort(function (a, b){
+                return a.getAttribute("id").localeCompare(b.getAttribute("id"), 'en-US-u-kn-true')
+            })
             for (i = 0; i < all.length; i++) {
                 var listing = all[i]
                 for (u = 0; u < selected.length; u++) {
@@ -303,6 +419,22 @@
                     }
                 }
                 document.getElementById("main").appendChild(listing.div)
+            }
+            if (document.getElementById("pgsys") != null){
+                document.getElementById("pgno").innerText = "1"
+                bac.style.display = "none"
+                forw.style.display = "inline-block"
+                for(i=0; i<all.length; i++){
+                    if(i<9){
+                        all[i].div.style.display = "inline-block"
+                    }
+                    else{
+                        all[i].div.style.display = "none"
+                    }
+                }
+                var p = $("#pgsys")
+                $("#pgsys").detach()
+                document.getElementById("main").appendChild(p[0])
             }
             all.length = 0
             selected.length = 0
@@ -326,7 +458,11 @@
             all.sort(function (a, b) {
                 return a.id.localeCompare(b.id, 'en-US-u-kn-true')
             })
+            every.sort(function (a, b){
+                return a.getAttribute("id").localeCompare(b.getAttribute("id"), 'en-US-u-kn-true')
+            })
             all.reverse()
+            every.reverse()
             for (i = 0; i < all.length; i++) {
                 var listing = all[i]
                 for (u = 0; u < selected.length; u++) {
@@ -336,6 +472,22 @@
                     }
                 }
                 document.getElementById("main").appendChild(listing.div)
+            }
+            if (document.getElementById("pgsys") != null){
+                document.getElementById("pgno").innerText = "1"
+                bac.style.display = "none"
+                forw.style.display = "inline-block"
+                for(i=0; i<all.length; i++){
+                    if(i<9){
+                        all[i].div.style.display = "inline-block"
+                    }
+                    else{
+                        all[i].div.style.display = "none"
+                    }
+                }
+                var p = $("#pgsys")
+                $("#pgsys").detach()
+                document.getElementById("main").appendChild(p[0])
             }
             all.length = 0
             selected.length = 0
@@ -359,6 +511,9 @@
             all.sort(function (a, b) {
                 return a.price.localeCompare(b.price, 'en-US-u-kn-true')
             })
+            every.sort(function (a, b){
+                return a.children[3].getAttribute("id").localeCompare(b.children[3].getAttribute("id"), 'en-US-u-kn-true')
+            })
             for (i = 0; i < all.length; i++) {
                 var listing = all[i]
                 for (u = 0; u < selected.length; u++) {
@@ -368,6 +523,22 @@
                     }
                 }
                 document.getElementById("main").appendChild(listing.div)
+            }
+            if (document.getElementById("pgsys") != null){
+                document.getElementById("pgno").innerText = "1"
+                bac.style.display = "none"
+                forw.style.display = "inline-block"
+                for(i=0; i<all.length; i++){
+                    if(i<9){
+                        all[i].div.style.display = "inline-block"
+                    }
+                    else{
+                        all[i].div.style.display = "none"
+                    }
+                }
+                var p = $("#pgsys")
+                $("#pgsys").detach()
+                document.getElementById("main").appendChild(p[0])
             }
             all.length = 0
             selected.length = 0
@@ -391,7 +562,11 @@
             all.sort(function (a, b) {
                 return a.price.localeCompare(b.price, 'en-US-u-kn-true')
             })
+            every.sort(function (a, b){
+                return a.children[3].getAttribute("id").localeCompare(b.children[3].getAttribute("id"), 'en-US-u-kn-true')
+            })
             all.reverse()
+            every.reverse()
             for (i = 0; i < all.length; i++) {
                 var listing = all[i]
                 for (u = 0; u < selected.length; u++) {
@@ -401,6 +576,22 @@
                     }
                 }
                 document.getElementById("main").appendChild(listing.div)
+            }
+            if (document.getElementById("pgsys") != null){
+                document.getElementById("pgno").innerText = "1"
+                bac.style.display = "none"
+                forw.style.display = "inline-block"
+                for(i=0; i<all.length; i++){
+                    if(i<9){
+                        all[i].div.style.display = "inline-block"
+                    }
+                    else{
+                        all[i].div.style.display = "none"
+                    }
+                }
+                var p = $("#pgsys")
+                $("#pgsys").detach()
+                document.getElementById("main").appendChild(p[0])
             }
             all.length = 0
             selected.length = 0

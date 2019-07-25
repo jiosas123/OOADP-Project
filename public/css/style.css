@@ -149,6 +149,16 @@ body{
 #inf{
   margin-bottom: 40px;
 }
+#pgsys{
+  margin-top: 40px;
+}
+#pgsys #bac, #pgsys #pgno, #pgsys #forw{
+  display: inline-block;
+}
+#pgsys #pgno{
+  margin-left: 10px;
+  margin-right: 10px;
+}
 #testerNavBar{
   background-color: #28749E;
 }
