@@ -165,6 +165,9 @@ body{
 #Ace_WholeBody{
 border: black solid 2px;
 background-color: white;
+width: 80%;
+margin-left: 10%;
+
 }
 #floatingRight{
   width:200px;

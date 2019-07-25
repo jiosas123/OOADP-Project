@@ -18,11 +18,18 @@
         <button id="sortPriceD" class="desce sorts">Price<br>(Descending)</button>
     </div>
     <div id="filts">
+        {{!-- <button class='filter2' value='Chinese' onclick='filtCuisineChinese(this)'>Chinese</button>
+        <button class='filter2' value='Malay'>Malay</button>
+        <button class='filter2' value='Indian'>Indian</button>
+        <button class='filter2' value='Western'>Western</button>
+        <button class='filter2' value='Korean'>Korean</button>
+        <button class='filter2' value='Japanese' onclick=''>Japanese</button> --}}
+        
         <button id="filt0s" class="filts" onclick="filtout(this)"> Toggle out-of-stock listings (on)</button>
     </div>
         {{#each listing}}
      
-        <div class="listing" id="{{this.id}}">
+        <div class="listing {{this.Cuisine}}" id="{{this.id}}">
             <a href='../item/displayItemDesciption/{{this.id}}'>
             <img class="listing-img" src="{{{this.posterURL}}}" />
             </a>
@@ -82,6 +89,8 @@
         var s = document.getElementById("sorts")
         var f = document.getElementById("filts")
         var o = document.getElementsByClassName("out")
+        var ja = document.getElementsByClassName("filter2")
+        
         s.style.display = "none"
         f.style.display = "none"
         function buy(that) {
@@ -243,6 +252,21 @@
             document.getElementById("pgno").innerText = num.toString()
             window.scrollTo(0, 200)
         }
+        
+         function filtCuisineIn(that){
+            for(i=0; i<o.length; i++){
+                if (ja[i] == Chinese)
+                {
+                    ja[i].parentNode.style.display = "inline-block"
+                }
+                else
+                {
+                    ja[i].parentNode.style.display = "none"
+                }
+            }
+            that.setAttribute( "onclick", "javascript: filtCuisineIn(this)")
+        }
+
         function filtout(that){
             if((every.length - o.length) < 10 && document.getElementById("pgsys") != null){
                 document.getElementById("pgsys").style.display = "none"
@@ -596,4 +620,5 @@
             all.length = 0
             selected.length = 0
         })
+
     </script>

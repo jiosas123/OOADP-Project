@@ -1,21 +1,66 @@
-<h1>
+<div class='container'>
+	<div class="card card-body">
+		{{#if cart}}
+		{{#each cart}}
+		<div class='row'>
+			<div class='col-lg-10'>
+			
+					<div class='row'>
+						<div class='col-lg-4'>
+							<a href="{{posterURL}}" data-title="{{title}}" data-toggle="lightbox">
+								<img src="{{posterURL}}" alt="Poster unavailable" class="img-thumbnail img-fluid">
+							</a>
+						</div>
+						<div class="col-lg-4">
+							<div class='row'>
+								<div class='col-lg-6' id="ItemName">
+									Item Name: {{itemName}}
 
-{{title}}
-{{total}}
+								</div>
+								<div class='col-lg-6'>
+									Cost : {{itemPrice}}
+								</div>
+							</div>{{!-- end of row inner --}}
+						</div>
+						<div class='col-lg-4'>
+							Quantity: {{Quantity}}
+						</div>
 
-{{#if cart}}
-{{#each cart}}
+					</div>{{!--Row ends here inner --}}
 
-{{ itemName}}
 
-{{posterURL}}
-<a href="../item/deleteInCart/{{id}}" class="card-link">
-							<i class="fas fa-pencil-alt">delete ME</i>
 
-						</a>
 
-{{/each}}
-{{else}}
-Empty Cart
-{{/if}}
-</h1>
+
+		
+			</div>
+
+
+
+			<div class='col-lg-2'>
+				<br>
+
+				<br>
+				<br>
+				<form action="/item/boughtItem/{{id}}?_method=PUT " method="POST" >
+					<label>Meals to buy</label>
+				<input type='number' name='amountToBuy' id='amountToBuy' value='1'min='1' max="{{Quantity}}">
+				<br>
+				<button  style="width:100%;" type='submit'> &nbsp; Order &nbsp;	 </button>				
+				</form>
+					<br>
+				<a href="../item/deleteInCart/{{id}}" class="card-link">
+					<i class="fas fa-pencil-alt">Remove from Cart</i>
+
+				</a>
+
+			</div>
+		</div>
+		<br>
+		<br>{{!-- Row ends here outer --}}
+		{{/each}}
+		{{else}}
+		Empty Cart
+		{{/if}}
+	</div>
+</div>
