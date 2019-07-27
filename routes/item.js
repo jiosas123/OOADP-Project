@@ -8,6 +8,7 @@ const fs = require('fs');
 const upload = require('../helpers/imageUpload');
 const Cart = require('../models/cart');
 
+const History = require('../models/history');
 router.get('/addItem', ensureAuthenticated, (req, res) => {
 
     const testung = req.user.id;
@@ -35,9 +36,9 @@ router.post('/addItem', ensureAuthenticated, (req, res) => {
     // Multi-value components return array of strings or undefined
 
     var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var date =today.getDate + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    var dateTime = date+' '+time;
+    var dateTime = date + ' ' + time;
 
     let itemName = req.body.itemName;
     let itemDescription = req.body.itemDescription;
@@ -48,11 +49,11 @@ router.post('/addItem', ensureAuthenticated, (req, res) => {
     let Halaltype = req.body.Halaltype;
     let Vegtype = req.body.Vegtype === undefined ? '' : req.body.Vegtype.toString();
     let username = req.user.name;
-    let LocationD= req.body.LocationD.toString();
-    let DaysAvailable= req.body.DaysAvailable.toString();
-    let dateTimeItem= date;
+    let LocationD = req.body.LocationD.toString();
+    let DaysAvailable = req.body.DaysAvailable.toString();
+    let dateTimeItem = date;
     let Cuisine = req.body.Cuisine
-    let Quantity= req.body.Quantity;
+    let Quantity = req.body.Quantity;
     let timeAvailable = req.body.timeAvailable.toString();
     Item.create({
         itemName,
@@ -98,7 +99,7 @@ router.get('/buying/:id', ensureAuthenticated, (req, res) => {
 
 
 
-    
+
 });
 function checkOptions(item) {
     // Language
@@ -106,38 +107,38 @@ function checkOptions(item) {
     // video.englishLang = (video.language.search('English') >= 0) ? 'checked' : '';
     // video.malayLang = (video.language.search('Malay') >= 0) ? 'checked' : '';
     // video.tamilLang = (video.language.search('Tamil') >= 0) ? 'checked' : '';
-//canBeSeenByOthers
-    item.can=(item.Seenbyothers.search('Seenbyothers') >= 0) ? 'checked' : '';
-// veg??
-    item.vegi=(item.Vegtype.search('Veg') >= 0) ? 'checked' : '';
+    //canBeSeenByOthers
+    item.can = (item.Seenbyothers.search('Seenbyothers') >= 0) ? 'checked' : '';
+    // veg??
+    item.vegi = (item.Vegtype.search('Veg') >= 0) ? 'checked' : '';
 
-//days
-    item.dayMonday=(item.DaysAvailable.search('Monday') >= 0) ? 'checked' : '';
-    item.dayTuesday=(item.DaysAvailable.search('Tuesday') >= 0) ? 'checked' : '';
-    item.dayWednesday=(item.DaysAvailable.search('Wednesday') >= 0) ? 'checked' : '';
-    item.dayThursday=(item.DaysAvailable.search('Thursday') >= 0) ? 'checked' : '';
-    item.dayFriday=(item.DaysAvailable.search('Friday') >= 0) ? 'checked' : '';
-    item.daySaturday=(item.DaysAvailable.search('Saturday') >= 0) ? 'checked' : '';
-    item.daySunday=(item.DaysAvailable.search('Sunday') >= 0) ? 'checked' : '';
-//location LocationD
-    item.NorthLO =(item.LocationD.search('North') >= 0) ? 'checked' : '';
-    item.CentralLO =(item.LocationD.search('Central') >= 0) ? 'checked' : '';
-    item.EastLO =(item.LocationD.search('East') >= 0) ? 'checked' : '';
-    item.WestLO =(item.LocationD.search('West') >= 0) ? 'checked' : '';
+    //days
+    item.dayMonday = (item.DaysAvailable.search('Monday') >= 0) ? 'checked' : '';
+    item.dayTuesday = (item.DaysAvailable.search('Tuesday') >= 0) ? 'checked' : '';
+    item.dayWednesday = (item.DaysAvailable.search('Wednesday') >= 0) ? 'checked' : '';
+    item.dayThursday = (item.DaysAvailable.search('Thursday') >= 0) ? 'checked' : '';
+    item.dayFriday = (item.DaysAvailable.search('Friday') >= 0) ? 'checked' : '';
+    item.daySaturday = (item.DaysAvailable.search('Saturday') >= 0) ? 'checked' : '';
+    item.daySunday = (item.DaysAvailable.search('Sunday') >= 0) ? 'checked' : '';
+    //location LocationD
+    item.NorthLO = (item.LocationD.search('North') >= 0) ? 'checked' : '';
+    item.CentralLO = (item.LocationD.search('Central') >= 0) ? 'checked' : '';
+    item.EastLO = (item.LocationD.search('East') >= 0) ? 'checked' : '';
+    item.WestLO = (item.LocationD.search('West') >= 0) ? 'checked' : '';
 
-    item.morning=(item.timeAvailable.search('morning') >= 0) ? 'checked' : '';
-    
-    item.afternoon=(item.timeAvailable.search('afternoon') >= 0) ? 'checked' : '';
-    
-    item.evening=(item.timeAvailable.search('evening') >= 0) ? 'checked' : '';
-//timeAvalible
+    item.morning = (item.timeAvailable.search('morning') >= 0) ? 'checked' : '';
+
+    item.afternoon = (item.timeAvailable.search('afternoon') >= 0) ? 'checked' : '';
+
+    item.evening = (item.timeAvailable.search('evening') >= 0) ? 'checked' : '';
+    //timeAvalible
     // Subtitles
     // video.chineseSub = (video.subtitles.search('Chinese') >= 0) ? 'checked' : '';
     // video.englishSub = (video.subtitles.search('English') >= 0) ? 'checked' : '';
     // video.malaySub = (video.subtitles.search('Malay') >= 0) ? 'checked' : '';
     // video.tamilSub = (video.subtitles.search('Tamil') >= 0) ? 'checked' : '';
 
-    
+
 }
 
 router.get('/edit/:id', ensureAuthenticated, (req, res) => {
@@ -169,9 +170,9 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
 
 router.put('/saveEditedItem/:id', ensureAuthenticated, (req, res) => {
     var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var date =today.getDate()+ '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    var dateTime = date+' '+time;
+    var dateTime = date + ' ' + time;
 
 
 
@@ -181,25 +182,25 @@ router.put('/saveEditedItem/:id', ensureAuthenticated, (req, res) => {
     let posterURL = req.body.posterURL;
     let userId = req.user.id;
     let Seenbyothers = req.body.Seenbyothers === undefined ? '' : req.body.Seenbyothers.toString();
-  
+
     let itemPrice = req.body.itemPrice;
     let Halaltype = req.body.Halaltype;
     let Vegtype = req.body.Vegtype === undefined ? '' : req.body.Vegtype.toString();
     let username = req.user.name;
-    let LocationD= req.body.LocationD.toString();
-    let DaysAvailable= req.body.DaysAvailable.toString();
-    let dateTimeItem= date;
+    let LocationD = req.body.LocationD.toString();
+    let DaysAvailable = req.body.DaysAvailable.toString();
+    let dateTimeItem = date;
     let Cuisine = req.body.Cuisine;
     let Quantity = req.body.Quantity;
     let timeAvailable = req.body.timeAvailable.toString();
-    
+
     Item.update({
         itemName,
         posterURL,
         itemDescription,
         userId,
         Seenbyothers,
-    
+
         itemPrice,
         Halaltype,
         Vegtype,
@@ -269,7 +270,7 @@ router.get('/ShowAllCart', ensureAuthenticated, (req, res) => {
 });
 
 router.get('/addToCart/:id', ensureAuthenticated, (req, res) => {
-   console.log("tyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+    console.log("tyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
 
     var itemID = req.params.id;
     Item.findOne({
@@ -296,7 +297,7 @@ router.get('/addToCart/:id', ensureAuthenticated, (req, res) => {
         let timeAvailable = item.timeAvailable;
 
         Cart.create({
-    
+
             itemID,
             currentUser,
             itemName,
@@ -337,21 +338,21 @@ router.get('/addToCart/:id', ensureAuthenticated, (req, res) => {
 
 
             // For icons to use, go to https://glyphsearch.com/
-                    console.log("hjjhjhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+            console.log("hjjhjhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
         }).catch(err => console.log(err));
     })
 });
 
 router.get('/deleteInCart/:id', ensureAuthenticated, (req, res) => {
 
-    console.log(req.param.id+"testttttttttttttttttttttttttttttttttttttttttt")
+    console.log(req.param.id + "testttttttttttttttttttttttttttttttttttttttttt")
     var itemID = req.params.id;
     Cart.findOne({
         where: {
             id: itemID
         }
     }).then((cart) => {
-            console.log(cart.currentUser)
+        console.log(cart.currentUser)
         if (cart.currentUser == req.user.id) {
             Item.update({
                 existed: ''
@@ -364,7 +365,7 @@ router.get('/deleteInCart/:id', ensureAuthenticated, (req, res) => {
                     Cart.destroy({
                         where: {
                             id: itemID,
-                            currentUser:req.user.id
+                            currentUser: req.user.id
                         }
                     }).then((cart) => {
                         // For icons to use, go to https://glyphsearch.com/
@@ -383,16 +384,16 @@ router.get('/deleteInCart/:id', ensureAuthenticated, (req, res) => {
 });
 
 router.get('/deleteInCart2/:id', ensureAuthenticated, (req, res) => {
-    
-    console.log(req.param.id+"testttttttttttttttttttttttttttttttttttttttttt")
+
+    console.log(req.param.id + "testttttttttttttttttttttttttttttttttttttttttt")
     var itemID = req.params.id;
     Cart.findOne({
         where: {
             itemID: itemID,
-            currentUser:req.user.id
+            currentUser: req.user.id
         }
     }).then((cart) => {
-            console.log(cart.currentUser)
+        console.log(cart.currentUser)
         if (cart.currentUser == req.user.id) {
             Item.update({
                 existed: ''
@@ -405,7 +406,7 @@ router.get('/deleteInCart2/:id', ensureAuthenticated, (req, res) => {
                     Cart.destroy({
                         where: {
                             itemID: itemID,
-                            currentUser:req.user.id
+                            currentUser: req.user.id
                         }
                     }).then((cart) => {
                         // For icons to use, go to https://glyphsearch.com/
@@ -450,7 +451,7 @@ router.get('/delete/:id', ensureAuthenticated, (req, res) => {
     })
 });
 
-router.get('/displayItemDesciption/:id',(req,res)=>{
+router.get('/displayItemDesciption/:id', (req, res) => {
     var itemID = req.params.id;
     Item.findOne({
         where: {
@@ -458,17 +459,17 @@ router.get('/displayItemDesciption/:id',(req,res)=>{
         }
     }).then((item) => {
         checkOptions(item)
-        res.render('Item/displayItemOnly',{
+        res.render('Item/displayItemOnly', {
             item
         });
-        
+
     })
 });
 
 
 router.put('/boughtItem/:id', (req, res) => {
-    var itemID = req.params.id;       
-     var amountbought = req.body.amountToBuy;
+    var itemID = req.params.id;
+    var amountbought = req.body.amountToBuy;
     Cart.findOne({
 
         where: {
@@ -496,15 +497,69 @@ router.put('/boughtItem/:id', (req, res) => {
                 }
             })
 
-              function myFunc(arg) {	
-            alertMessage(res, 'success', 'Ordered ' + amountbought +" set"+ ' of ' + cart.itemName)
+
+
+        Cart.findOne({
+            where: {
+                id:itemID
+            }
+        }).then((found) => {
+            console.log("ttttttttttttttttttttttttttttttt")
+            var today = new Date();
+            var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            var dateTime = date + ' ' + time;
+            let itemName = found.itemName;
+            let QuantityBought = amountbought;
+            let datePurchased=date;
+            let posterURL = found.posterURL;
+            let itemPrice=found.itemPrice;
+            let currentUser = req.user.name;
+                History.create({
+                    itemName,
+                    QuantityBought,
+                    datePurchased,
+                    itemPrice,
+                    posterURL,
+                    currentUser
+
+
+                })
+        })
+
+
+
+
+
+        function myFunc(arg) {
+            console.log("dsddsdsdsddsdsdsdsdssdsdds")
+            alertMessage(res, 'success', 'Ordered ' + amountbought + " set" + ' of ' + cart.itemName)
             res.redirect('/item/ShowAllCart')
         }
-              
-              setTimeout(myFunc, 500, 'funky');
+
+        setTimeout(myFunc, 500, 'funky');
     })
 })
 
+
+router.get('/history',ensureAuthenticated,(req,res)=>{
+    History.findAll({
+        where:{
+            currentUser:req.user.name
+        }
+    }).then((show)=>{
+            console.log("sucessfullyyyy")
+            res.render('Item/ShowHistory',{
+                show:show
+            })
+
+
+    })
+
+
+
+    
+});
 
 
 
@@ -539,7 +594,7 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
 router.get('/displayUserItem', ensureAuthenticated, (req, res) => {
 
     Item.findAll({
-		where: {
+        where: {
             userId: req.user.id
         },
         order: [
@@ -573,46 +628,45 @@ const Sequelize = require('sequelize');
         })
         }).catch (err => console.log(err));
     })*/
-    router.get("/search/ajax/:filter2", ensureAuthenticated, (req,res) => {
-        let filter2 = req.params.filter2;
-        Item.findAll ({
-            where:  {
-                Cuisine: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("Cuisine")),  filter2 )
-            },
-            order: [
-                ['itemName','ASC']
-            ],
-            raw:true 
-        }).then ((items) => {
-            res.json({
-                items: items
-            })
-            }).catch (err => console.log(err));
+router.get("/search/ajax/:filter2", ensureAuthenticated, (req, res) => {
+    let filter2 = req.params.filter2;
+    Item.findAll({
+        where: {
+            Cuisine: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("Cuisine")), filter2)
+        },
+        order: [
+            ['itemName', 'ASC']
+        ],
+        raw: true
+    }).then((items) => {
+        res.json({
+            items: items
         })
+    }).catch(err => console.log(err));
+})
 
-    router.get("/search/ajax/:query/:filter", ensureAuthenticated, (req,res) => {
-        let query = req.params.query;
-        let filter = req.params.filter;
-        Item.findAll ({
-            where:  {
-                /*userId: req.user.id,*/
-                itemName: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("itemName")), 'LIKE', '%'+ query + '%'),
-                Cuisine: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("Cuisine")),  filter )        
-                    },
-            order: [
-                ['itemName','ASC'],
-            ],
-            raw:true 
-        }).then ((items) => {
-            res.json({
-                items: items
-            })
-            }).catch (err => console.log(err));
+router.get("/search/ajax/:query/:filter", ensureAuthenticated, (req, res) => {
+    let query = req.params.query;
+    let filter = req.params.filter;
+    Item.findAll({
+        where: {
+            /*userId: req.user.id,*/
+            itemName: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("itemName")), 'LIKE', '%' + query + '%'),
+            Cuisine: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("Cuisine")), filter)
+        },
+        order: [
+            ['itemName', 'ASC'],
+        ],
+        raw: true
+    }).then((items) => {
+        res.json({
+            items: items
         })
+    }).catch(err => console.log(err));
+})
 
-router.get('/search', ensureAuthenticated, (req,res) =>
-{
-res.render('item/search', {});
+router.get('/search', ensureAuthenticated, (req, res) => {
+    res.render('item/search', {});
 })
 
 

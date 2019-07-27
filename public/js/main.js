@@ -19,6 +19,24 @@ function ensureOneCheck(checkBoxName, messageId, submitId) {
 
 }
 
+function CheckQuantity(Quantity,showit){
+	console.log(Quantity);
+
+	const max = document.getElementById(Quantity).max;
+	console.log(max)
+	if(max==0){
+		document.getElementById(showit).style.display='block';
+		console.log(showit)
+
+
+	}else{
+		document.getElementById(showit).display='none';
+
+	}
+
+
+}
+
 
 
 

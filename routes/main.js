@@ -4,6 +4,7 @@ const alertMessage = require('../helpers/messenger')
 const Item = require('../models/item');
 const sequelize = require('../config/DBConfig');
 const Cart = require('../models/cart')
+const ensureAuthenticated = require('../helpers/auth')
 
 
 router.get('/', (req, res) => {
@@ -21,7 +22,7 @@ router.get('/', (req, res) => {
 	})
 });
 
-router.get('/home', (req, res) => {
+router.get('/home', ensureAuthenticated,(req, res) => {
 	const title = 'Listings';
 	Cart.findAndCountAll({
 		where: {
