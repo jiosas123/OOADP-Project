@@ -1,0 +1,36 @@
+<div id="main" class="jumbotron text-center" style="background-color: #388FB0;border-radius: 0; padding: 0;">
+
+    <h1 class="display-4" style="text-align:center;">Your Items</h1>
+
+    {{#if item}}
+
+    {{#each item}}
+    <div class="listing" id="{{this.id}}">
+        <div class='aceBorder'>
+            <img src="{{posterURL}}" alt="Poster unavailable" class="img-thumbnail img-fluid">
+            <div style="text-align:center; background-color:white; opacity:0.7;">
+                {{ itemName}}
+            </div>
+         
+                <a href="../item/edit/{{id}}" class="card-link">
+                    <li id='InuserItems'class='Acechange1'>
+                        <i>Edit</i>
+                    </li>
+                </a>
+                <a href="../item/delete/{{id}}">
+                    <li id='InuserItems'class='Acechange2'>
+                        <i>delete</i>
+                    </li>
+                </a>
+          
+        </div>
+    </div>
+    {{/each}}
+
+
+    {{else}}
+
+
+    <h3>You did not list anything</h3>
+    {{/if}}
+</div>

@@ -22,9 +22,6 @@ const Cart = db.define('cart', {
     userId: {
         type: Sequelize.STRING
     },
-    Seenbyothers: {
-        type: Sequelize.STRING
-    },
 
     itemPrice: {
         type: Sequelize.STRING

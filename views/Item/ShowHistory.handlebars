@@ -3,7 +3,44 @@
 <br>
 {{#if show}}
 {{#each show}}
-{{itemName}}
+
+<div class="card card-body" style="width:50%; margin-left:25%;">
+    <div class="row">
+        <div class='col-lg-4'>
+            <a href="{{posterURL}}" data-title="{{title}}" data-toggle="lightbox">
+                <img src="{{posterURL}}" alt="Poster unavailable" class="img-thumbnail img-fluid">
+            </a>
+
+        </div>
+        <div class='col-lg-8'>
+  
+
+            <label>
+                Item Name: {{itemName}}
+            </label>
+            <br>
+            <label>Quantity Bought: 
+                 {{QuantityBought}}
+            </label>
+           <br>
+            <label>Date Purchased: 
+                {{datePurchased}}
+            </label>
+            <label> Price: {{itemPrice}}
+
+
+            </label>
+            <br>
+        </div>
+
+  
+
+    </div>
+
+
+
+</div>
+
 
 
 {{/each}}

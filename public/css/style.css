@@ -217,3 +217,32 @@ margin-left: 10%;
   color:red;
   
 }
+#InuserItems{
+  display: inline-block;
+}
+.Acechange1{
+  background-color: blue;
+  width: 100%;
+  opacity: 0.7;
+
+}
+.Acechange2{
+  background-color: green;
+  width: 100%;
+  opacity: 0.7;
+
+}
+.Acechange1:hover{
+  color:white;
+}
+.Acechange2:hover{
+color:white;
+
+}
+
+.Acechange1 ,.Acechange2{
+  color:black;
+}
+.aceBorder{
+  border:white 1.2px solid;
+}

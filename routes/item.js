@@ -36,7 +36,7 @@ router.post('/addItem', ensureAuthenticated, (req, res) => {
     // Multi-value components return array of strings or undefined
 
     var today = new Date();
-    var date =today.getDate + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+    var date =today.getFullYear() +'-' + (today.getMonth() + 1) + '-' + today.getDate();
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     var dateTime = date + ' ' + time;
 
@@ -44,7 +44,6 @@ router.post('/addItem', ensureAuthenticated, (req, res) => {
     let itemDescription = req.body.itemDescription;
     let posterURL = req.body.posterURL;
     let userId = req.user.id;
-    let Seenbyothers = req.body.Seenbyothers === undefined ? '' : req.body.Seenbyothers.toString();
     let itemPrice = req.body.itemPrice;
     let Halaltype = req.body.Halaltype;
     let Vegtype = req.body.Vegtype === undefined ? '' : req.body.Vegtype.toString();
@@ -60,7 +59,7 @@ router.post('/addItem', ensureAuthenticated, (req, res) => {
         posterURL,
         itemDescription,
         userId,
-        Seenbyothers,
+    
         itemPrice,
         Halaltype,
         Vegtype,
@@ -108,8 +107,7 @@ function checkOptions(item) {
     // video.malayLang = (video.language.search('Malay') >= 0) ? 'checked' : '';
     // video.tamilLang = (video.language.search('Tamil') >= 0) ? 'checked' : '';
     //canBeSeenByOthers
-    item.can = (item.Seenbyothers.search('Seenbyothers') >= 0) ? 'checked' : '';
-    // veg??
+     // veg??
     item.vegi = (item.Vegtype.search('Veg') >= 0) ? 'checked' : '';
 
     //days
@@ -141,6 +139,25 @@ function checkOptions(item) {
 
 }
 
+//need copy into josh profile
+router.get('/userItem',ensureAuthenticated,(req,res)=>{
+
+    userID=req.user.id
+    Item.findAll({
+        where:{
+            userId:userID
+        }
+    }).then((item)=>{
+        res.render('Item/UserItems',{
+            item:item
+        });
+    })
+    
+    
+    
+});
+
+//need copy into josh profile
 router.get('/edit/:id', ensureAuthenticated, (req, res) => {
     Item.findOne({
         where: {
@@ -170,7 +187,7 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
 
 router.put('/saveEditedItem/:id', ensureAuthenticated, (req, res) => {
     var today = new Date();
-    var date =today.getDate()+ '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+    var date =today.getFullYear() +'-' + (today.getMonth() + 1) + '-' + today.getDate();
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     var dateTime = date + ' ' + time;
 
@@ -181,8 +198,7 @@ router.put('/saveEditedItem/:id', ensureAuthenticated, (req, res) => {
     let itemDescription = req.body.itemDescription;
     let posterURL = req.body.posterURL;
     let userId = req.user.id;
-    let Seenbyothers = req.body.Seenbyothers === undefined ? '' : req.body.Seenbyothers.toString();
-
+  
     let itemPrice = req.body.itemPrice;
     let Halaltype = req.body.Halaltype;
     let Vegtype = req.body.Vegtype === undefined ? '' : req.body.Vegtype.toString();
@@ -199,7 +215,6 @@ router.put('/saveEditedItem/:id', ensureAuthenticated, (req, res) => {
         posterURL,
         itemDescription,
         userId,
-        Seenbyothers,
 
         itemPrice,
         Halaltype,
@@ -216,9 +231,34 @@ router.put('/saveEditedItem/:id', ensureAuthenticated, (req, res) => {
                 id: itemID
             }
         }).then(() => {
+            Cart.update({
+                itemName,
+                itemDesciption,
+                posterURL,
+                userId,
+                itemPrice,
+                Halaltype,
+                Vegtype,
+                DaysAvailable,
+                LocationD,
+                dateTimeItem,
+                Cuisine,
+                Quantity,
+                timeAvailable
+
+
+            },{
+                where:{
+                    itemID:itemID
+                }
+            }).then(()=>{
+          res.redirect('/item/displayUserItem');
+            })
+
+
             // After saving, redirect to router.get(/listVideos...) to retrieve all updated
             // videos
-            res.redirect('/item/displayUserItem');
+  
         }).catch(err => console.log(err));
 });
 
@@ -284,7 +324,6 @@ router.get('/addToCart/:id', ensureAuthenticated, (req, res) => {
         let itemDescription = item.itemDescription;
         let posterURL = item.posterURL;
         let userId = item.userId;
-        let Seenbyothers = item.Seenbyothers
         let itemPrice = item.itemPrice;
         let Halaltype = item.Halaltype;
         let Vegtype = item.Vegtype;
@@ -304,7 +343,6 @@ router.get('/addToCart/:id', ensureAuthenticated, (req, res) => {
             itemDescription,
             posterURL,
             userId,
-            Seenbyothers,
             itemPrice,
 
             Halaltype,
@@ -476,12 +514,10 @@ router.put('/boughtItem/:id', (req, res) => {
             id: itemID
         }
     }).then((cart) => {
+        if(cart.Quantity!=0){
 
-        console.log(amountbought)
-        console.log(cart.Quantity)
+
         var final = cart.Quantity - amountbought;
-        console.log(final)
-        console.log('asdhahsshdshhdhs')
         Item.update({
             Quantity: final
         }, {
@@ -506,7 +542,7 @@ router.put('/boughtItem/:id', (req, res) => {
         }).then((found) => {
             console.log("ttttttttttttttttttttttttttttttt")
             var today = new Date();
-            var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+            var date =today.getFullYear() +'-' + (today.getMonth() + 1) + '-' + today.getDate();
             var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
             var dateTime = date + ' ' + time;
             let itemName = found.itemName;
@@ -533,11 +569,15 @@ router.put('/boughtItem/:id', (req, res) => {
 
         function myFunc(arg) {
             console.log("dsddsdsdsddsdsdsdsdssdsdds")
-            alertMessage(res, 'success', 'Ordered ' + amountbought + " set" + ' of ' + cart.itemName)
+            alertMessage(res, 'success', 'Ordered ' + amountbought + " set" + ' of ' + cart.itemName,true)
             res.redirect('/item/ShowAllCart')
         }
 
         setTimeout(myFunc, 500, 'funky');
+    }else{
+        alertMessage(res, 'danger',  cart.itemName+' out of stock',true)
+          
+    }
     })
 })
 
@@ -548,7 +588,6 @@ router.get('/history',ensureAuthenticated,(req,res)=>{
             currentUser:req.user.name
         }
     }).then((show)=>{
-            console.log("sucessfullyyyy")
             res.render('Item/ShowHistory',{
                 show:show
             })
