@@ -16,9 +16,6 @@ const Item = db.define('item', {
     userId: {
         type: Sequelize.STRING
     },
-    Seenbyothers: {
-        type: Sequelize.STRING
-    },
 
     itemPrice: {
         type: Sequelize.STRING
