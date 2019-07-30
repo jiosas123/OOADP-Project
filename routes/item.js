@@ -298,7 +298,7 @@ router.put('/saveEditedItem/:id', ensureAuthenticated, (req, res) => {
 
 
             function myFunc(arg) {
-                res.redirect('/item/displayUserItem');
+                res.redirect('/profile/profile');
             }
 
             setTimeout(myFunc, 500, 'funky');
@@ -359,8 +359,7 @@ router.get('/ShowAllCart', ensureAuthenticated, (req, res) => {
 });
 
 router.get('/addToCart/:id', ensureAuthenticated, (req, res) => {
-    console.log("tyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-
+   
     var itemID = req.params.id;
     Item.findOne({
         where: {
@@ -425,21 +424,18 @@ router.get('/addToCart/:id', ensureAuthenticated, (req, res) => {
 
 
             // For icons to use, go to https://glyphsearch.com/
-            console.log("hjjhjhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
         }).catch(err => console.log(err));
     })
 });
 
 router.get('/deleteInCart/:id', ensureAuthenticated, (req, res) => {
 
-    console.log(req.param.id + "testttttttttttttttttttttttttttttttttttttttttt")
-    var itemID = req.params.id;
+     var itemID = req.params.id;
     Cart.findOne({
         where: {
             id: itemID
         }
     }).then((cart) => {
-        console.log(cart.currentUser)
         if (cart.currentUser == req.user.id) {
             Item.update({
                 existed: ''
@@ -472,7 +468,6 @@ router.get('/deleteInCart/:id', ensureAuthenticated, (req, res) => {
 
 router.get('/deleteInCart2/:id', ensureAuthenticated, (req, res) => {
 
-    console.log(req.param.id + "testttttttttttttttttttttttttttttttttttttttttt")
     var itemID = req.params.id;
     Cart.findOne({
         where: {
@@ -480,8 +475,7 @@ router.get('/deleteInCart2/:id', ensureAuthenticated, (req, res) => {
             currentUser: req.user.id
         }
     }).then((cart) => {
-        console.log(cart.currentUser)
-        if (cart.currentUser == req.user.id) {
+         if (cart.currentUser == req.user.id) {
             Item.update({
                 existed: ''
             }, {
@@ -560,7 +554,7 @@ router.get('/delete/:id', ensureAuthenticated, (req, res) => {
 
                     alertMessage(res, 'success', 'item ID ' + itemID + ' successfully deleted.', 'fa fa-hand-peace-o', true);
 
-                    res.redirect('/item/displayUserItem');
+                    res.redirect('/profile/profile');
                 }
 
                 setTimeout(myFunc, 500, 'funky');
@@ -625,7 +619,7 @@ router.put('/boughtItem/:id', (req, res) => {
                     id: itemID
                 }
             }).then((found) => {
-                console.log("ttttttttttttttttttttttttttttttt")
+              
                 var today = new Date();
                 var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
                 var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -653,8 +647,7 @@ router.put('/boughtItem/:id', (req, res) => {
 
 
             function myFunc(arg) {
-                console.log("dsddsdsdsddsdsdsdsdssdsdds")
-                alertMessage(res, 'success', 'Ordered ' + amountbought + " set" + ' of ' + cart.itemName, true)
+                 alertMessage(res, 'success', 'Ordered ' + amountbought + " set" + ' of ' + cart.itemName, true)
                 res.redirect('/item/ShowAllCart')
             }
 
@@ -752,22 +745,22 @@ const Sequelize = require('sequelize');
         })
         }).catch (err => console.log(err));
     })*/
-    router.get("/search/ajax/:filter3", ensureAuthenticated, (req,res) => {
-        let filter3 = req.params.filter3;
-        Item.findAll ({
-            where:  {
-                Cuisine: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("Cuisine")),  filter3 )
-            },
-            order: [
-                ['itemName','ASC']
-            ],
-            raw:true 
-        }).then ((items) => {
-            res.json({
-                items: items
-            })
-            }).catch (err => console.log(err));
+router.get("/search/ajax/:filter3", ensureAuthenticated, (req, res) => {
+    let filter3 = req.params.filter3;
+    Item.findAll({
+        where: {
+            Cuisine: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("Cuisine")), filter3)
+        },
+        order: [
+            ['itemName', 'ASC']
+        ],
+        raw: true
+    }).then((items) => {
+        res.json({
+            items: items
         })
+    }).catch(err => console.log(err));
+})
 
 router.get("/search/ajax/:filter2", ensureAuthenticated, (req, res) => {
     let filter2 = req.params.filter2;

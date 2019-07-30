@@ -20,10 +20,10 @@
 			</ul>
 
 			<ul class="navbar-nav ml-auto">
-				<li class='nav-item'>
+				{{!-- <li class='nav-item'>
 				<a href='/item/userItem' class='nav-link'>usersItem</a>
 		
-				</li>
+				</li> --}}
 				<li class='nav-item'>
 					<a href='/item/history' class='nav-link'>History</a>
 				</li>
@@ -40,12 +40,13 @@
 					</div>
 				</li>
 					<li class="nav-item">
-						<a class="nav-link" href="chatgroup/showChat">Message</a>
+						<a class="nav-link" href="/chatgroup/showChat">Message</a>
 					</li>
-				<li class="nav-item"><div class="nav-link" >
-					<a href="profile/profile" class="nav-link">
+				<li class="nav-item">
+				
+					<a href="/profile/profile" class="nav-link">
 					{{user.name}}</a>
-					</div></li>
+				</li>
 				<li class="nav-item">
 					<a href="/logout" class="nav-link">Logout</a>
 				</li>

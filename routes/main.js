@@ -8,21 +8,44 @@ const ensureAuthenticated = require('../helpers/auth')
 
 
 router.get('/', (req, res) => {
-	var lists = new Promise(function (resolve) {
-		var result = [];
-		sequelize.query("SELECT * FROM foodfood.items", { type: sequelize.QueryTypes.SELECT }).then(results => {
-			result = results
-			resolve(result)
-		})
+	Cart.findAll({
+
+	}).then((cartAll) => {
+		var i;
+		for (i = 0; i < cartAll.length; i++) {
+			var itemID = cartAll[i].itemID;
+			Item.update({
+				existed: ''
+			}, {
+					where: {
+						id: itemID
+					}
+				}).catch(err => console.log(err));
+		}//forloop
+	}).then((hi) => {
+		function myFunc(arg) {
+			var lists = new Promise(function (resolve) {
+				var result = [];
+				sequelize.query("SELECT * FROM foodfood.items", { type: sequelize.QueryTypes.SELECT }).then(results => {
+					result = results
+					resolve(result)
+				})
+			})
+
+			const title = 'Listings';
+			lists.then(function (value) {
+				res.render('index', { title: title, listing: value, total: '0' }) // renders views/index.handlebars
+			})
+		}
+		setTimeout(myFunc, 500, 'funcky')
+
 	})
 
-	const title = 'Listings';
-	lists.then(function (value) {
-			res.render('index', { title: title, listing: value, total: '0'}) // renders views/index.handlebars
-	})
+
+
 });
 
-router.get('/home', ensureAuthenticated,(req, res) => {
+router.get('/home', ensureAuthenticated, (req, res) => {
 	const title = 'Listings';
 	Cart.findAndCountAll({
 		where: {
@@ -37,9 +60,8 @@ router.get('/home', ensureAuthenticated,(req, res) => {
 			}
 		}).then((cartAll) => {
 			var i;
-	
+
 			for (i = 0; i < cartAll.length; i++) {
-				console.log(cartAll[i].id + "222222");
 				var itemID = cartAll[i].itemID;
 				Item.update({
 					existed: 'existed'
@@ -50,39 +72,39 @@ router.get('/home', ensureAuthenticated,(req, res) => {
 
 						}
 					})
-			
-			
+
+
 			}
-		 }).then((hi)=>{
+		}).then((hi) => {
 
-			 
-						
-						
-	function myFunc(arg) {	
-		
-		
-		var lists = new Promise(function(resolve){
-							var result=[];
-							sequelize.query("SELECT * FROM foodfood.items",{type:sequelize.QueryTypes.SELECT}).then(results=>{
-								result=results
-								resolve(result)
 
-							})
 
-						})
-						lists.then(function (value){
-							res.render('index',{title:title,listing:value,total:cart.count})
-						})
-		  }
-		  
-		  setTimeout(myFunc, 500, 'funky');
-		 })
-				
-			
-	
-	
 
-						
+			function myFunc(arg) {
+
+
+				var lists = new Promise(function (resolve) {
+					var result = [];
+					sequelize.query("SELECT * FROM foodfood.items", { type: sequelize.QueryTypes.SELECT }).then(results => {
+						result = results
+						resolve(result)
+
+					})
+
+				})
+				lists.then(function (value) {
+					res.render('index', { title: title, listing: value, total: cart.count })
+				})
+			}
+
+			setTimeout(myFunc, 500, 'funky');
+		})
+
+
+
+
+
+
 
 
 		// 	console.log("im 4")
@@ -103,28 +125,29 @@ router.get('/home', ensureAuthenticated,(req, res) => {
 		// })*/
 
 
-	
+
 
 	})
 });
 
 
 router.get('/prev', (req, res) => {
-	
+
 	const title = 'Food Food';
 
 	Item.findAll({
-		
-        raw: true
-    }).then((item) => {
-        // pass object to listVideos.handlebar
-        res.render('index', {title: title        , 
-            item: item , min:num-6 , max:num
+
+		raw: true
+	}).then((item) => {
+		// pass object to listVideos.handlebar
+		res.render('index', {
+			title: title,
+			item: item, min: num - 6, max: num
 		});
-		num=num-6
-    }).catch(err => console.log(err));
-	 
-	
+		num = num - 6
+	}).catch(err => console.log(err));
+
+
 	/*res.render('index', { title: title        
 	
 	
@@ -142,7 +165,6 @@ router.get('/logout', (req, res) => {
 
 		var i;
 		for (i = 0; i < cartAll.length; i++) {
-			console.log(cartAll[i].itemID + "testerererer");
 
 			var itemID = cartAll[i].itemID;
 			Item.update({
@@ -154,7 +176,7 @@ router.get('/logout', (req, res) => {
 				}).then(() => {
 					// After saving, redirect to router.get(/listVideos...) to retrieve all updated
 					// videos
-				
+
 
 				}).catch(err => console.log(err));
 
@@ -163,14 +185,14 @@ router.get('/logout', (req, res) => {
 
 	}).then((hi) => {
 
-		
 
-		function myFunc(arg) {	
-		req.logout();
-		res.redirect('/');
-		
+
+		function myFunc(arg) {
+			req.logout();
+			res.redirect('/');
+
 		}
-				  
+
 		setTimeout(myFunc, 500, 'funky');
 	})
 
