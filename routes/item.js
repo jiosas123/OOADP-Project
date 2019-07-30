@@ -753,6 +753,23 @@ const Sequelize = require('sequelize');
         })
         }).catch (err => console.log(err));
     })*/
+    router.get("/search/ajax/:filter3", ensureAuthenticated, (req,res) => {
+        let filter3 = req.params.filter3;
+        Item.findAll ({
+            where:  {
+                Cuisine: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("Cuisine")),  filter3 )
+            },
+            order: [
+                ['itemName','ASC']
+            ],
+            raw:true 
+        }).then ((items) => {
+            res.json({
+                items: items
+            })
+            }).catch (err => console.log(err));
+        })
+
 router.get("/search/ajax/:filter2", ensureAuthenticated, (req, res) => {
     let filter2 = req.params.filter2;
     Item.findAll({
@@ -777,7 +794,11 @@ router.get("/search/ajax/:query/:filter", ensureAuthenticated, (req, res) => {
         where: {
             /*userId: req.user.id,*/
             itemName: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("itemName")), 'LIKE', '%' + query + '%'),
-            Cuisine: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("Cuisine")), filter)
+            Cuisine: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("Cuisine")), filter),
+            /*Cuisine: 
+                {
+                    [filterlist.filterlist]: filter
+                }*/
         },
         order: [
             ['itemName', 'ASC'],
