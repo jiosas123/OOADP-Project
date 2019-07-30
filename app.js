@@ -179,9 +179,7 @@ app.use('/chatgroup',chatRoute);
 const port = 5000;
 
 // Starts the server and listen to port 5000
-app.listen(port, () => {
-	console.log(`Server started on port ${port}`);
-});
+
 
 // Bring in database connection
 const BoyDB = require('./config/DBConnection');

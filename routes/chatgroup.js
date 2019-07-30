@@ -8,16 +8,15 @@ const fs = require('fs');
 const upload = require('../helpers/imageUpload');
 
 
-router.post('/chats', ensureAuthenticated, (req, res) => {
+router.get('/showChat', ensureAuthenticated, (req, res) => {
 
     const testung = req.user.id;
 
-    //res.render('chatting/chattingsystem', { // pass object to listVideos.handlebar
+    res.render('chatting/chattingsytem', { // pass object to listVideos.handlebar
 
-        //testung: testung
+        testung: testung
 
-
-    //});
+    });
 
  
 });
@@ -63,8 +62,8 @@ router.post('/chatss', ensureAuthenticated, (req, res) => {
         */
 
 
-    }).then((item) => {
-        res.redirect('/video/listVideos');
+    }).then((Chat) => {
+        res.redirect('/chatting/chattingsystem');
     })
         .catch(err => console.log(err))
 
@@ -72,7 +71,7 @@ router.post('/chatss', ensureAuthenticated, (req, res) => {
 
 router.get('/chatss/:id', ensureAuthenticated, (req, res) => {
     console.log("zssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
-    res.redirect('/video/listVideos');
+    res.redirect('/chatting/chattingsystem');
 });
 
 router.get('/',(req,res)=>{
