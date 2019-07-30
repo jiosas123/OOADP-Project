@@ -186,7 +186,7 @@ app.listen(port, () => {
 // Bring in database connection
 const BoyDB = require('./config/DBConnection');
 // Connects to MySQL database
-BoyDB.setUpDB(true); // To set up database with new tables set (true)
+BoyDB.setUpDB(false); // To set up database with new tables set (true)
 // Passport Config
 const authenticate = require('./config/passport');
 authenticate.localStrategy(passport);
