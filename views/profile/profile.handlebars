@@ -1,0 +1,71 @@
+<div class="jumbotron text-center">
+	<div class="container">
+		<h1 class="display-4">{{title}}</h1>
+
+		{{#if user}}	
+		<p class="lead">Rating</p>
+		{{#each user}}
+		{{rating}}
+			<div class="card-link"></div>
+		{{/each}}
+		{{else}}
+		<h3>You have 0 rating so far </h3>
+		{{/if}}
+		</br>
+
+	
+		{{#if chatss}}
+		<div class="card card-body">
+			<h3 class="text-primary">Feedback</h3>	
+		{{#each Feedback}}
+			<div class="card-link"></div>
+		{{/each}}
+
+
+
+		</div>
+
+		{{else}}
+		<h3>no feedback so far</h3>
+		{{/if}}
+	</div>
+	<br>
+	{{#if item}}
+
+		<div class="card card-body">
+			<h3 class="text-primary">All Food Item</h3>
+			{{#each item}}
+
+			<img src="{{posterURL}}" alt="Poster unavailable" class="img-thumbnail img-fluid">
+			<table>
+				<tr>
+					<td>
+						{{ itemName}}
+
+					</td>
+
+
+				</tr>
+
+				<tr>
+					<td>
+
+						<a href="../item/edit/{{id}}" class="card-link">
+							<i class="fas fa-pencil-alt">Edit ME</i>
+
+						</a>
+					</td>
+				</tr>
+
+
+
+			</table>
+
+
+			{{/each}}
+		</div>
+
+		{{else}}
+		<h3>Food Bank Empty</h3>
+		{{/if}}
+</div>
