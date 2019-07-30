@@ -101,6 +101,7 @@ router.get('/buying/:id', ensureAuthenticated, (req, res) => {
 
 });
 function checkOptions(item) {
+    if (item != null){
     // Language
     // video.chineseLang = (video.language.search('Chinese') >= 0) ? 'checked' : '';
     // video.englishLang = (video.language.search('English') >= 0) ? 'checked' : '';
@@ -136,7 +137,7 @@ function checkOptions(item) {
     // video.malaySub = (video.subtitles.search('Malay') >= 0) ? 'checked' : '';
     // video.tamilSub = (video.subtitles.search('Tamil') >= 0) ? 'checked' : '';
 
-
+    }
 }
 
 //need copy into josh profile
