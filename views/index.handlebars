@@ -41,7 +41,7 @@
             <div class="amount {{this.Quantity}}">{{this.Quantity}}x</div>
             {{/unless}}
             <div class="listing-body" id="{{this.itemPrice}}">
-                <a href="#" class="product-name">{{this.itemName}}</a>
+                <a href="../item/displayItemDesciption/{{this.id}}" class="product-name">{{this.itemName}}</a>
                 {{#unless this.Quantity}}
          
                 <div class='out'>
@@ -271,6 +271,10 @@
             if((every.length - o.length) < 10 && document.getElementById("pgsys") != null){
                 document.getElementById("pgsys").style.display = "none"
             }
+            if(document.getElementById("pgsys") != null){
+                document.getElementById("pgno").innerText = "1"
+                bac.style.display = "none"
+            }
             for(i=0; i<o.length; i++){
                 o[i].closest(".listing").style.display = "none"
             }
@@ -282,8 +286,6 @@
                     }
                 }
             }
-            document.getElementById("pgno").innerText = "1"
-            bac.style.display = "none"
             if((every.length - o.length) < 10 && document.getElementById("pgsys") != null){
                 forw.style.display = "inline-block"
             }
@@ -294,9 +296,11 @@
             if(every.length > 9 && document.getElementById("pgsys") != null) {
                 document.getElementById("pgsys").style.display = "block"
             }
-            document.getElementById("pgno").innerText = "1"
-            bac.style.display = "none"
-            forw.style.display = "inline-block"
+            if (document.getElementById("pgsys") != null){
+                document.getElementById("pgno").innerText = "1"
+                bac.style.display = "none"
+                forw.style.display = "inline-block"
+            }
             for(i=0; i<every.length; i++){
                 if(i<9){
                     every[i].style.display = "inline-block"
