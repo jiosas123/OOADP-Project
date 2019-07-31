@@ -19,18 +19,26 @@ function ensureOneCheck(checkBoxName, messageId, submitId) {
 
 }
 
-function CheckQuantity(Quantity,showit){
+function CheckQuantity(Quantity,showit,showit2){
 	console.log(Quantity);
-
+	console.log(showit)
+	console.log(showit2)
 	const max = document.getElementById(Quantity).max;
+
+	const amount = document.getElementById(Quantity).value;
+	console.log(amount)
 	console.log(max)
 	if(max==0){
 		document.getElementById(showit).style.display='block';
 		console.log(showit)
 
 
+	}else if(max<amount){
+		document.getElementById(showit2).style.display='block';
+
 	}else{
-		document.getElementById(showit).display='none';
+		document.getElementById(showit).style.display='none';
+		document.getElementById(showit2).style.display='none';
 
 	}
 

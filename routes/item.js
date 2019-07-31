@@ -100,41 +100,41 @@ router.get('/buying/:id', ensureAuthenticated, (req, res) => {
 
 });
 function checkOptions(item) {
-    if (item != null){
-    // Language
-    // video.chineseLang = (video.language.search('Chinese') >= 0) ? 'checked' : '';
-    // video.englishLang = (video.language.search('English') >= 0) ? 'checked' : '';
-    // video.malayLang = (video.language.search('Malay') >= 0) ? 'checked' : '';
-    // video.tamilLang = (video.language.search('Tamil') >= 0) ? 'checked' : '';
-    //canBeSeenByOthers
-    // veg??
-    item.vegi = (item.Vegtype.search('Veg') >= 0) ? 'checked' : '';
+    if (item != null) {
+        // Language
+        // video.chineseLang = (video.language.search('Chinese') >= 0) ? 'checked' : '';
+        // video.englishLang = (video.language.search('English') >= 0) ? 'checked' : '';
+        // video.malayLang = (video.language.search('Malay') >= 0) ? 'checked' : '';
+        // video.tamilLang = (video.language.search('Tamil') >= 0) ? 'checked' : '';
+        //canBeSeenByOthers
+        // veg??
+        item.vegi = (item.Vegtype.search('Veg') >= 0) ? 'checked' : '';
 
-    //days
-    item.dayMonday = (item.DaysAvailable.search('Monday') >= 0) ? 'checked' : '';
-    item.dayTuesday = (item.DaysAvailable.search('Tuesday') >= 0) ? 'checked' : '';
-    item.dayWednesday = (item.DaysAvailable.search('Wednesday') >= 0) ? 'checked' : '';
-    item.dayThursday = (item.DaysAvailable.search('Thursday') >= 0) ? 'checked' : '';
-    item.dayFriday = (item.DaysAvailable.search('Friday') >= 0) ? 'checked' : '';
-    item.daySaturday = (item.DaysAvailable.search('Saturday') >= 0) ? 'checked' : '';
-    item.daySunday = (item.DaysAvailable.search('Sunday') >= 0) ? 'checked' : '';
-    //location LocationD
-    item.NorthLO = (item.LocationD.search('North') >= 0) ? 'checked' : '';
-    item.CentralLO = (item.LocationD.search('Central') >= 0) ? 'checked' : '';
-    item.EastLO = (item.LocationD.search('East') >= 0) ? 'checked' : '';
-    item.WestLO = (item.LocationD.search('West') >= 0) ? 'checked' : '';
+        //days
+        item.dayMonday = (item.DaysAvailable.search('Monday') >= 0) ? 'checked' : '';
+        item.dayTuesday = (item.DaysAvailable.search('Tuesday') >= 0) ? 'checked' : '';
+        item.dayWednesday = (item.DaysAvailable.search('Wednesday') >= 0) ? 'checked' : '';
+        item.dayThursday = (item.DaysAvailable.search('Thursday') >= 0) ? 'checked' : '';
+        item.dayFriday = (item.DaysAvailable.search('Friday') >= 0) ? 'checked' : '';
+        item.daySaturday = (item.DaysAvailable.search('Saturday') >= 0) ? 'checked' : '';
+        item.daySunday = (item.DaysAvailable.search('Sunday') >= 0) ? 'checked' : '';
+        //location LocationD
+        item.NorthLO = (item.LocationD.search('North') >= 0) ? 'checked' : '';
+        item.CentralLO = (item.LocationD.search('Central') >= 0) ? 'checked' : '';
+        item.EastLO = (item.LocationD.search('East') >= 0) ? 'checked' : '';
+        item.WestLO = (item.LocationD.search('West') >= 0) ? 'checked' : '';
 
-    item.morning = (item.timeAvailable.search('morning') >= 0) ? 'checked' : '';
+        item.morning = (item.timeAvailable.search('morning') >= 0) ? 'checked' : '';
 
-    item.afternoon = (item.timeAvailable.search('afternoon') >= 0) ? 'checked' : '';
+        item.afternoon = (item.timeAvailable.search('afternoon') >= 0) ? 'checked' : '';
 
-    item.evening = (item.timeAvailable.search('evening') >= 0) ? 'checked' : '';
-    //timeAvalible
-    // Subtitles
-    // video.chineseSub = (video.subtitles.search('Chinese') >= 0) ? 'checked' : '';
-    // video.englishSub = (video.subtitles.search('English') >= 0) ? 'checked' : '';
-    // video.malaySub = (video.subtitles.search('Malay') >= 0) ? 'checked' : '';
-    // video.tamilSub = (video.subtitles.search('Tamil') >= 0) ? 'checked' : '';
+        item.evening = (item.timeAvailable.search('evening') >= 0) ? 'checked' : '';
+        //timeAvalible
+        // Subtitles
+        // video.chineseSub = (video.subtitles.search('Chinese') >= 0) ? 'checked' : '';
+        // video.englishSub = (video.subtitles.search('English') >= 0) ? 'checked' : '';
+        // video.malaySub = (video.subtitles.search('Malay') >= 0) ? 'checked' : '';
+        // video.tamilSub = (video.subtitles.search('Tamil') >= 0) ? 'checked' : '';
     }
 }
 
@@ -323,11 +323,6 @@ router.get('/ShowAllCart', ensureAuthenticated, (req, res) => {
             currentUser: req.user.id
 
         }
-
-        , order: [
-            ['itemName', 'ASC']
-        ],
-        raw: true
     }).then((cart) => {
 
         //
@@ -338,7 +333,8 @@ router.get('/ShowAllCart', ensureAuthenticated, (req, res) => {
             }
 
             , order: [
-                ['itemName', 'ASC']
+                ['dateInCart', 'DESC'],
+                ['TimeInCart', 'DESC']
             ],
             raw: true
         }).then((cartAll) => {
@@ -359,14 +355,16 @@ router.get('/ShowAllCart', ensureAuthenticated, (req, res) => {
 });
 
 router.get('/addToCart/:id', ensureAuthenticated, (req, res) => {
-   
+
     var itemID = req.params.id;
     Item.findOne({
         where: {
             id: itemID
         }
     }).then((item) => {
-
+        var today = new Date();
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         var currentUser = req.user.id;
         let itemName = item.itemName;
         let itemDescription = item.itemDescription;
@@ -382,7 +380,8 @@ router.get('/addToCart/:id', ensureAuthenticated, (req, res) => {
         let Cuisine = item.Cuisine;
         let Quantity = item.Quantity; // this one need change 
         let timeAvailable = item.timeAvailable;
-
+        let DateInCart=date;
+        let TimeInCart=time;
         Cart.create({
 
             itemID,
@@ -404,7 +403,8 @@ router.get('/addToCart/:id', ensureAuthenticated, (req, res) => {
 
             Quantity,
             timeAvailable,
-
+            DateInCart,
+            TimeInCart,
 
         }).then((cart) => {
             Item.update({
@@ -430,7 +430,7 @@ router.get('/addToCart/:id', ensureAuthenticated, (req, res) => {
 
 router.get('/deleteInCart/:id', ensureAuthenticated, (req, res) => {
 
-     var itemID = req.params.id;
+    var itemID = req.params.id;
     Cart.findOne({
         where: {
             id: itemID
@@ -475,7 +475,7 @@ router.get('/deleteInCart2/:id', ensureAuthenticated, (req, res) => {
             currentUser: req.user.id
         }
     }).then((cart) => {
-         if (cart.currentUser == req.user.id) {
+        if (cart.currentUser == req.user.id) {
             Item.update({
                 existed: ''
             }, {
@@ -598,19 +598,18 @@ router.put('/boughtItem/:id', (req, res) => {
 
             var final = cart.Quantity - amountbought;
             Item.update({
-                Quantity: final
+                Quantity: final,
+                existed: ''
             }, {
                     where: {
                         id: cart.itemID
                     }
                 })
-            Cart.update({
-                Quantity: final
-            }, {
-                    where: {
-                        id: itemID
-                    }
-                })
+            Cart.destroy({
+                where: {
+                    id: itemID
+                }
+            })
 
 
 
@@ -619,24 +618,26 @@ router.put('/boughtItem/:id', (req, res) => {
                     id: itemID
                 }
             }).then((found) => {
-              
+                var totalcost = amountbought * found.itemPrice
                 var today = new Date();
                 var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
                 var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-                var dateTime = date + ' ' + time;
+                // var dateTime = date + ' ' + time;
                 let itemName = found.itemName;
                 let QuantityBought = amountbought;
                 let datePurchased = date;
                 let posterURL = found.posterURL;
-                let itemPrice = found.itemPrice;
+                let itemPrice = totalcost;
                 let currentUser = req.user.name;
+                let dateTime = time;
                 History.create({
                     itemName,
                     QuantityBought,
                     datePurchased,
                     itemPrice,
                     posterURL,
-                    currentUser
+                    currentUser,
+                    dateTime
 
 
                 })
@@ -647,7 +648,7 @@ router.put('/boughtItem/:id', (req, res) => {
 
 
             function myFunc(arg) {
-                 alertMessage(res, 'success', 'Ordered ' + amountbought + " set" + ' of ' + cart.itemName, true)
+                alertMessage(res, 'success', 'Ordered ' + amountbought + " set" + ' of ' + cart.itemName, true)
                 res.redirect('/item/ShowAllCart')
             }
 
@@ -664,7 +665,12 @@ router.get('/history', ensureAuthenticated, (req, res) => {
     History.findAll({
         where: {
             currentUser: req.user.name
-        }
+        },
+        order: [
+            ['datePurchased', 'DESC'],
+            ['dateTime', 'DESC']
+        ],
+        raw: true
     }).then((show) => {
         res.render('Item/ShowHistory', {
             show: show

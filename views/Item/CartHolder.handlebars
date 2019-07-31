@@ -30,7 +30,7 @@
 						</div>{{!-- end of row inner --}}
 					</div>
 					<div class='col-lg-4'>
-						Quantity: {{Quantity}}
+						Available Quantity: {{Quantity}}
 					</div>
 
 				</div>{{!--Row ends here inner --}}
@@ -52,12 +52,14 @@
 				<label class='Ace_colorChange' id='displayOnly{{id}}' style="display:none;">
 					{{itemName}} has no stock.
 				</label>
+				<label class='Ace_colorChange' id='display{{id}}' style="display:none;">
+				Invaild Quantity entered for {{itemName}} 
+				</label>
 				<form action="/item/boughtItem/{{id}}?_method=PUT " method="POST">
 					<label>Meals to buy</label>
 					<input type='number' name='amountToBuy' id='amountToBuy{{id}}' value='1' min='1' max="{{Quantity}}">
 					<br>
-					<button style="width:100%;" type='submit'
-						onclick="CheckQuantity('amountToBuy{{id}}','displayOnly{{id}}')"> &nbsp; Order &nbsp;
+					<button style="width:100%;" type='submit' onclick="CheckQuantity('amountToBuy{{id}}','displayOnly{{id}}','display{{id}}')"> &nbsp; Order &nbsp;
 					</button>
 				</form>
 
@@ -75,7 +77,10 @@
 
 	{{/each}}
 	{{else}}
-	Empty Cart
+	<div class='card card-body' style="width:80%; margin-left:10%; text-align:center;">
+		Empty Cart
+	</div>
+	
 	{{/if}}
 
 </div>

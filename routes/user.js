@@ -9,7 +9,7 @@ const passport = require('passport');
 // Login Form POST => /user/login
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/profile/profile', // Route to /video/listVideos URL
+        successRedirect: '/home', // Route to /video/listVideos URL
         failureRedirect: '/showLogin', // Route to /login URL
         failureFlash: true
         /* Setting the failureFlash option to true instructs Passport to flash an error

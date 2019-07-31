@@ -10,8 +10,8 @@ const Cart = db.define('cart', {
     itemID: {
         type: Sequelize.STRING
     },
-    currentUser:{
-        type: Sequelize.STRING 
+    currentUser: {
+        type: Sequelize.STRING
     },
     itemDescription: {
         type: Sequelize.STRING(2000)
@@ -37,23 +37,29 @@ const Cart = db.define('cart', {
     },
     likes: {
         type: Sequelize.STRING
-    },     
-    DaysAvailable:{
+    },
+    DaysAvailable: {
         type: Sequelize.STRING
     },
-    LocationD:{
+    LocationD: {
         type: Sequelize.STRING
     },
-    dateTimeItem:{
+    dateTimeItem: {
         type: Sequelize.DATEONLY
     },
-    Cuisine:{
+    Cuisine: {
         type: Sequelize.STRING
     },
-    Quantity:{
+    Quantity: {
         type: Sequelize.INTEGER
     },
-    timeAvailable:{
+    timeAvailable: {
+        type: Sequelize.STRING
+    },
+    DateInCart: {
+        type: Sequelize.DATEONLY
+    },
+    TimeInCart: {
         type: Sequelize.STRING
     }
 });

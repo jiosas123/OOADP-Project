@@ -21,6 +21,9 @@ const history = db.define('his',{
     },
     currentUser:{
         type: Sequelize.STRING     
+    },
+    dateTime:{
+        type: Sequelize.STRING
     }
 
 
