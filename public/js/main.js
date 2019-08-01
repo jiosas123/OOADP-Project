@@ -24,7 +24,7 @@ function CheckQuantity(Quantity,showit,showit2){
 	console.log(showit)
 	console.log(showit2)
 	const max = document.getElementById(Quantity).max;
-
+	const min = document.getElementById(Quantity).min;
 	const amount = document.getElementById(Quantity).value;
 	console.log(amount)
 	console.log(max)
@@ -33,7 +33,8 @@ function CheckQuantity(Quantity,showit,showit2){
 		console.log(showit)
 
 
-	}else if(max<amount){
+	}else if(max<amount || min>amount){
+		console.log(showit2)
 		document.getElementById(showit2).style.display='block';
 
 	}else{

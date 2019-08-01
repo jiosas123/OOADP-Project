@@ -1,0 +1,133 @@
+<div class='container' style='width:80%; margin-left:10%;'>
+
+    <div class="card card-body">
+        {{#if item}}
+        <form action='/item/addToCart/{{item.id}}?_method=put' method='POST'>
+
+            <div class='row' style='font-size:1.5em'>
+                <div class='col-lg-5'>
+                    <label> Item: {{item.itemName}}</label>
+                    <label>&nbsp;&nbsp;&nbsp;</label>
+                    <label> Available Quantity: {{item.Quantity}}</label>
+                    <label>&nbsp;&nbsp;&nbsp;</label>
+                    <label>Cost:$<span id='costHere'>{{item.itemPrice}}</span></label>
+                    <br>
+                    <label>Created by: {{item.username}}</label>
+                </div>
+
+            </div>
+            <div class='row'>
+                <div class="col-lg-5">
+                    <a href="{{item.posterURL}}" data-title="{{title}}" data-toggle="lightbox">
+                        <img src="{{item.posterURL}}" alt="Poster unavailable" style="width:250px;height:250px;">
+                    </a></div>
+                <div class='col-lg-7'>
+
+                    <label class='Ace_colorChange' id='displayOnly{{item.id}}' style="display:none;">
+                        {{item.itemName}} has no stock.
+                    </label>
+                    <label class='Ace_colorChange' id='display{{item.id}}' style="display:none;">
+                        Invaild Quantity entered for {{item.itemName}}
+                    </label>
+
+                    <label>Ordering</label>
+                    <input type='number' class='amountToBuy' name='amountToBuy' id='amountToBuy' value='1' min='1'
+                        max="{{item.Quantity}}" onchange="totalPriceChange()">
+                    <span> &nbsp;&nbsp;&nbsp; Total Cost: $<span id="SentHere">{{item.itemPrice}}</span>
+                    </span> 
+                    <br>
+                    {{!-- possible to put total here --}}
+                    <label>Day To collect :</label>
+                    <select name='dayTobuy' required>
+                        {{#if item.dayMonday}}
+                        <option value='Monday'>Monday</option>
+                        {{/if}}
+
+                        {{#if item.dayTueday}}
+                        <option value='Tuesday'>Tuesday</option>
+                        {{/if}}
+
+                        {{#if item.dayWednesday}}
+                        <option value='Wednesday'>Wednesday</option>
+                        {{/if}}
+
+                        {{#if item.dayThursday}}
+                        <option value='Thursday'>Thursday</option>
+                        {{/if}}
+                        {{#if item.dayFriday}}
+                        <option value='Friday'>Friday</option>
+                        {{/if}}
+
+                        {{#if item.daySaturday}}
+                        <option value='Saturday'>Saturday</option>
+                        {{/if}}
+
+                        {{#if item.daySunday}}
+                        <option value='Sunday'>Sunday</option>
+                        {{/if}}
+                    </select>
+                    <br>
+                    <label>Time to collect</label>
+                    <select name='TimeToCollect' required>
+                        {{#if item.morning}}
+                        <option value='9am'>9am</option>
+                        <option value='10am'>10am</option>
+                        <option value='11am'>11am</option>
+                        {{/if}}
+                        {{#if item.afternoon}}
+                        <option value='1pm'>1pm</option>
+                        <option value="2pm">2pm</option>
+                        <option value='3pm'>3pm</option>
+                        {{/if}}
+                        {{#if item.evening}}
+                        <option value='5pm'>5pm</option>
+                        <option value="6pm">6pm</option>
+                        <option value='7pm'>7pm</option>
+                        <option value='8pm'>8pm</option>
+                        {{/if}}
+                    </select>
+                    {{!-- possible to put date here --}}
+                    <button style="width:100%;" type='submit'
+                        onclick="CheckQuantity('amountToBuy','displayOnly{{item.id}}','display{{item.id}}')"> &nbsp;
+                        Order
+                        &nbsp;
+                    </button>
+
+
+                </div>
+            </div>
+            <div class='row' style="margin-bottom: 20px;">
+
+                <div class='col-lg-12'>
+                    <label>
+                        Desciption:
+                    </label>
+                    <br>
+                    <textarea rows="7" class="form-control" disabled> {{item.itemDescription}}
+                </textarea>
+
+                </div>
+
+            </div>
+
+
+
+
+        </form>
+        {{else}}
+        <h3>Item does not exist, or has been deleted</h3>
+
+        {{/if}}
+    </div>
+</div>
+<script>
+
+    function totalPriceChange() {
+        var x = document.getElementById('amountToBuy').value;
+        var y = parseFloat(document.getElementById('costHere').innerHTML);
+        console.log(y)
+        console.log(x)
+        console.log(x * y)
+        document.getElementById('SentHere').innerHTML = y * x;
+    }
+</script>

@@ -8,17 +8,18 @@
                     {{item.Quantity}}</label>
                 <br>
                 <label>Created by: {{item.username}}</label>
-                <br>
-                <a href="{{item.posterURL}}" data-title="{{title}}" data-toggle="lightbox">
-                    <img src="{{item.posterURL}}" alt="Poster unavailable" class="img-thumbnail img-fluid">
-                </a>
             </div>
-  
-            
-                <div class='col-lg-7'>
-                <br>
-                <table border="1" id="inf">
-                    <tr>
+
+        </div>
+        <div class='row'>
+            <div class="col-lg-5">
+                <a href="{{item.posterURL}}" data-title="{{title}}" data-toggle="lightbox" >
+                    <img src="{{item.posterURL}}" alt="Poster unavailable" class="img-thumbnail img-fluid" >
+                </a>
+                </div>
+            <div class='col-lg-7'>
+                <table border="1" id="inf" style="width:50%; height:100%; font-size:1.2em;">
+                    <tr style='font-size:1.4em; text-align:center;'>
                         <th>Information</th>
                         <th>Value</th>
                     </tr>
@@ -29,7 +30,7 @@
                         {{else}}
                         <td>No</td>
                     </tr>
-                        {{/if}}
+                    {{/if}}
                     <tr>
                         <td>Is halal?</td>
                         <td>{{item.Halaltype}}</td>
@@ -51,13 +52,11 @@
                         <td>{{item.LocationD}}</td>
                     </tr>
                 </table>
-
-
             </div>
         </div>
-    <div class='row' style="margin-bottom: 20px;">
+        <div class='row' style="margin-bottom: 20px;">
 
-          <div class='col-lg-12'>
+            <div class='col-lg-12'>
                 <label>
                     Desciption:
                 </label>
@@ -67,7 +66,7 @@
 
             </div>
 
-    </div>
+        </div>
 
 
 
@@ -75,14 +74,13 @@
         <div class='row'>
             <div class='col-lg-12'>
                 <div class="listing-body">
-                {{#unless item.Quantity}}
-                                
-                          <button class="out">${{item.itemPrice}} each<br> Out of stock</button>
+                    {{#unless item.Quantity}}
+
+                    <button class="out">${{item.itemPrice}} each<br> Out of stock</button>
                     {{else}}
                     {{#if item.existed}}
 
-                    <a id="test2" class="noUnderLine" href="../deleteInCart2/{{item.id}}"
-                        style="text-decoration:none;">
+                    <a id="test2" class="noUnderLine" href="../deleteInCart2/{{item.id}}" style="text-decoration:none;">
                         <div class="in-cart" style="text-decoration:none;">${{item.itemPrice}}
                             each<br>
                             <span id="sentHere"></span>
@@ -92,8 +90,7 @@
                     </a>
                     {{else}}
 
-                    <a id="test12" class="noUnderLine" href="../addToCart/{{item.id}}"
-                        style="text-decoration:none;">
+                    <a id="test12" class="noUnderLine" href="../item/step2AddingIntoCart/{{item.id}}" style="text-decoration:none;">
                         <div class="available" style="text-decoration:none; ">
                             <span>${{item.itemPrice}} each<br> Add to Cart</span style="text-decoration:none; ">
 
@@ -105,7 +102,7 @@
 
 
 
-                {{/unless}}
+                    {{/unless}}
                 </div>
             </div>
         </div>

@@ -35,9 +35,6 @@ const Cart = db.define('cart', {
     username: {
         type: Sequelize.STRING
     },
-    likes: {
-        type: Sequelize.STRING
-    },
     DaysAvailable: {
         type: Sequelize.STRING
     },

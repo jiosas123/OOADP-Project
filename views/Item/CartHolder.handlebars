@@ -6,48 +6,65 @@
 
 <div class='container'>
 	<div class='row' style="width:80%; margin-left:10%;">
-<div class='col-lg-10'> </div>
-<div class='col-lg-2'>
-	<a href='/item/clear' style="text-decoration:none;"><div id="ACEClearButton" style=" font-size:1em;text-align:center; ">Clear cart</div></a>
-</div>
+		<div class='col-lg-10'> </div>
+		<div class='col-lg-2'>
+			<a href='/item/clear' style="text-decoration:none;">
+				<div id="ACEClearButton" style=" font-size:1em;text-align:center; ">Clear cart</div>
+			</a>
+		</div>
 	</div>
 	<br>
 
 	{{#if cart}}
 	{{#each cart}}
-	<div class="card card-body" style="width:80%; margin-left:10%;">
-		<div class='row'>
-			<div class='col-lg-10'>
 
-				<div class='row'>
-					<div class='col-lg-4'>
-						<a href="{{posterURL}}" data-title="{{title}}" data-toggle="lightbox">
-							<img src="{{posterURL}}" alt="Poster unavailable" class="listing-img">
-						</a>
-					</div>
-					<div class="col-lg-4">
-						<div class='row'>
-							<div class='col-lg-12' id="ItemName">
-								Item Name: {{itemName}}
-								<br>
-								<br>
-								<div class='row'>
-									<div class='col-lg-12'>
-												Cost : {{itemPrice}}
+	<form action="/item/boughtItem/{{id}}?_method=PUT " method="POST">
+		<div class="card card-body" style="width:80%; margin-left:10%;">
+			<div class='row'>
+				<div class='col-lg-10'>
+
+					<div class='row'>
+						<div class='col-lg-4'>
+							<a href="{{posterURL}}" data-title="{{title}}" data-toggle="lightbox">
+								<img src="{{posterURL}}" alt="Poster unavailable" class="listing-img">
+							</a>
+						</div>
+						<div class="col-lg-4">
+							<div class='row'>
+								<div class='col-lg-12' id="ItemName">
+									Item Name: {{itemName}}
+									<br>
+									<br>
+									<div class='row'>
+										<div class='col-lg-12'>
+											Total Cost : ${{itemPrice}}
+										</div>
+
 									</div>
-							
+									<div class='row'>
+										<div class='col-lg-12'>
+											Day selected :{{DaysAvailable}}
+										</div>
+
+									</div>
+
+									<div class='row'>
+										<div class='col-lg-12'>
+											Time selected :{{timeAvailable}}
+										</div>
+									</div>
 								</div>
+							</div>{{!-- end of row inner --}}
+						</div>
+						<div class='col-lg-4'>
+							Quantity Selected: {{Quantity}}
+						</div>
 
-							</div>
-					
-						</div>{{!-- end of row inner --}}
-					</div>
-					<div class='col-lg-4'>
-						Available Quantity: {{Quantity}}
-					</div>
+					</div>{{!--Row ends here inner --}}
 
-				</div>{{!--Row ends here inner --}}
 
+
+				</div>
 
 
 
@@ -61,20 +78,8 @@
 				<br>
 
 				<br>
-				<br>
-				<label class='Ace_colorChange' id='displayOnly{{id}}' style="display:none;">
-					{{itemName}} has no stock.
-				</label>
-				<label class='Ace_colorChange' id='display{{id}}' style="display:none;">
-				Invaild Quantity entered for {{itemName}} 
-				</label>
-				<form action="/item/boughtItem/{{id}}?_method=PUT " method="POST">
-					<label>Meals to buy</label>
-					<input type='number' name='amountToBuy' id='amountToBuy{{id}}' value='1' min='1' max="{{Quantity}}">
-					<br>
-					<button style="width:100%;" type='submit' onclick="CheckQuantity('amountToBuy{{id}}','displayOnly{{id}}','display{{id}}')"> &nbsp; Order &nbsp;
-					</button>
-				</form>
+				{{!-- put buy here to complete the transaction --}}
+
 
 				<br>
 				<a href="../item/deleteInCart/{{id}}" class="card-link">
@@ -85,15 +90,15 @@
 			</div>
 		</div>
 		{{!-- Row ends here outer --}}
-	</div>
+</div>
+</form>
 
+{{/each}}
+{{else}}
+<div class='card card-body' style="width:80%; margin-left:10%; text-align:center;">
+	Empty Cart
+</div>
 
-	{{/each}}
-	{{else}}
-	<div class='card card-body' style="width:80%; margin-left:10%; text-align:center;">
-		Empty Cart
-	</div>
-	
-	{{/if}}
+{{/if}}
 
 </div>

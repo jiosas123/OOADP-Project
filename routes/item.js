@@ -99,15 +99,10 @@ router.get('/buying/:id', ensureAuthenticated, (req, res) => {
 
 
 });
+
 function checkOptions(item) {
     if (item != null) {
-        // Language
-        // video.chineseLang = (video.language.search('Chinese') >= 0) ? 'checked' : '';
-        // video.englishLang = (video.language.search('English') >= 0) ? 'checked' : '';
-        // video.malayLang = (video.language.search('Malay') >= 0) ? 'checked' : '';
-        // video.tamilLang = (video.language.search('Tamil') >= 0) ? 'checked' : '';
-        //canBeSeenByOthers
-        // veg??
+
         item.vegi = (item.Vegtype.search('Veg') >= 0) ? 'checked' : '';
 
         //days
@@ -125,19 +120,10 @@ function checkOptions(item) {
         item.WestLO = (item.LocationD.search('West') >= 0) ? 'checked' : '';
 
         item.morning = (item.timeAvailable.search('morning') >= 0) ? 'checked' : '';
-
         item.afternoon = (item.timeAvailable.search('afternoon') >= 0) ? 'checked' : '';
-
         item.evening = (item.timeAvailable.search('evening') >= 0) ? 'checked' : '';
-        //timeAvalible
-        // Subtitles
-        // video.chineseSub = (video.subtitles.search('Chinese') >= 0) ? 'checked' : '';
-        // video.englishSub = (video.subtitles.search('English') >= 0) ? 'checked' : '';
-        // video.malaySub = (video.subtitles.search('Malay') >= 0) ? 'checked' : '';
-        // video.tamilSub = (video.subtitles.search('Tamil') >= 0) ? 'checked' : '';
     }
 }
-
 //need copy into josh profile
 router.get('/userItem', ensureAuthenticated, (req, res) => {
 
@@ -298,7 +284,7 @@ router.put('/saveEditedItem/:id', ensureAuthenticated, (req, res) => {
 
 
             function myFunc(arg) {
-                alertMessage(res,'success','you have successfully updated '+itemName)
+                alertMessage(res, 'success', 'you have successfully updated ' + itemName)
                 res.redirect('/profile/profile');
             }
 
@@ -317,7 +303,7 @@ router.put('/saveEditedItem/:id', ensureAuthenticated, (req, res) => {
 
 
 router.get('/ShowAllCart', ensureAuthenticated, (req, res) => {
-
+    // herehere
     const title = req.user.name + " Cart"
     Cart.findAndCountAll({
         where: {
@@ -339,6 +325,7 @@ router.get('/ShowAllCart', ensureAuthenticated, (req, res) => {
             ],
             raw: true
         }).then((cartAll) => {
+        
             res.render('Item/CartHolder', { title: title, cart: cartAll, total: cart.count }) // renders views/index.handlebars)
 
 
@@ -354,8 +341,32 @@ router.get('/ShowAllCart', ensureAuthenticated, (req, res) => {
 
 
 });
+//print this
+router.get('/step2AddingIntoCart/:id', ensureAuthenticated, (req, res) => {
+    console.log("testherehere")
 
-router.get('/addToCart/:id', ensureAuthenticated, (req, res) => {
+
+    Item.findOne({
+        where: {
+            id: req.params.id
+        }
+    }).then((item) => {
+        checkOptions(item)
+
+
+        res.render('Item/orderingItemDisplay', {
+            item: item
+        })
+
+
+
+    })
+
+
+});
+
+//end print
+router.put('/addToCart/:id', ensureAuthenticated, (req, res) => {
 
     var itemID = req.params.id;
     Item.findOne({
@@ -371,16 +382,16 @@ router.get('/addToCart/:id', ensureAuthenticated, (req, res) => {
         let itemDescription = item.itemDescription;
         let posterURL = item.posterURL;
         let userId = item.userId;
-        let itemPrice = item.itemPrice;
+        let itemPrice = item.itemPrice*req.body.amountToBuy;
         let Halaltype = item.Halaltype;
         let Vegtype = item.Vegtype;
-        let username = item.name;
+        let username = item.username;
         let LocationD = item.LocationD;
-        let DaysAvailable = item.DaysAvailable;
+        let DaysAvailable = req.body.dayTobuy;
         let dateTimeItem = item.dateTimeItem;
         let Cuisine = item.Cuisine;
-        let Quantity = item.Quantity; // this one need change 
-        let timeAvailable = item.timeAvailable;
+        let Quantity = req.body.amountToBuy; // this one need change 
+        let timeAvailable = req.body.TimeToCollect;
         let DateInCart = date;
         let TimeInCart = time;
         Cart.create({
@@ -453,8 +464,7 @@ router.get('/deleteInCart/:id', ensureAuthenticated, (req, res) => {
                         }
                     }).then((cart) => {
                         // For icons to use, go to https://glyphsearch.com/
-                        alertMessage(res, 'success',  itemName + ' successfully deleted.', 'fa fa-hand-peace-o', true);
-
+                     
                         res.redirect('/item/ShowAllCart');
                     }).catch(err => console.log(err));
                 })
@@ -485,14 +495,15 @@ router.get('/deleteInCart2/:id', ensureAuthenticated, (req, res) => {
                     }
 
                 }).then((cart) => {
+
+                  
                     Cart.destroy({
                         where: {
                             itemID: itemID,
                             currentUser: req.user.id
                         }
-                    }).then((cart) => {
+                    }).then(() => {
                         // For icons to use, go to https://glyphsearch.com/
-                        alertMessage(res, 'success',  itemName + ' successfully deleted.', 'fa fa-hand-peace-o', true);
 
                         res.redirect('/home');
                     }).catch(err => console.log(err));
@@ -553,8 +564,7 @@ router.get('/delete/:id', ensureAuthenticated, (req, res) => {
 
                 function myFunc(arg) {
 
-                    alertMessage(res, 'success',  itemName + ' successfully deleted.', 'fa fa-hand-peace-o', true);
-
+                  
                     res.redirect('/profile/profile');
                 }
 
@@ -687,23 +697,23 @@ router.get('/history', ensureAuthenticated, (req, res) => {
 
 router.get('/clear', ensureAuthenticated, (req, res) => {
     Cart.findAll({
-        where:{
-              currentUser: req.user.id
+        where: {
+            currentUser: req.user.id
         }
-      
 
-    }).then((cart)=>{
-            for(var p=0;p<cart.length;p++ ){
-                Item.update({
-                    existed:''
 
-                },{
-                    where:{
-                        id:cart[p].itemID
+    }).then((cart) => {
+        for (var p = 0; p < cart.length; p++) {
+            Item.update({
+                existed: ''
+
+            }, {
+                    where: {
+                        id: cart[p].itemID
                     }
 
                 })
-            }
+        }
     })
 
 
