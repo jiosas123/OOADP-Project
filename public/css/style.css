@@ -246,3 +246,13 @@ color:white;
 .aceBorder{
   border:white 1.2px solid;
 }
+div #ACEClearButton:hover{
+background-color: rgb(189, 189, 189);
+color:white;
+opacity: 0.5;
+
+}
+#ACEClearButton{
+  color:black;
+  background-color: white;
+}

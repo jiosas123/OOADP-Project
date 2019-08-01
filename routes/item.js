@@ -298,6 +298,7 @@ router.put('/saveEditedItem/:id', ensureAuthenticated, (req, res) => {
 
 
             function myFunc(arg) {
+                alertMessage(res,'success','you have successfully updated '+itemName)
                 res.redirect('/profile/profile');
             }
 
@@ -380,8 +381,8 @@ router.get('/addToCart/:id', ensureAuthenticated, (req, res) => {
         let Cuisine = item.Cuisine;
         let Quantity = item.Quantity; // this one need change 
         let timeAvailable = item.timeAvailable;
-        let DateInCart=date;
-        let TimeInCart=time;
+        let DateInCart = date;
+        let TimeInCart = time;
         Cart.create({
 
             itemID,
@@ -417,7 +418,7 @@ router.get('/addToCart/:id', ensureAuthenticated, (req, res) => {
                     // After saving, redirect to router.get(/listVideos...) to retrieve all updated
                     // videos
 
-                    alertMessage(res, 'success', 'item ID  ' + itemID + ' successfully Added into Cart.', 'fa fa-hand-peace-o', true);
+                    alertMessage(res, 'success', itemName + ' successfully Added into Cart.', 'fa fa-hand-peace-o', true);
 
                     res.redirect('/home');
                 }).catch(err => console.log(err));
@@ -452,7 +453,7 @@ router.get('/deleteInCart/:id', ensureAuthenticated, (req, res) => {
                         }
                     }).then((cart) => {
                         // For icons to use, go to https://glyphsearch.com/
-                        alertMessage(res, 'success', 'item ID ' + itemID + ' successfully deleted.', 'fa fa-hand-peace-o', true);
+                        alertMessage(res, 'success',  itemName + ' successfully deleted.', 'fa fa-hand-peace-o', true);
 
                         res.redirect('/item/ShowAllCart');
                     }).catch(err => console.log(err));
@@ -491,7 +492,7 @@ router.get('/deleteInCart2/:id', ensureAuthenticated, (req, res) => {
                         }
                     }).then((cart) => {
                         // For icons to use, go to https://glyphsearch.com/
-                        alertMessage(res, 'success', 'item ID ' + itemID + ' successfully deleted.', 'fa fa-hand-peace-o', true);
+                        alertMessage(res, 'success',  itemName + ' successfully deleted.', 'fa fa-hand-peace-o', true);
 
                         res.redirect('/home');
                     }).catch(err => console.log(err));
@@ -552,7 +553,7 @@ router.get('/delete/:id', ensureAuthenticated, (req, res) => {
 
                 function myFunc(arg) {
 
-                    alertMessage(res, 'success', 'item ID ' + itemID + ' successfully deleted.', 'fa fa-hand-peace-o', true);
+                    alertMessage(res, 'success',  itemName + ' successfully deleted.', 'fa fa-hand-peace-o', true);
 
                     res.redirect('/profile/profile');
                 }
@@ -684,7 +685,54 @@ router.get('/history', ensureAuthenticated, (req, res) => {
 
 });
 
+router.get('/clear', ensureAuthenticated, (req, res) => {
+    Cart.findAll({
+        where:{
+              currentUser: req.user.id
+        }
+      
 
+    }).then((cart)=>{
+            for(var p=0;p<cart.length;p++ ){
+                Item.update({
+                    existed:''
+
+                },{
+                    where:{
+                        id:cart[p].itemID
+                    }
+
+                })
+            }
+    })
+
+
+    Cart.destroy({
+        where: {
+            currentUser: req.user.id
+        }
+    }).then((userCart) => {
+        // for (var i = 0; i < userCart.length; i++) {
+        //     Cart.destory({
+        //         where: {
+        //             id: userCart[i].id
+        //         }
+        //     })
+        // }
+
+
+
+        function myFunc(arg) {
+            res.redirect('/item/showAllCart')
+        }
+
+        setTimeout(myFunc, 500, 'funky');
+
+
+    })
+
+
+})
 
 
 
@@ -731,6 +779,10 @@ router.get('/displayUserItem', ensureAuthenticated, (req, res) => {
         });
     }).catch(err => console.log(err));
 })
+
+
+
+
 
 const Sequelize = require('sequelize');
 
