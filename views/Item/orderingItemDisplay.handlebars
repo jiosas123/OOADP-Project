@@ -1,124 +1,150 @@
-<div class='container' style='width:80%; margin-left:10%;'>
+<div class='container' style='width:80%; margin-left:10%;'> <div class="card card-body">
+    {{#if item}}
+    <form action='/item/addToCart/{{item.id}}?_method=put' method='POST'>
 
-    <div class="card card-body">
-        {{#if item}}
-        <form action='/item/addToCart/{{item.id}}?_method=put' method='POST'>
+        <div class='row' style='font-size:1.5em'>
+            <div class='col-lg-5'>
+                <label> Item: {{item.itemName}}</label>
+                <label>&nbsp;&nbsp;&nbsp;</label>
+                <label> Available Quantity: {{item.Quantity}}</label>
+                <label>&nbsp;&nbsp;&nbsp;</label>
+                <label>Cost:$<span id='costHere'>{{item.itemPrice}}</span></label>
+                <br>
+                <label>Created by: {{item.username}}</label>
+            </div>
 
-            <div class='row' style='font-size:1.5em'>
-                <div class='col-lg-5'>
-                    <label> Item: {{item.itemName}}</label>
-                    <label>&nbsp;&nbsp;&nbsp;</label>
-                    <label> Available Quantity: {{item.Quantity}}</label>
-                    <label>&nbsp;&nbsp;&nbsp;</label>
-                    <label>Cost:$<span id='costHere'>{{item.itemPrice}}</span></label>
-                    <br>
-                    <label>Created by: {{item.username}}</label>
-                </div>
+        </div>
+        <div class='row'>
+            <div class="col-lg-5">
+                <a href="{{item.posterURL}}" data-title="{{title}}" data-toggle="lightbox">
+                    <img src="{{item.posterURL}}" alt="Poster unavailable" style="width:250px;height:250px;">
+                </a></div>
+            <div class='col-lg-7'>
+
+                <label class='Ace_colorChange' id='displayOnly{{item.id}}' style="display:none;">
+                    {{item.itemName}} has no stock.
+                </label>
+                <label class='Ace_colorChange' id='display{{item.id}}' style="display:none;">
+                    Invaild Quantity entered for {{item.itemName}}
+                </label>
+
+                <label>Ordering</label>
+                <input type='number' class='amountToBuy' name='amountToBuy' id='amountToBuy' value='1' min='1'
+                    max="{{item.Quantity}}" onchange="totalPriceChange()">
+                <span> &nbsp;&nbsp;&nbsp; Total Cost: $<span id="SentHere">{{item.itemPrice}}</span>
+                </span>
+                <br>
+                {{!-- possible to put total here --}}
+                <label>Day To collect :</label>
+                <select name='dayTobuy' required>
+                    {{#if item.dayMonday}}
+                    <option value='Monday' id='monday'>
+
+                    </option>
+                    {{/if}}
+
+                    {{#if item.dayTuesday}}
+                    <option value='Tuesday' id='tuesday'>Tuesday</option>
+                    {{/if}}
+
+                    {{#if item.dayWednesday}}
+                    <option value='Wednesday' id='wednesday'>Wednesday</option>
+                    {{/if}}
+
+                    {{#if item.dayThursday}}
+                    <option value='Thursday' id='thursday'>Thursday</option>
+                    {{/if}}
+                    {{#if item.dayFriday}}
+                    <option value='Friday' id='friday'>Friday</option>
+                    {{/if}}
+
+                    {{#if item.daySaturday}}
+                    <option value='Saturday' id='saturday'>Saturday</option>
+                    {{/if}}
+
+                    {{#if item.daySunday}}
+                    <option value='Sunday' id='sunday'>Sunday</option>
+                    {{/if}}
+                </select>
+                <br>
+                <label>Time to collect</label>
+                <select name='TimeToCollect' required>
+                    {{#if item.morning}}
+                    <option value='9am'>9am</option>
+                    <option value='10am'>10am</option>
+                    <option value='11am'>11am</option>
+                    {{/if}}
+                    {{#if item.afternoon}}
+                    <option value='1pm'>1pm</option>
+                    <option value="2pm">2pm</option>
+                    <option value='3pm'>3pm</option>
+                    {{/if}}
+                    {{#if item.evening}}
+                    <option value='5pm'>5pm</option>
+                    <option value="6pm">6pm</option>
+                    <option value='7pm'>7pm</option>
+                    <option value='8pm'>8pm</option>
+                    {{/if}}
+                </select>
+                {{!-- possible to put date here --}}
+                <button style="width:100%;" type='submit'
+                    onclick="CheckQuantity('amountToBuy','displayOnly{{item.id}}','display{{item.id}}')"> &nbsp;
+                    Order
+                    &nbsp;
+                </button>
+
 
             </div>
-            <div class='row'>
-                <div class="col-lg-5">
-                    <a href="{{item.posterURL}}" data-title="{{title}}" data-toggle="lightbox">
-                        <img src="{{item.posterURL}}" alt="Poster unavailable" style="width:250px;height:250px;">
-                    </a></div>
-                <div class='col-lg-7'>
+        </div>
+        <div class='row' style="margin-bottom: 20px;">
 
-                    <label class='Ace_colorChange' id='displayOnly{{item.id}}' style="display:none;">
-                        {{item.itemName}} has no stock.
-                    </label>
-                    <label class='Ace_colorChange' id='display{{item.id}}' style="display:none;">
-                        Invaild Quantity entered for {{item.itemName}}
-                    </label>
-
-                    <label>Ordering</label>
-                    <input type='number' class='amountToBuy' name='amountToBuy' id='amountToBuy' value='1' min='1'
-                        max="{{item.Quantity}}" onchange="totalPriceChange()">
-                    <span> &nbsp;&nbsp;&nbsp; Total Cost: $<span id="SentHere">{{item.itemPrice}}</span>
-                    </span> 
-                    <br>
-                    {{!-- possible to put total here --}}
-                    <label>Day To collect :</label>
-                    <select name='dayTobuy' required>
-                        {{#if item.dayMonday}}
-                        <option value='Monday'>Monday</option>
-                        {{/if}}
-
-                        {{#if item.dayTueday}}
-                        <option value='Tuesday'>Tuesday</option>
-                        {{/if}}
-
-                        {{#if item.dayWednesday}}
-                        <option value='Wednesday'>Wednesday</option>
-                        {{/if}}
-
-                        {{#if item.dayThursday}}
-                        <option value='Thursday'>Thursday</option>
-                        {{/if}}
-                        {{#if item.dayFriday}}
-                        <option value='Friday'>Friday</option>
-                        {{/if}}
-
-                        {{#if item.daySaturday}}
-                        <option value='Saturday'>Saturday</option>
-                        {{/if}}
-
-                        {{#if item.daySunday}}
-                        <option value='Sunday'>Sunday</option>
-                        {{/if}}
-                    </select>
-                    <br>
-                    <label>Time to collect</label>
-                    <select name='TimeToCollect' required>
-                        {{#if item.morning}}
-                        <option value='9am'>9am</option>
-                        <option value='10am'>10am</option>
-                        <option value='11am'>11am</option>
-                        {{/if}}
-                        {{#if item.afternoon}}
-                        <option value='1pm'>1pm</option>
-                        <option value="2pm">2pm</option>
-                        <option value='3pm'>3pm</option>
-                        {{/if}}
-                        {{#if item.evening}}
-                        <option value='5pm'>5pm</option>
-                        <option value="6pm">6pm</option>
-                        <option value='7pm'>7pm</option>
-                        <option value='8pm'>8pm</option>
-                        {{/if}}
-                    </select>
-                    {{!-- possible to put date here --}}
-                    <button style="width:100%;" type='submit'
-                        onclick="CheckQuantity('amountToBuy','displayOnly{{item.id}}','display{{item.id}}')"> &nbsp;
-                        Order
-                        &nbsp;
-                    </button>
-
-
-                </div>
-            </div>
-            <div class='row' style="margin-bottom: 20px;">
-
-                <div class='col-lg-12'>
-                    <label>
-                        Desciption:
-                    </label>
-                    <br>
-                    <textarea rows="7" class="form-control" disabled> {{item.itemDescription}}
+            <div class='col-lg-12'>
+                <label>
+                    Desciption:
+                </label>
+                <br>
+                <textarea rows="7" class="form-control" disabled> {{item.itemDescription}}
                 </textarea>
 
-                </div>
-
             </div>
 
+        </div>
+
+        <div id='monday' style='display:none;'>
+
+        </div>
 
 
+        <div id='tuesday' style='display:none;'>
 
-        </form>
-        {{else}}
-        <h3>Item does not exist, or has been deleted</h3>
+        </div>
 
-        {{/if}}
-    </div>
+        <div id='wednesday' style='display:none;'>
+
+        </div>
+
+        <div id='thursday' style='display:none;'>
+
+        </div>
+
+        <div id='friday' style='display:none;'>
+
+        </div>
+
+        <div id='saturday' style='display:none;'>
+
+        </div>
+
+        <div id='sunday' style='display:none;'>
+
+        </div>
+
+    </form>
+    {{else}}
+    <h3>Item does not exist, or has been deleted</h3>
+
+    {{/if}}
+</div>
 </div>
 <script>
 
@@ -129,5 +155,220 @@
         console.log(x)
         console.log(x * y)
         document.getElementById('SentHere').innerHTML = y * x;
+    }
+
+
+    window.onload = setTimeout(getDatesNow(), 1000);
+    function getDatesNow() {
+        var today = new Date();
+        var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date + ' ' + time;
+
+        var nextDay6 = new Date();
+        nextDay6.setDate((today.getDate() + 7))
+
+        var nextDay0 = new Date();
+        nextDay0.setDate((today.getDate() + 1))
+
+        var nextDay1 = new Date()
+        nextDay1.setDate((today.getDate() + 2))
+
+        var nextDay2 = new Date()
+        nextDay2.setDate((today.getDate() + 3))
+
+        var nextDay3 = new Date()
+        nextDay3.setDate((today.getDate() + 4))
+
+        var nextDay4 = new Date()
+        nextDay4.setDate((today.getDate() + 5))
+
+        var nextDay5 = new Date()
+        nextDay5.setDate((today.getDate() + 6))
+
+
+        if (today.getDay() == 1) { // monday
+
+            document.getElementById('monday').value = nextDay6.getDate() + '-' + (nextDay6.getMonth() + 1) + '-' + nextDay6.getFullYear() + ' (Monday)';
+            document.getElementById('monday').innerHTML = nextDay6.getDate() + '-' + (nextDay6.getMonth() + 1) + '-' + nextDay6.getFullYear() + ' (Monday)';
+
+            document.getElementById('tuesday').value = nextDay0.getDate() + '-' + (nextDay0.getMonth() + 1) + '-' + nextDay0.getFullYear() + ' (Tuesday)';
+            document.getElementById('tuesday').innerHTML = nextDay0.getDate() + '-' + (nextDay0.getMonth() + 1) + '-' + nextDay0.getFullYear() + ' (Tuesday)';
+
+            document.getElementById('wednesday').value = nextDay1.getDate() + '-' + (nextDay1.getMonth() + 1) + '-' + nextDay1.getFullYear()  + ' (Wednesday)';
+            document.getElementById('wednesday').innerHTML = nextDay1.getDate() + '-' + (nextDay1.getMonth() + 1) + '-' + nextDay1.getFullYear()  + ' (Wednesday)';
+
+            document.getElementById('thursday').value = nextDay2.getDate() + '-' + (nextDay2.getMonth() + 1) + '-' + nextDay2.getFullYear() + ' (Thursday)';
+            document.getElementById('thursday').innerHTML = nextDay2.getDate() + '-' + (nextDay2.getMonth() + 1) + '-' + nextDay2.getFullYear() +  ' (Thursday)';
+
+            document.getElementById('friday').value = nextDay3.getDate() + '-' + (nextDay3.getMonth() + 1) + '-' + nextDay3.getFullYear() + ' (Friday)';
+            document.getElementById('friday').innerHTML = nextDay3.getDate() + '-' + (nextDay3.getMonth() + 1) + '-' + nextDay3.getFullYear() + ' (Friday)';
+
+            document.getElementById('saturday').value = nextDay4.getDate() + '-' + (nextDay4.getMonth() + 1) + '-' + nextDay4.getFullYear()  + ' (Saturday)';
+            document.getElementById('saturday').innerHTML = nextDay4.getDate() + '-' + (nextDay4.getMonth() + 1) + '-' + nextDay4.getFullYear()  + ' (Saturday)';
+
+            document.getElementById('sunday').value = nextDay5.getDate() + '-' + (nextDay5.getMonth() + 1) + '-' + nextDay5.getFullYear()  + ' (Sunday)';
+            document.getElementById('sunday').innerHTML = nextDay5.getDate() + '-' + (nextDay5.getMonth() + 1) + '-' + nextDay5.getFullYear()  + ' (Sunday)';
+
+
+
+        } else if (today.getDay() == 2) { //tueday
+
+
+            document.getElementById('monday').value = nextDay5.getDate() + '-' + (nextDay5.getMonth() + 1) + '-' + nextDay5.getFullYear() + ' (Monday)';
+            document.getElementById('monday').innerHTML = nextDay5.getDate() + '-' + (nextDay5.getMonth() + 1) + '-' + nextDay5.getFullYear() + ' (Monday)';
+
+            document.getElementById('tuesday').value = nextDay6.getDate() + '-' + (nextDay6.getMonth() + 1) + '-' + nextDay6.getFullYear() + ' (Tuesday)';
+            document.getElementById('tuesday').innerHTML = nextDay6.getDate() + '-' + (nextDay6.getMonth() + 1) + '-' + nextDay6.getFullYear() + ' (Tuesday)';
+
+            document.getElementById('wednesday').value = nextDay0.getDate() + '-' + (nextDay0.getMonth() + 1) + '-' + nextDay0.getFullYear() +  ' (Wednesday)';
+            document.getElementById('wednesday').innerHTML = nextDay0.getDate() + '-' + (nextDay0.getMonth() + 1) + '-' + nextDay0.getFullYear()  + ' (Wednesday)';
+
+            document.getElementById('thursday').value = nextDay1.getDate() + '-' + (nextDay1.getMonth() + 1) + '-' + nextDay1.getFullYear()  + ' (Thursday)';
+            document.getElementById('thursday').innerHTML = nextDay1.getDate() + '-' + (nextDay1.getMonth() + 1) + '-' + nextDay1.getFullYear()  + ' (Thursday)';
+
+            document.getElementById('friday').value = nextDay2.getDate() + '-' + (nextDay2.getMonth() + 1) + '-' + nextDay2.getFullYear()  + ' (Friday)';
+            document.getElementById('friday').innerHTML = nextDay2.getDate() + '-' + (nextDay2.getMonth() + 1) + '-' + nextDay2.getFullYear()  + ' (Friday)';
+
+            document.getElementById('saturday').value = nextDay3.getDate() + '-' + (nextDay3.getMonth() + 1) + '-' + nextDay3.getFullYear()  + ' (Saturday)';
+            document.getElementById('saturday').innerHTML = nextDay3.getDate() + '-' + (nextDay3.getMonth() + 1) + '-' + nextDay3.getFullYear()  + ' (Saturday)';
+
+            document.getElementById('sunday').value = nextDay4.getDate() + '-' + (nextDay4.getMonth() + 1) + '-' + nextDay4.getFullYear()  + ' (Sunday)';
+            document.getElementById('sunday').innerHTML = nextDay4.getDate() + '-' + (nextDay4.getMonth() + 1) + '-' + nextDay4.getFullYear()  + ' (Sunday)';
+
+
+
+
+        } else if (today.getDay() == 3) { // wednesday
+
+            document.getElementById('monday').value = nextDay4.getDate() + '-' + (nextDay4.getMonth() + 1) + '-' + nextDay4.getFullYear() + ' (Monday)';
+            document.getElementById('monday').innerHTML = nextDay4.getDate() + '-' + (nextDay4.getMonth() + 1) + '-' + nextDay4.getFullYear() + ' (Monday)';
+
+            document.getElementById('tuesday').value = nextDay5.getDate() + '-' + (nextDay5.getMonth() + 1) + '-' + nextDay5.getFullYear() + ' (Tuesday)';
+            document.getElementById('tuesday').innerHTML = nextDay5.getDate() + '-' + (nextDay5.getMonth() + 1) + '-' + nextDay5.getFullYear() + ' (Tuesday)';
+
+            document.getElementById('wednesday').value = nextDay6.getDate() + '-' + (nextDay6.getMonth() + 1) + '-' + nextDay6.getFullYear()  + ' (Wednesday)';
+            document.getElementById('wednesday').innerHTML = nextDay6.getDate() + '-' + (nextDay6.getMonth() + 1) + '-' + nextDay6.getFullYear()  + ' (Wednesday)';
+
+            document.getElementById('thursday').value = nextDay0.getDate() + '-' + (nextDay0.getMonth() + 1) + '-' + nextDay0.getFullYear()  + ' (Thursday)';
+            document.getElementById('thursday').innerHTML = nextDay0.getDate() + '-' + (nextDay0.getMonth() + 1) + '-' + nextDay0.getFullYear()  + ' (Thursday)';
+
+            document.getElementById('friday').value = nextDay1.getDate() + '-' + (nextDay1.getMonth() + 1) + '-' + nextDay1.getFullYear()  + ' (Friday)';
+            document.getElementById('friday').innerHTML = nextDay1.getDate() + '-' + (nextDay1.getMonth() + 1) + '-' + nextDay1.getFullYear() + ' (Friday)';
+
+            document.getElementById('saturday').value = nextDay2.getDate() + '-' + (nextDay2.getMonth() + 1) + '-' + nextDay2.getFullYear()  + ' (Saturday)';
+            document.getElementById('saturday').innerHTML = nextDay2.getDate() + '-' + (nextDay2.getMonth() + 1) + '-' + nextDay2.getFullYear()  + ' (Saturday)';
+
+            document.getElementById('sunday').value = nextDay3.getDate() + '-' + (nextDay3.getMonth() + 1) + '-' + nextDay3.getFullYear()  + ' (Sunday)';
+            document.getElementById('sunday').innerHTML = nextDay3.getDate() + '-' + (nextDay3.getMonth() + 1) + '-' + nextDay3.getFullYear()  + ' (Sunday)';
+
+
+
+
+
+        } else if (today.getDay() == 4) {//thursday
+
+
+            document.getElementById('monday').value = nextDay3.getDate() + '-' + (nextDay3.getMonth() + 1) + '-' + nextDay3.getFullYear() + ' (Monday)';
+            document.getElementById('monday').innerHTML = nextDay3.getDate() + '-' + (nextDay3.getMonth() + 1) + '-' + nextDay3.getFullYear() + ' (Monday)';
+
+            document.getElementById('tuesday').value = nextDay4.getDate() + '-' + (nextDay4.getMonth() + 1) + '-' + nextDay4.getFullYear() + ' (Tuesday)';
+            document.getElementById('tuesday').innerHTML = nextDay4.getDate() + '-' + (nextDay4.getMonth() + 1) + '-' + nextDay4.getFullYear() + ' (Tuesday)';
+
+            document.getElementById('wednesday').value = nextDay5.getDate() + '-' + (nextDay5.getMonth() + 1) + '-' + nextDay5.getFullYear()  + ' (Wednesday)';
+            document.getElementById('wednesday').innerHTML = nextDay5.getDate() + '-' + (nextDay5.getMonth() + 1) + '-' + nextDay5.getFullYear()  + ' (Wednesday)';
+
+            document.getElementById('thursday').value = nextDay6.getDate() + '-' + (nextDay6.getMonth() + 1) + '-' + nextDay6.getFullYear()  + ' (Thursday)';
+            document.getElementById('thursday').innerHTML = nextDay6.getDate() + '-' + (nextDay6.getMonth() + 1) + '-' + nextDay6.getFullYear() + '-' + ' (Thursday)';
+
+            document.getElementById('friday').value = nextDay0.getDate() + '-' + (nextDay0.getMonth() + 1) + '-' + nextDay0.getFullYear()  + ' (Friday)';
+            document.getElementById('friday').innerHTML = nextDay0.getDate() + '-' + (nextDay0.getMonth() + 1) + '-' + nextDay0.getFullYear()  + ' (Friday)';
+
+            document.getElementById('saturday').value = nextDay1.getDate() + '-' + (nextDay1.getMonth() + 1) + '-' + nextDay1.getFullYear()  + ' (Saturday)';
+            document.getElementById('saturday').innerHTML = nextDay1.getDate() + '-' + (nextDay1.getMonth() + 1) + '-' + nextDay1.getFullYear()  + ' (Saturday)';
+
+            document.getElementById('sunday').value = nextDay2.getDate() + '-' + (nextDay2.getMonth() + 1) + '-' + nextDay2.getFullYear()  + ' (Sunday)';
+            document.getElementById('sunday').innerHTML = nextDay2.getDate() + '-' + (nextDay2.getMonth() + 1) + '-' + nextDay2.getFullYear()  + ' (Sunday)';
+
+
+
+        } else if (today.getDay() == 5) {//friday
+
+
+            document.getElementById('monday').value = nextDay2.getDate() + '-' + (nextDay2.getMonth() + 1) + '-' + nextDay2.getFullYear() + ' (Monday)';
+            document.getElementById('monday').innerHTML = nextDay2.getDate() + '-' + (nextDay2.getMonth() + 1) + '-' + nextDay2.getFullYear() + ' (Monday)';
+
+            document.getElementById('tuesday').value = nextDay3.getDate() + '-' + (nextDay3.getMonth() + 1) + '-' + nextDay3.getFullYear() + ' (Tuesday)';
+            document.getElementById('tuesday').innerHTML = nextDay3.getDate() + '-' + (nextDay3.getMonth() + 1) + '-' + nextDay3.getFullYear() + ' (Tuesday)';
+
+            document.getElementById('wednesday').value = nextDay4.getDate() + '-' + (nextDay4.getMonth() + 1) + '-' + nextDay4.getFullYear()  + ' (Wednesday)';
+            document.getElementById('wednesday').innerHTML = nextDay4.getDate() + '-' + (nextDay4.getMonth() + 1) + '-' + nextDay4.getFullYear()  + ' (Wednesday)';
+
+            document.getElementById('thursday').value = nextDay5.getDate() + '-' + (nextDay5.getMonth() + 1) + '-' + nextDay5.getFullYear()  + ' (Thursday)';
+            document.getElementById('thursday').innerHTML = nextDay5.getDate() + '-' + (nextDay5.getMonth() + 1) + '-' + nextDay5.getFullYear()  + ' (Thursday)';
+
+            document.getElementById('friday').value = nextDay6.getDate() + '-' + (nextDay6.getMonth() + 1) + '-' + nextDay6.getFullYear()  + ' (Friday)';
+            document.getElementById('friday').innerHTML = nextDay6.getDate() + '-' + (nextDay6.getMonth() + 1) + '-' + nextDay6.getFullYear()  + ' (Friday)';
+
+            document.getElementById('saturday').value = nextDay0.getDate() + '-' + (nextDay0.getMonth() + 1) + '-' + nextDay0.getFullYear()  + ' (Saturday)';
+            document.getElementById('saturday').innerHTML = nextDay0.getDate() + '-' + (nextDay0.getMonth() + 1) + '-' + nextDay0.getFullYear()  + ' (Saturday)';
+
+            document.getElementById('sunday').value = nextDay1.getDate() + '-' + (nextDay1.getMonth() + 1) + '-' + nextDay1.getFullYear()  + ' (Sunday)';
+            document.getElementById('sunday').innerHTML = nextDay1.getDate() + '-' + (nextDay1.getMonth() + 1) + '-' + nextDay1.getFullYear()  + ' (Sunday)';
+
+
+        } else if (today.getDay() == 6) {//saturday
+            document.getElementById('monday').value = nextDay1.getDate() + '-' + (nextDay1.getMonth() + 1) + '-' + nextDay1.getFullYear() + ' (Monday)';
+            document.getElementById('monday').innerHTML = nextDay1.getDate() + '-' + (nextDay1.getMonth() + 1) + '-' + nextDay1.getFullYear() + ' (Monday)';
+
+            document.getElementById('tuesday').value = nextDay2.getDate() + '-' + (nextDay2.getMonth() + 1) + '-' + nextDay2.getFullYear() + ' (Tuesday)';
+            document.getElementById('tuesday').innerHTML = nextDay2.getDate() + '-' + (nextDay2.getMonth() + 1) + '-' + nextDay2.getFullYear() + ' (Tuesday)';
+
+            document.getElementById('wednesday').value = nextDay3.getDate() + '-' + (nextDay3.getMonth() + 1) + '-' + nextDay3.getFullYear()  + ' (Wednesday)';
+            document.getElementById('wednesday').innerHTML = nextDay3.getDate() + '-' + (nextDay3.getMonth() + 1) + '-' + nextDay3.getFullYear()  + ' (Wednesday)';
+
+            document.getElementById('thursday').value = nextDay4.getDate() + '-' + (nextDay4.getMonth() + 1) + '-' + nextDay4.getFullYear()  + ' (Thursday)';
+            document.getElementById('thursday').innerHTML = nextDay4.getDate() + '-' + (nextDay4.getMonth() + 1) + '-' + nextDay4.getFullYear()  + ' (Thursday)';
+
+            document.getElementById('friday').value = nextDay5.getDate() + '-' + (nextDay5.getMonth() + 1) + '-' + nextDay5.getFullYear()  + ' (Friday)';
+            document.getElementById('friday').innerHTML = nextDay5.getDate() + '-' + (nextDay5.getMonth() + 1) + '-' + nextDay5.getFullYear()  + ' (Friday)';
+
+            document.getElementById('saturday').value = nextDay6.getDate() + '-' + (nextDay6.getMonth() + 1) + '-' + nextDay6.getFullYear()  + ' (Saturday)';
+            document.getElementById('saturday').innerHTML = nextDay6.getDate() + '-' + (nextDay6.getMonth() + 1) + '-' + nextDay6.getFullYear()  + ' (Saturday)';
+
+            document.getElementById('sunday').value = nextDay0.getDate() + '-' + (nextDay0.getMonth() + 1) + '-' + nextDay0.getFullYear()  + ' (Sunday)';
+            document.getElementById('sunday').innerHTML = nextDay0.getDate() + '-' + (nextDay0.getMonth() + 1) + '-' + nextDay0.getFullYear()  + ' (Sunday)';
+
+
+        } else if (today.getDay() == 0) {//sunday
+
+
+            document.getElementById('monday').value = nextDay0.getDate() + '-' + (nextDay0.getMonth() + 1) + '-' + nextDay0.getFullYear() + ' (Monday)';
+            document.getElementById('monday').innerHTML = nextDay0.getDate() + '-' + (nextDay0.getMonth() + 1) + '-' + nextDay0.getFullYear() + ' (Monday)';
+
+            document.getElementById('tuesday').value = nextDay1.getDate() + '-' + (nextDay1.getMonth() + 1) + '-' + nextDay1.getFullYear() + ' (Tuesday)';
+            document.getElementById('tuesday').innerHTML = nextDay1.getDate() + '-' + (nextDay1.getMonth() + 1) + '-' + nextDay1.getFullYear() + ' (Tuesday)';
+
+            document.getElementById('wednesday').value = nextDay2.getDate() + '-' + (nextDay2.getMonth() + 1) + '-' + nextDay2.getFullYear()  + ' (Wednesday)';
+            document.getElementById('wednesday').innerHTML = nextDay2.getDate() + '-' + (nextDay2.getMonth() + 1) + '-' + nextDay2.getFullYear()  + ' (Wednesday)';
+
+            document.getElementById('thursday').value = nextDay3.getDate() + '-' + (nextDay3.getMonth() + 1) + '-' + nextDay3.getFullYear()  + ' (Thursday)';
+            document.getElementById('thursday').innerHTML = nextDay3.getDate() + '-' + (nextDay3.getMonth() + 1) + '-' + nextDay3.getFullYear()  + ' (Thursday)';
+
+            document.getElementById('friday').value = nextDay4.getDate() + '-' + (nextDay4.getMonth() + 1) + '-' + nextDay4.getFullYear()  + ' (Friday)';
+            document.getElementById('friday').innerHTML = nextDay4.getDate() + '-' + (nextDay4.getMonth() + 1) + '-' + nextDay4.getFullYear()  + ' (Friday)';
+
+            document.getElementById('saturday').value = nextDay5.getDate() + '-' + (nextDay5.getMonth() + 1) + '-' + nextDay5.getFullYear()  + ' (Saturday)';
+            document.getElementById('saturday').innerHTML = nextDay5.getDate() + '-' + (nextDay5.getMonth() + 1) + '-' + nextDay5.getFullYear()  + ' (Saturday)';
+
+            document.getElementById('sunday').value = nextDay6.getDate() + '-' + (nextDay6.getMonth() + 1) + '-' + nextDay6.getFullYear()  + ' (Sunday)';
+            document.getElementById('sunday').innerHTML = nextDay6.getDate() + '-' + (nextDay6.getMonth() + 1) + '-' + nextDay6.getFullYear()  + ' (Sunday)';
+
+
+
+        }
+
+
+
     }
 </script>

@@ -27,19 +27,25 @@ function CheckQuantity(Quantity,showit,showit2){
 	const min = document.getElementById(Quantity).min;
 	const amount = document.getElementById(Quantity).value;
 	console.log(amount)
-	console.log(max)
+	console.log(max)		
+
 	if(max==0){
 		document.getElementById(showit).style.display='block';
 		console.log(showit)
 
 
-	}else if(max<amount || min>amount){
-		console.log(showit2)
-		document.getElementById(showit2).style.display='block';
+	}
+	// if(max<amount){
+	
+	// }
+	if(max>=Quantity>=min){
+
+			document.getElementById(showit).style.display='none';
+		document.getElementById(showit2).style.display='none';
 
 	}else{
-		document.getElementById(showit).style.display='none';
-		document.getElementById(showit2).style.display='none';
+		// 	console.log(showit2)
+	document.getElementById(showit2).style.display='block';
 
 	}
 

@@ -325,7 +325,7 @@ router.get('/ShowAllCart', ensureAuthenticated, (req, res) => {
             ],
             raw: true
         }).then((cartAll) => {
-        
+
             res.render('Item/CartHolder', { title: title, cart: cartAll, total: cart.count }) // renders views/index.handlebars)
 
 
@@ -382,7 +382,7 @@ router.put('/addToCart/:id', ensureAuthenticated, (req, res) => {
         let itemDescription = item.itemDescription;
         let posterURL = item.posterURL;
         let userId = item.userId;
-        let itemPrice = item.itemPrice*req.body.amountToBuy;
+        let itemPrice = item.itemPrice * req.body.amountToBuy;
         let Halaltype = item.Halaltype;
         let Vegtype = item.Vegtype;
         let username = item.username;
@@ -464,7 +464,7 @@ router.get('/deleteInCart/:id', ensureAuthenticated, (req, res) => {
                         }
                     }).then((cart) => {
                         // For icons to use, go to https://glyphsearch.com/
-                     
+
                         res.redirect('/item/ShowAllCart');
                     }).catch(err => console.log(err));
                 })
@@ -496,7 +496,7 @@ router.get('/deleteInCart2/:id', ensureAuthenticated, (req, res) => {
 
                 }).then((cart) => {
 
-                  
+
                     Cart.destroy({
                         where: {
                             itemID: itemID,
@@ -564,7 +564,7 @@ router.get('/delete/:id', ensureAuthenticated, (req, res) => {
 
                 function myFunc(arg) {
 
-                  
+
                     res.redirect('/profile/profile');
                 }
 
@@ -595,79 +595,88 @@ router.get('/displayItemDesciption/:id', (req, res) => {
 });
 
 
-router.put('/boughtItem/:id', (req, res) => {
+router.get('/boughtItem/:id', (req, res) => {
     var itemID = req.params.id;
-    var amountbought = req.body.amountToBuy;
     Cart.findOne({
 
         where: {
             id: itemID
         }
     }).then((cart) => {
-        if (cart.Quantity != 0) {
+        console.log(cart.itemID)
 
+        Item.findOne({
+            where: {
+                id: cart.itemID
+            }
+        }).then((things) => {
+            if (cart.Quantity<=things.Quantity ) {
+                
 
-            var final = cart.Quantity - amountbought;
-            Item.update({
-                Quantity: final,
-                existed: ''
-            }, {
+                var final = things.Quantity-cart.Quantity ;
+                Item.update({
+                    Quantity: final,
+                    existed: ''
+                }, {
+                        where: {
+                            id: cart.itemID
+                        }
+                    })
+                Cart.destroy({
                     where: {
-                        id: cart.itemID
+                        id: itemID
                     }
                 })
-            Cart.destroy({
-                where: {
-                    id: itemID
-                }
-            })
 
 
 
-            Cart.findOne({
-                where: {
-                    id: itemID
-                }
-            }).then((found) => {
-                var totalcost = amountbought * found.itemPrice
-                var today = new Date();
-                var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-                var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-                // var dateTime = date + ' ' + time;
-                let itemName = found.itemName;
-                let QuantityBought = amountbought;
-                let datePurchased = date;
-                let posterURL = found.posterURL;
-                let itemPrice = totalcost;
-                let currentUser = req.user.name;
-                let dateTime = time;
-                History.create({
-                    itemName,
-                    QuantityBought,
-                    datePurchased,
-                    itemPrice,
-                    posterURL,
-                    currentUser,
-                    dateTime
+                Cart.findOne({
+                    where: {
+                        id: itemID
+                    }
+                }).then((found) => {
+                    var totalcost = found.itemPrice
+                    var today = new Date();
+                    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+                    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                    // var dateTime = date + ' ' + time;
+                    let itemName = found.itemName;
+                    let QuantityBought = found.Quantity;
+                    let datePurchased = date;
+                    let posterURL = found.posterURL;
+                    let itemPrice = totalcost;
+                    let currentUser = req.user.name;
+                    let dateTime = time;
+                    History.create({
+                        itemName,
+                        QuantityBought,
+                        datePurchased,
+                        itemPrice,
+                        posterURL,
+                        currentUser,
+                        dateTime
 
 
+                    })
                 })
-            })
+                function myFunc(arg) {
+                    alertMessage(res, 'success', 'Ordered ' + cart.Quantity + " set" + ' of ' + cart.itemName, true)
+                    res.redirect('/item/ShowAllCart')
+                }
 
+                setTimeout(myFunc, 500, 'funky');
+            } else {
+                alertMessage(res, 'danger', cart.itemName + 'Ran out of stock ', true)
 
-
-
-
-            function myFunc(arg) {
-                alertMessage(res, 'success', 'Ordered ' + amountbought + " set" + ' of ' + cart.itemName, true)
-                res.redirect('/item/ShowAllCart')
             }
 
-            setTimeout(myFunc, 500, 'funky');
-        } else {
-            alertMessage(res, 'danger', cart.itemName + ' out of stock', true)
+        })
 
-        }
+
+
+
+
+
     })
 })
 

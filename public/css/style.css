@@ -256,3 +256,14 @@ opacity: 0.5;
   color:black;
   background-color: white;
 }
+#ACE_order_div{
+  background-color:lightgreen; 
+  text-decoration: none;
+  color:white;
+}
+#ACE_order_div:hover {
+ background-color:grey;
+  opacity: 0.4;
+color:blue;
+  text-decoration: none;
+}
