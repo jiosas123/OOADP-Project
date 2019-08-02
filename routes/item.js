@@ -307,18 +307,17 @@ router.get('/ShowAllCart', ensureAuthenticated, (req, res) => {
             ],
             raw: true
         }).then((cartAll) => {
-            console.log('im here boyyyyyyyyyyyyyyyyyyyyyyyyyy')
             var today = new Date();
             var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
             // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
             for (var i = 0; i < cartAll.length; i++) {
                 var dd = cartAll[i].DaysAvailable
                 console.log(dd)
-                var numnum = dd.indexOf('(')
+                var numnum = dd.indexOf(' ')
                 var newdate = dd.substring(0, numnum)
                 console.log(numnum)
                 console.log(newdate)
-                if (date > newdate) {
+                if (date > newdate|| date==newdate) {
                     Item.update({
                         existed: ''
                     }, {
@@ -350,7 +349,6 @@ router.get('/ShowAllCart', ensureAuthenticated, (req, res) => {
                 raw: true
 
             }).then((cartDis) => {
-                console.log('asdasdasdasd')
 
                 res.render('Item/CartHolder', { title: title, cart: cartDis, total: cart.count }) // renders views/index.handlebars)
 
@@ -641,18 +639,17 @@ router.get('/boughtItem/:id', (req, res) => {
     }).then((cartAll) => {
 
         
-        console.log('im here boyyyyyyyyyyyyyyyyyyyyyyyyyy')
         var today = new Date();
         var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
         // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         for (var i = 0; i < cartAll.length; i++) {
             var dd = cartAll[i].DaysAvailable
             console.log(dd)
-            var numnum = dd.indexOf('(')
+            var numnum = dd.indexOf(' ')
             var newdate = dd.substring(0, numnum)
             console.log(numnum)
             console.log(newdate)
-            if (date > newdate) {
+            if (date > newdate || date==newdate) {
                 Item.update({
                     existed: ''
                 }, {
