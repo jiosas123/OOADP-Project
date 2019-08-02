@@ -205,28 +205,11 @@ router.put('/saveEditedItem/:id', ensureAuthenticated, (req, res) => {
             }
         }).then((cat) => {
             for (var i = 0; i < cat.length; i++) {
-                Cart.update({
-
-                    itemName,
-                    itemDescription,
-                    posterURL,
-                    userId,
-                    itemPrice,
-                    Halaltype,
-                    Vegtype,
-                    DaysAvailable,
-                    LocationD,
-                    dateTimeItem,
-                    Cuisine,
-                    Quantity,
-                    timeAvailable
-
-
-                }, {
-                        where: {
-                            id: cat[i].id
-                        }
-                    })
+                Cart.destroy({
+                    where: {
+                        id: cat[i].id
+                    }
+                })
 
 
             }//endForLoop
@@ -311,7 +294,6 @@ router.get('/ShowAllCart', ensureAuthenticated, (req, res) => {
 
         }
     }).then((cart) => {
-
         //
         Cart.findAll({
             where: {
@@ -325,11 +307,63 @@ router.get('/ShowAllCart', ensureAuthenticated, (req, res) => {
             ],
             raw: true
         }).then((cartAll) => {
+            console.log('im here boyyyyyyyyyyyyyyyyyyyyyyyyyy')
+            var today = new Date();
+            var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+            // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            for (var i = 0; i < cartAll.length; i++) {
+                var dd = cartAll[i].DaysAvailable
+                console.log(dd)
+                var numnum = dd.indexOf('(')
+                var newdate = dd.substring(0, numnum)
+                console.log(numnum)
+                console.log(newdate)
+                if (date > newdate) {
+                    Item.update({
+                        existed: ''
+                    }, {
+                            where: {
+                                id: cartAll[i].itemID
+                            }
 
-            res.render('Item/CartHolder', { title: title, cart: cartAll, total: cart.count }) // renders views/index.handlebars)
-
-
+                        })
+                    Cart.destroy({
+                        where: {
+                            id: cartAll[i].id
+                        }
+                    })
+                }
+            }
         })
+        function myFunc(arg) {
+
+            Cart.findAll({
+                where: {
+                    currentUser: req.user.id
+
+                }
+
+                , order: [
+                    ['dateInCart', 'DESC'],
+                    ['TimeInCart', 'DESC']
+                ],
+                raw: true
+
+            }).then((cartDis) => {
+                console.log('asdasdasdasd')
+
+                res.render('Item/CartHolder', { title: title, cart: cartDis, total: cart.count }) // renders views/index.handlebars)
+
+
+
+
+            })
+        }
+        setTimeout(myFunc, 500, 'funky');
+
+
+
+
         //
 
     })
@@ -597,23 +631,63 @@ router.get('/displayItemDesciption/:id', (req, res) => {
 
 router.get('/boughtItem/:id', (req, res) => {
     var itemID = req.params.id;
+
+
+    Cart.findAll({
+        where: {
+            currentUser: req.user.id
+
+        }
+    }).then((cartAll) => {
+
+        
+        console.log('im here boyyyyyyyyyyyyyyyyyyyyyyyyyy')
+        var today = new Date();
+        var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+        // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        for (var i = 0; i < cartAll.length; i++) {
+            var dd = cartAll[i].DaysAvailable
+            console.log(dd)
+            var numnum = dd.indexOf('(')
+            var newdate = dd.substring(0, numnum)
+            console.log(numnum)
+            console.log(newdate)
+            if (date > newdate) {
+                Item.update({
+                    existed: ''
+                }, {
+                        where: {
+                            id: cartAll[i].itemID
+                        }
+
+                    })
+                Cart.destroy({
+                    where: {
+                        id: cartAll[i].id
+                    }
+                })
+            }
+        }
+    })
+     function myworking(arg) {
+         console.log("this is secondytyttytytytytytyttytyytytytytytyt");
     Cart.findOne({
 
         where: {
             id: itemID
         }
     }).then((cart) => {
+        if(cart){
         console.log(cart.itemID)
-
         Item.findOne({
             where: {
                 id: cart.itemID
             }
         }).then((things) => {
-            if (cart.Quantity<=things.Quantity ) {
-                
+            if (cart.Quantity <= things.Quantity) {
 
-                var final = things.Quantity-cart.Quantity ;
+
+                var final = things.Quantity - cart.Quantity;
                 Item.update({
                     Quantity: final,
                     existed: ''
@@ -663,21 +737,24 @@ router.get('/boughtItem/:id', (req, res) => {
                     alertMessage(res, 'success', 'Ordered ' + cart.Quantity + " set" + ' of ' + cart.itemName, true)
                     res.redirect('/item/ShowAllCart')
                 }
-
+            
                 setTimeout(myFunc, 500, 'funky');
+                
             } else {
                 alertMessage(res, 'danger', cart.itemName + 'Ran out of stock ', true)
-
+                res.redirect('/item/ShowAllCart')
             }
 
         })
-
-
-
-
-
-
+    }else{
+       
+    alertMessage(res,'danger','All dates before today are deleted',true)
+        res.redirect('/item/showAllCart')
+    }
     })
+
+}
+    setTimeout(myworking, 500, 'funky');
 })
 
 
