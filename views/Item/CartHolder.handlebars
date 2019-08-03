@@ -1,12 +1,21 @@
 <h1 class='display-4' style="text-align:center">Cart</h1>
-<p class='lead' style="text-align:center">The place you order your food</p>
+<p class='lead' style="text-align:center">The place you finalize order your food</p>
 
 <br>
 
 
-<div class='container'>
+<div class='container' >
 	<div class='row' style="width:80%; margin-left:10%;">
-		<div class='col-lg-10'> </div>
+		<div class='col-lg-8'> </div>
+		<div class='col-lg-2'>
+			<a href='/item/buyAll' style='text-decoration:none;'>
+				<div id='ACEClearButton' style='font-size:1em; text-align:center;'>
+					Order all
+
+				</div>
+			</a>
+
+		</div>
 		<div class='col-lg-2'>
 			<a href='/item/clear' style="text-decoration:none;">
 				<div id="ACEClearButton" style=" font-size:1em;text-align:center; ">Clear cart</div>
@@ -65,40 +74,32 @@
 
 
 				</div>
+				<div class='col-lg-2'>
+					<a href="/item/deleteInCart/{{id}}" class="card-link">
+						<i class="fas fa-pencil-alt">Remove from Cart</i>
+					</a>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<a href='/item/boughtItem/{{id}}' class='cart-link' style="text-decoration:none;">
+						<div id='ACE_order_div'
+							style="width:100%; height:50px;  text-align:center;text-decoration:none;">
 
+							Order
 
+						</div>
 
+					</a>
 
-
-			
-
-
-
-			<div class='col-lg-2'>
-				<a href="/item/deleteInCart/{{id}}" class="card-link">
-					<i class="fas fa-pencil-alt">Remove from Cart</i>
-				</a>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<a href='/item/boughtItem/{{id}}' class='cart-link' style="text-decoration:none;">
-				<div id='ACE_order_div' style="width:100%; height:50px;  text-align:center;text-decoration:none;" >
-	
-						Order
-
+					{{!-- put buy here to complete the transaction --}}
 				</div>
-				
-				</a>
-							
-							{{!-- put buy here to complete the transaction --}}
-</div>
 			</div>
 		</div>
 		{{!-- Row ends here outer --}}
-</div>
+
 </form>
 
 {{/each}}
