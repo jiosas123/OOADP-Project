@@ -239,7 +239,7 @@
             document.getElementById("bac").style.display = "inline-block"
             var num = (parseInt(document.getElementById("pgno").innerText) + 1)
             for(i=0;i<every.length;i++){
-                if(num*9-9 <= i && i < num*9){
+                if(num*9-9 <= i && i < num*9 && document.getElementById("filt0s")){
                     every[i].style.display = "inline-block"
                 }
                 else{
@@ -268,6 +268,7 @@
         }
 
         function filtout(that){
+            var counted = 1
             if((every.length - o.length) < 10 && document.getElementById("pgsys") != null){
                 document.getElementById("pgsys").style.display = "none"
             }
@@ -279,19 +280,15 @@
                 o[i].closest(".listing").style.display = "none"
             }
             for(i=0; i<every.length; i++){
-                if(every[i].style.display == "none"){
-                    if(every[i].children[2].classList.contains("out")){}
-                    else{
-                        every[i].style.display = "inline-block"
-                    }
+                if(every[i].children[2].classList.contains("out")){}
+                else if(counted>9){
+                    every[i].style.display = "none"
+                }
+                else{
+                    counted += 1
+                    every[i].style.display = "inline-block"
                 }
             }
-            if((every.length - o.length) < 10 && document.getElementById("pgsys") != null){
-                forw.style.display = "inline-block"
-            }
-            that.textContent = "Toggle out-of-stock listings (off)"
-            that.setAttribute( "onclick", "javascript: filtin(this)")
-        }
         function filtin(that){
             if(every.length > 9 && document.getElementById("pgsys") != null) {
                 document.getElementById("pgsys").style.display = "block"
@@ -309,7 +306,7 @@
                     every[i].style.display = "none"
                 }
             }
-            that.textContent = "Toggle out-of-stock listings (on)"
+            that.textContent = "Toggle out-of-stock listings (off)"
             that.setAttribute( "onclick", "javascript: filtout(this)")
         }
         $("#sortAlphA").click(function () {
