@@ -18,14 +18,14 @@
         <button id="sortPriceD" class="desce sorts">Price<br>(Descending)</button>
     </div>
     <div id="filts">
-        {{!-- <button class='filter2' value='Chinese' onclick='filtCuisineChinese(this)'>Chinese</button>
-        <button class='filter2' value='Malay'>Malay</button>
-        <button class='filter2' value='Indian'>Indian</button>
-        <button class='filter2' value='Western'>Western</button>
-        <button class='filter2' value='Korean'>Korean</button>
-        <button class='filter2' value='Japanese' onclick=''>Japanese</button> --}}
+        {{!-- <button id="filtChi" class="filts" onclick="filtCuisineChinese(this)">Chinese (included)</button>
+        <button id="filtMal" class="filts" onclick="filtCuisineMalay(this)">Malay (included)</button>
+        <button id="filtInd" class="filts" onclick="filtCuisineIndian(this)">Indian (included)</button>
+        <button id="filtWes" class="filts" onclick="filtCuisineWestern(this)">Western (included)</button>
+        <button id="filtKor" class="filts" onclick="filtCuisineKorean(this)">Korean (included)</button>
+        <button id="filtJap" class="filts" onclick="filtCuisineJapanese(this)">Japanese (included)</button> --}}
         
-        <button id="filt0s" class="filts" onclick="filtout(this)"> Toggle out-of-stock listings (on)</button>
+        <button id="filt0s" class="filts" onclick="filtout(this)"> Out-of-stock listings (included)</button>
     </div>
         {{#each listing}}
      
@@ -222,7 +222,7 @@
             document.getElementById("forw").style.display = "inline-block"
             var num = (parseInt(document.getElementById("pgno").innerText) - 1)
             for(i=0;i<every.length;i++){
-                if(num*9-9 <= i && i < num*9){
+                if(num*9-9 <= i && i < num*9 && document.getElementById("filt0s")){
                     every[i].style.display = "inline-block"
                 }
                 else{
@@ -289,6 +289,8 @@
                     every[i].style.display = "inline-block"
                 }
             }
+            that.textContent = "Out-of-stock listings (excluded)"
+            that.setAttribute( "onclick", "javascript: filtin(this)")
         }
         function filtin(that){
             if(every.length > 9 && document.getElementById("pgsys") != null) {
@@ -307,7 +309,7 @@
                     every[i].style.display = "none"
                 }
             }
-            that.textContent = "Toggle out-of-stock listings (off)"
+            that.textContent = "Out-of-stock listings (included)"
             that.setAttribute( "onclick", "javascript: filtout(this)")
         }
         $("#sortAlphA").click(function () {
