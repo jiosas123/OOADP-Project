@@ -1,72 +1,116 @@
 <div class="container">
 	<input id="query"></input>
-	<input id="search" type="button" value="search" class="btn-primary"/>
+	<input id="search" type="button" value="search" class="btn-primary" />
+
+
 	<div class='row'>
 		<div class='col-sm-12 col-md-12 col-lg-12'>
-			<label> Cuisine </label>
+			<label> Cuisine Type </label>
 		</div>
 		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="checkbox" value='Chinese' class='filter' id='Chinesefilter'> Chinese </input>
+			<input type="button" value='Chinese' class='cuisine btn-primary'> </input>
 		</div>
 		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="checkbox" value='Malay' class='filter' id='Malayfilter'> Malay </input>
+			<input type="button" value='Malay' class='cuisine btn-primary'> </input>
 		</div>
 		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="checkbox" value='Indian' class='filter' id='Indianfilter'> Indian </input>
+			<input type="button" value='Indian' class='cuisine btn-primary'> </input>
 		</div>
 		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="checkbox" value='Western' class='filter' id='Westernfilter'> Western </input>
+			<input type="button" value='Western' class='cuisine btn-primary'> </input>
 		</div>
 		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="checkbox" value='Japanese' class='filter' id='Japanesefilter'> Japanese </input>
+			<input type="button" value='Japanese' class='cuisine btn-primary'> </input>
 		</div>
 		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="checkbox" value='Korean' class='filter' id='Koreanfilter'> Korean </input>
+			<input type="button" value='Korean' class='cuisine btn-primary'> </input>
 		</div>
 	</div>
 
 	<div class='row'>
 		<div class='col-sm-12 col-md-12 col-lg-12'>
-			<label> Simple Filter </label>
+			<label> Days Available </label>
 		</div>
 		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='Chinese' class='filter3' id='Chinesefilter3'>  </input>
+			<input type="button" value='Monday' class='day btn-primary'> </input>
 		</div>
 		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='Malay' class='filter3' id='Malayfilter3'>  </input>
+			<input type="button" value='Tuesday' class='day btn-primary'> </input>
 		</div>
 		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='Indian' class='filter3' id='Indianfilter3'>  </input>
+			<input type="button" value='Wednesday' class='day btn-primary'> </input>
 		</div>
 		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='Western' class='filter3' id='Westernfilter3'>  </input>
+			<input type="button" value='Thursday' class='day btn-primary'> </input>
 		</div>
 		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='Japanese' class='filter3' id='Japanesefilter3'>  </input>
+			<input type="button" value='Friday' class='day btn-primary'> </input>
 		</div>
 		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='Korean' class='filter3' id='Koreanfilter3'>  </input>
+			<input type="button" value='Saturday' class='day btn-primary'> </input>
+		</div>
+		<div class='col-sm-12 col-md-6 col-lg-4'>
+			<input type="button" value='Sunday' class='day btn-primary'> </input>
 		</div>
 	</div>
+
+	<div class='row'>
+		<div class='col-sm-12 col-md-12 col-lg-12'>
+			<label> Time </label>
+		</div>
+		<div class='col-sm-12 col-md-6 col-lg-4'>
+			<input type="button" value='morning' class='time btn-primary'> </input>
+		</div>
+		<div class='col-sm-12 col-md-6 col-lg-4'>
+			<input type="button" value='afternoon' class='time btn-primary'> </input>
+		</div>
+		<div class='col-sm-12 col-md-6 col-lg-4'>
+			<input type="button" value='evening' class='time btn-primary'> </input>
+		</div>
+		
+	</div>
+
+	<div class='row'>
+		<div class='col-sm-12 col-md-12 col-lg-12'>
+			<label> Location </label>
+		</div>
+		<div class='col-sm-12 col-md-6 col-lg-4'>
+			<input type="button" value='North' class='location btn-primary'> </input>
+		</div>
+		<div class='col-sm-12 col-md-6 col-lg-4'>
+			<input type="button" value='South' class='location btn-primary'> </input>
+		</div>
+		<div class='col-sm-12 col-md-6 col-lg-4'>
+			<input type="button" value='East' class='location btn-primary'> </input>
+		</div>
+		<div class='col-sm-12 col-md-6 col-lg-4'>
+			<input type="button" value='West' class='location btn-primary'> </input>
+		</div>
+		<div class='col-sm-12 col-md-6 col-lg-4'>
+			<input type="button" value='Central' class='location btn-primary'> </input>
+		</div>
+		
+	</div>
+
 
 	<div class="card card-body">
 		<h3 class="text-primary">Food Listings</h3>
 		<div id="card" class="card border-primary mb-2 w-100 mx-auto">
-		
+
 		</div>
 	</div>
 
 	<script>
-		/*$(document).ready( function() {
-			$("#search").click( function() {
-				var query = $("#query").val();
+		$(document).ready(function (){
+			$(".day").click(function(){
+				var day = $(this).val();
 				$.ajax({
-					url: "/item/search/ajax/" + query,
+					url: "/item/search/ajax/" + day + "/filter3",
 					type: "GET",
-					success: function(data) {
+					success: function (data) {
 						var items = data.items;
 						$("#card").html("");
-						$.each(items, function(index, item) {
+						$.each(items, function (index, item) {
 							var row = `
 							<div class="card-header">
 								<h5 class="card-title">${item.itemName}</h5>
@@ -144,56 +188,18 @@
 							`
 							$("#card").append(row);
 						})
-					} 
+					}
 					
 				})
 			})
-		})*/
-		
+		})
+
 		$(document).ready(function () {
 			$("#search").click(function () {
-				
-				var filterlist = []
-
-				if (document.getElementById("Chinesefilter").checked) {
-					alert("Chinese is checked");
-					filterlist.push(document.getElementById("Chinesefilter").value);
-					alert(filterlist);
-				}
-
-				if (document.getElementById("Malayfilter").checked) {
-					alert("Malay is checked");
-					filterlist.push(document.getElementById("Malayfilter").value);
-					alert(filterlist);
-
-				}
-
-				if (document.getElementById("Indianfilter").checked) {
-					alert("Indian is checked");
-					filterlist.push(document.getElementById("Indianfilter").value);
-				}
-				
-				if (document.getElementById("Westernfilter").checked) {
-					alert("Western is checked");
-					filterlist.push(document.getElementById("Westernfilter").value);
-				}
-
-				if (document.getElementById("Koreanfilter").checked) {
-					alert("Korean is checked");
-					filterlist.push(document.getElementById("Koreanfilter").value);
-				}
-
-				if (document.getElementById("Japanesefilter").checked) {
-					alert("Japanese is checked");
-					filterlist.push(document.getElementById("Japanesefilter").value);
-				}
-
-				/*var filterlist2 = filterlist.split();*/
 				var query = $("#query").val();
 				/*var filter = $(filterlist).each();*/
-				var filter = filterlist
 				$.ajax({
-					url: "/item/search/ajax/" + query + "/" + filter,
+					url: "/item/search/ajax/" + query + "/filter",
 					type: "GET",
 					success: function (data) {
 						var items = data.items;
@@ -285,13 +291,108 @@
 
 
 
-			$(document).ready(function () {
-			$(".filter3").click(function () {
+		$(document).ready(function () {
+			$(".cuisine").click(function () {
 
-				var filter3 = $(this).val();
+				var cuisine = $(this).val();
 
 				$.ajax({
-					url: "/item/search/ajax/" + filter3,
+					url: "/item/search/ajax/" + cuisine + "/filter2",
+					type: "GET",
+					success: function (data) {
+						var items = data.items;
+						$("#card").html("");
+						$.each(items, function (index, item) {
+							var row = `
+							<div class="card-header">
+								<h5 class="card-title">${item.itemName}</h5>
+							</div>
+							<div class="card-body">
+								{{!-- Practical 09 Exercise 02 --}}
+								<div class="row">
+									<div class="col-sm-12 col-md-12 col-lg-2">
+										<a href="${item.posterURL}" data-title="${item.itemName}" data-toggle="lightbox">
+											<img src="${item.posterURL}" alt="Poster unavailable" class="img-thumbnail img-fluid">
+										</a>
+									</div>
+									<div class="col-sm-12 col-md-12 col-lg-8">
+										<div class="row"> {{!-- subtitles, language... --}}
+											<div class="col-sm-12 col-md-6 col-lg-3">
+												<p class="font-italic">Item Price</p>
+												<p class="text-info">
+													${item.itemPrice}
+												</p>
+											</div>
+											<div class="col-sm-12 col-md-6 col-lg-4">
+												<p class="font-italic">Cuisine</p>
+												<p class="text-info">
+													${item.Cuisine}
+												</p>
+											</div>
+											<div class="col-sm-12 col-md-6 col-lg-2">
+												<p class="font-italic">Item Attributes:</p>
+												<p class="text-info">${item.Halaltype}<br>${item.Vegtype}</p>
+											</div>
+											<div class="col-sm-12 col-md-6 col-lg-3">
+												<p class="font-italic">Items in Stock</p>
+												<p class="text-info">${item.Quantity}</p>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-6 col-lg-10">
+												<p class="font-italic">Available During:</p>
+												<p class="text-info">${item.DaysAvailable}<br>${item.timeAvailable}</p>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-12 col-md-6 col-lg-2">
+										<p class="font-italic"></p>
+										<a href="/item/edit/${item.id}" class="card-link">
+											<i class="fas fa-pencil-alt"></i>
+											Edit
+										</a>
+										<a href="/item/delete/${item.id}" class="card-link" data-toggle="confirmation"
+											data-title="Confirm delete?">
+											<i class="far fa-trash-alt"></i>
+											Delete
+										</a>
+									</div>
+								</div>
+							</div>
+
+							<div class="accordion" id="storyAccordion${item.id}">
+								<div class="card-header" id="headingOne${item.id}">
+									<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne${item.id}"
+										aria-expanded="false" aria-controls="collapseOne${item.id}">
+										Item Description<i class="fas fa-chevron-down"></i>
+									</button>
+
+								</div>
+
+								<div id="collapseOne${item.id}" class="collapse" aria-labelledby="headingOne${item.id}"
+									data-parent="#storyAccordion${item.id}">
+									<div class="card-body">
+										${item.itemDescription}
+									</div>
+								</div>
+							</div>
+	
+							`
+							$("#card").append(row);
+
+						})
+					}
+
+				})
+			})
+		})
+
+
+		$(document).ready(function (){
+			$(".time").click(function(){
+				var time = $(this).val();
+				$.ajax({
+					url: "/item/search/ajax/" + time + "/filter4",
 					type: "GET",
 					success: function (data) {
 						var items = data.items;
@@ -375,10 +476,106 @@
 							$("#card").append(row);
 						})
 					}
-
+					
 				})
 			})
 		})
+
+
+		$(document).ready(function (){
+			$(".location").click(function(){
+				var location = $(this).val();
+				$.ajax({
+					url: "/item/search/ajax/" + location + "/filter5",
+					type: "GET",
+					success: function (data) {
+						var items = data.items;
+						$("#card").html("");
+						$.each(items, function (index, item) {
+							var row = `
+							<div class="card-header">
+								<h5 class="card-title">${item.itemName}</h5>
+							</div>
+							<div class="card-body">
+								{{!-- Practical 09 Exercise 02 --}}
+								<div class="row">
+									<div class="col-sm-12 col-md-12 col-lg-2">
+										<a href="${item.posterURL}" data-title="${item.itemName}" data-toggle="lightbox">
+											<img src="${item.posterURL}" alt="Poster unavailable" class="img-thumbnail img-fluid">
+										</a>
+									</div>
+									<div class="col-sm-12 col-md-12 col-lg-8">
+										<div class="row"> {{!-- subtitles, language... --}}
+											<div class="col-sm-12 col-md-6 col-lg-3">
+												<p class="font-italic">Item Price</p>
+												<p class="text-info">
+													${item.itemPrice}
+												</p>
+											</div>
+											<div class="col-sm-12 col-md-6 col-lg-4">
+												<p class="font-italic">Cuisine</p>
+												<p class="text-info">
+													${item.Cuisine}
+												</p>
+											</div>
+											<div class="col-sm-12 col-md-6 col-lg-2">
+												<p class="font-italic">Item Attributes:</p>
+												<p class="text-info">${item.Halaltype}<br>${item.Vegtype}</p>
+											</div>
+											<div class="col-sm-12 col-md-6 col-lg-3">
+												<p class="font-italic">Items in Stock</p>
+												<p class="text-info">${item.Quantity}</p>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-6 col-lg-10">
+												<p class="font-italic">Available During:</p>
+												<p class="text-info">${item.DaysAvailable}<br>${item.timeAvailable}</p>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-12 col-md-6 col-lg-2">
+										<p class="font-italic"></p>
+										<a href="/item/edit/${item.id}" class="card-link">
+											<i class="fas fa-pencil-alt"></i>
+											Edit
+										</a>
+										<a href="/item/delete/${item.id}" class="card-link" data-toggle="confirmation"
+											data-title="Confirm delete?">
+											<i class="far fa-trash-alt"></i>
+											Delete
+										</a>
+									</div>
+								</div>
+							</div>
+
+							<div class="accordion" id="storyAccordion${item.id}">
+								<div class="card-header" id="headingOne${item.id}">
+									<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne${item.id}"
+										aria-expanded="false" aria-controls="collapseOne${item.id}">
+										Item Description<i class="fas fa-chevron-down"></i>
+									</button>
+
+								</div>
+
+								<div id="collapseOne${item.id}" class="collapse" aria-labelledby="headingOne${item.id}"
+									data-parent="#storyAccordion${item.id}">
+									<div class="card-body">
+										${item.itemDescription}
+									</div>
+								</div>
+							</div>
+	
+							`
+							$("#card").append(row);
+						})
+					}
+					
+				})
+			})
+		})
+
+
 	</script>
 
 

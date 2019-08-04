@@ -1020,11 +1020,12 @@ const Sequelize = require('sequelize');
         })
         }).catch (err => console.log(err));
     })*/
-router.get("/search/ajax/:filter3", ensureAuthenticated, (req, res) => {
-    let filter3 = req.params.filter3;
+
+router.get("/search/ajax/:cuisine/filter2", ensureAuthenticated, (req, res) => {
+    let cuisine = req.params.cuisine;
     Item.findAll({
         where: {
-            Cuisine: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("Cuisine")), filter3)
+            Cuisine: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("Cuisine")), 'LIKE', '%' + cuisine + '%'),
         },
         order: [
             ['itemName', 'ASC']
@@ -1037,11 +1038,11 @@ router.get("/search/ajax/:filter3", ensureAuthenticated, (req, res) => {
     }).catch(err => console.log(err));
 })
 
-router.get("/search/ajax/:filter2", ensureAuthenticated, (req, res) => {
-    let filter2 = req.params.filter2;
+router.get("/search/ajax/:day/filter3", ensureAuthenticated, (req, res) => {
+    let day = req.params.day;
     Item.findAll({
         where: {
-            Cuisine: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("Cuisine")), filter2)
+            DaysAvailable: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("DaysAvailable")), 'LIKE', '%' + day + '%'),
         },
         order: [
             ['itemName', 'ASC']
@@ -1054,18 +1055,13 @@ router.get("/search/ajax/:filter2", ensureAuthenticated, (req, res) => {
     }).catch(err => console.log(err));
 })
 
-router.get("/search/ajax/:query/:filter", ensureAuthenticated, (req, res) => {
+
+router.get("/search/ajax/:query/filter", ensureAuthenticated, (req, res) => {
     let query = req.params.query;
-    let filter = req.params.filter;
+    
     Item.findAll({
         where: {
-            /*userId: req.user.id,*/
             itemName: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("itemName")), 'LIKE', '%' + query + '%'),
-            Cuisine: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("Cuisine")), filter),
-            /*Cuisine: 
-                {
-                    [filterlist.filterlist]: filter
-                }*/
         },
         order: [
             ['itemName', 'ASC'],
@@ -1077,6 +1073,43 @@ router.get("/search/ajax/:query/:filter", ensureAuthenticated, (req, res) => {
         })
     }).catch(err => console.log(err));
 })
+
+router.get("/search/ajax/:time/filter4", ensureAuthenticated, (req, res) => {
+    let time = req.params.time;
+    Item.findAll({
+        where: {
+            timeAvailable: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("timeAvailable")), 'LIKE', '%' + time + '%'),
+        },
+        order: [
+            ['itemName', 'ASC']
+        ],
+        raw: true
+    }).then((items) => {
+        res.json({
+            items: items
+        })
+    }).catch(err => console.log(err));
+})
+
+
+router.get("/search/ajax/:location/filter5", ensureAuthenticated, (req, res) => {
+    let location = req.params.location;
+    Item.findAll({
+        where: {
+            LocationD: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col("LocationD")), 'LIKE', '%' + location + '%'),
+
+        },
+        order: [
+            ['itemName', 'ASC']
+        ],
+        raw: true
+    }).then((items) => {
+        res.json({
+            items: items
+        })
+    }).catch(err => console.log(err));
+})
+
 
 router.get('/search', ensureAuthenticated, (req, res) => {
     res.render('item/search', {});
