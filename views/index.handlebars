@@ -25,11 +25,11 @@
         <button id="filtKor" class="filts" onclick="filtCuisineKorean(this)">Korean (included)</button>
         <button id="filtJap" class="filts" onclick="filtCuisineJapanese(this)">Japanese (included)</button> --}}
         
-        <button id="filt0s" class="filts" onclick="filtout(this)"> Out-of-stock listings (included)</button>
+        <button id="filt0s" class="filts" onclick="filtout(this)">Out-of-stock listings (included)</button>
     </div>
         {{#each listing}}
      
-        <div class="listing {{this.Cuisine}}" id="{{this.id}}">
+        <div class="listing {{this.Cuisine}}" id="{{this.id}}" style="display: inline-block">
             <a href='../item/displayItemDesciption/{{this.id}}'>
             <img class="listing-img" src="{{{this.posterURL}}}" />
             </a>
@@ -179,6 +179,10 @@
         var selected = []
         var all = []
         var every = []
+        var firstInd = 0
+        var lastInd = 8
+        var count = 0
+        var gotmore = false
         function getEvery(){
             var mrthn9 = false
             var e = document.getElementsByClassName("listing")
@@ -221,50 +225,87 @@
         function pgback(){
             document.getElementById("forw").style.display = "inline-block"
             var num = (parseInt(document.getElementById("pgno").innerText) - 1)
-            for(i=0;i<every.length;i++){
-                if(num*9-9 <= i && i < num*9 && document.getElementById("filt0s")){
-                    every[i].style.display = "inline-block"
+            if(document.getElementById("filt0s").textContent == "Out-of-stock listings (included)"){
+                for(i=0;i<every.length;i++){
+                    if(num*9-9 <= i && i < num*9 && document.getElementById("filt0s").textContent == "Out-of-stock listings (included)"){
+                        every[i].style.display = "inline-block"
+                    }
+                    else{
+                        every[i].style.display = "none"
+                    }
                 }
-                else{
-                    every[i].style.display = "none"
+            }
+            else{
+                for(i=lastInd;i>=0;i--){
+                    if(count == 0 && i >= firstInd){
+                        every[i].style.display = "none"
+                    }
+                    else if(count < 9 && document.getElementById("filt0s").textContent == "Out-of-stock listings (excluded)" && !every[i].children[2].classList.contains("out")){
+                        if(count == 8){
+                            firstInd = i
+                        }
+                        if(count == 0){
+                            lastInd = i
+                        }
+                            count += 1
+                            every[i].style.display = "inline-block"
+                    }
+                    else{
+                        every[i].style.display = "none"
+                    }
                 }
             }
             if(num == 1){
                 document.getElementById("bac").style.display = "none"
             }
+            gotmore = false
+            count = 0
             document.getElementById("pgno").innerText = num.toString()
             window.scrollTo(0, 200)
         }
         function pgfor(){
             document.getElementById("bac").style.display = "inline-block"
             var num = (parseInt(document.getElementById("pgno").innerText) + 1)
-            for(i=0;i<every.length;i++){
-                if(num*9-9 <= i && i < num*9 && document.getElementById("filt0s")){
-                    every[i].style.display = "inline-block"
-                }
-                else{
-                    every[i].style.display = "none"
+            if(document.getElementById("filt0s").textContent == "Out-of-stock listings (included)"){
+                for(i=0;i<every.length;i++){
+                    if(num*9-9 <= i && i < num*9){
+                        every[i].style.display = "inline-block"
+                    }
+                    else{
+                        every[i].style.display = "none"
+                    }
                 }
             }
-            if(num*9 >= every.length){
+            else{
+                for(i=firstInd;i<every.length;i++){
+                    if(count == 0 && i <= lastInd){
+                        every[i].style.display = "none"
+                    }
+                    else if(count < 9 && document.getElementById("filt0s").textContent == "Out-of-stock listings (excluded)" && !every[i].children[2].classList.contains("out")){
+                        if(i == every.length - 1 || count == 8){
+                            lastInd = i
+                        }
+                        else if(count == 0){
+                            firstInd = i
+                        }
+                            count += 1
+                            every[i].style.display = "inline-block"
+                    }
+                    else{
+                        if(count == 9 && !every[i].children[2].classList.contains("out")){
+                            gotmore = true
+                        }
+                        every[i].style.display = "none"
+                    }
+                }
+            }
+            if(count != 0 && !gotmore || num*9 >= every.length){
                 document.getElementById("forw").style.display = "none"
             }
+            gotmore = false
+            count = 0
             document.getElementById("pgno").innerText = num.toString()
             window.scrollTo(0, 200)
-        }
-        
-         function filtCuisineIn(that){
-            for(i=0; i<o.length; i++){
-                if (ja[i] == Chinese)
-                {
-                    ja[i].parentNode.style.display = "inline-block"
-                }
-                else
-                {
-                    ja[i].parentNode.style.display = "none"
-                }
-            }
-            that.setAttribute( "onclick", "javascript: filtCuisineIn(this)")
         }
 
         function filtout(that){
@@ -274,6 +315,7 @@
             }
             if(document.getElementById("pgsys") != null){
                 document.getElementById("pgno").innerText = "1"
+                forw.style.display = "inline-block"
                 bac.style.display = "none"
             }
             for(i=0; i<o.length; i++){
@@ -285,10 +327,15 @@
                     every[i].style.display = "none"
                 }
                 else{
-                    counted += 1
-                    every[i].style.display = "inline-block"
+                    if(counted == 9){
+                        lastInd = i
+                    }
+                        counted += 1
+                        every[i].style.display = "inline-block"
                 }
             }
+            firstInd = 0
+            count = 0
             that.textContent = "Out-of-stock listings (excluded)"
             that.setAttribute( "onclick", "javascript: filtin(this)")
         }
@@ -309,6 +356,9 @@
                     every[i].style.display = "none"
                 }
             }
+            count = 0
+            firstInd = 0
+            lastInd = 8
             that.textContent = "Out-of-stock listings (included)"
             that.setAttribute( "onclick", "javascript: filtout(this)")
         }
@@ -344,12 +394,33 @@
                 }
                 document.getElementById("main").appendChild(listing.div)
             }
-            if (document.getElementById("pgsys") != null){
+            if (document.getElementById("pgsys") != null && document.getElementById("filt0s").textContent == "Out-of-stock listings (included)"){
                 document.getElementById("pgno").innerText = "1"
                 bac.style.display = "none"
                 forw.style.display = "inline-block"
                 for(i=0; i<all.length; i++){
                     if(i<9){
+                        all[i].div.style.display = "inline-block"
+                    }
+                    else{
+                        all[i].div.style.display = "none"
+                    }
+                }
+                var p = $("#pgsys")
+                $("#pgsys").detach()
+                document.getElementById("main").appendChild(p[0])
+            }
+            else if(document.getElementById("pgsys") != null && document.getElementById("filt0s").textContent == "Out-of-stock listings (excluded)"){
+                var num = 0
+                document.getElementById("pgno").innerText = "1"
+                bac.style.display = "none"
+                forw.style.display = "inline-block"
+                for(i=0; i<all.length; i++){
+                    if(num<9 && !all[i].div.children[2].classList.contains("out")){
+                        if(num == 8){
+                            lastInd = i
+                        }
+                        num += 1
                         all[i].div.style.display = "inline-block"
                     }
                     else{
