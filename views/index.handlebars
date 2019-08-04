@@ -394,7 +394,22 @@
                 }
                 document.getElementById("main").appendChild(listing.div)
             }
-            if (document.getElementById("pgsys") != null && document.getElementById("filt0s").textContent == "Out-of-stock listings (included)"){
+            if(document.getElementById("filt0s").textContent == "Out-of-stock listings (excluded)" && document.getElementById("pgsys") == null || document.getElementById("pgsys").style.display == "none"){
+                var num = 0
+                for(i=0; i<every.length; i++){
+                    if(num<9 && !every[i].children[2].classList.contains("out")){
+                        if(num == 8){
+                            lastInd = i
+                        }
+                        num += 1
+                        every[i].style.display = "inline-block"
+                    }
+                    else{
+                        every[i].style.display = "none"
+                    }
+                }
+            }
+            else if (document.getElementById("pgsys").style.display = "inline-block" && document.getElementById("filt0s").textContent == "Out-of-stock listings (included)"){
                 document.getElementById("pgno").innerText = "1"
                 bac.style.display = "none"
                 forw.style.display = "inline-block"
@@ -410,7 +425,7 @@
                 $("#pgsys").detach()
                 document.getElementById("main").appendChild(p[0])
             }
-            else if(document.getElementById("pgsys") != null && document.getElementById("filt0s").textContent == "Out-of-stock listings (excluded)"){
+            else if(document.getElementById("pgsys").style.display == "inline-block" && document.getElementById("filt0s").textContent == "Out-of-stock listings (excluded)"){
                 var num = 0
                 document.getElementById("pgno").innerText = "1"
                 bac.style.display = "none"
