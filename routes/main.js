@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
 		function myFunc(arg) {
 			var lists = new Promise(function (resolve) {
 				var result = [];
-				sequelize.query("SELECT * FROM foodfood.items", { type: sequelize.QueryTypes.SELECT }).then(results => {
+				sequelize.query("SELECT * FROM foodfood.items ORDER BY id DESC", { type: sequelize.QueryTypes.SELECT }).then(results => {
 					result = results
 					resolve(result)
 				})
