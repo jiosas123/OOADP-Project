@@ -67,7 +67,7 @@
 		<div class='col-sm-12 col-md-6 col-lg-4'>
 			<input type="button" value='evening' class='time btn-primary'> </input>
 		</div>
-		
+
 	</div>
 
 	<div class='row'>
@@ -89,7 +89,7 @@
 		<div class='col-sm-12 col-md-6 col-lg-4'>
 			<input type="button" value='Central' class='location btn-primary'> </input>
 		</div>
-		
+
 	</div>
 
 
@@ -101,8 +101,8 @@
 	</div>
 
 	<script>
-		$(document).ready(function (){
-			$(".day").click(function(){
+		$(document).ready(function () {
+			$(".day").click(function () {
 				var day = $(this).val();
 				$.ajax({
 					url: "/item/search/ajax/" + day + "/filter3",
@@ -189,7 +189,7 @@
 							$("#card").append(row);
 						})
 					}
-					
+
 				})
 			})
 		})
@@ -210,12 +210,11 @@
 								<h5 class="card-title">${item.itemName}</h5>
 							</div>
 							<div class="card-body">
-								{{!-- Practical 09 Exercise 02 --}}
 								<div class="row">
 									<div class="col-sm-12 col-md-12 col-lg-2">
-										<a href="${item.posterURL}" data-title="${item.itemName}" data-toggle="lightbox">
-											<img src="${item.posterURL}" alt="Poster unavailable" class="img-thumbnail img-fluid">
-										</a>
+										<a href='../item/displayItemDesciption/${item.id}'>
+           									 <img class="listing-img" src="${item.posterURL}" />
+        								</a>
 									</div>
 									<div class="col-sm-12 col-md-12 col-lg-8">
 										<div class="row"> {{!-- subtitles, language... --}}
@@ -308,12 +307,11 @@
 								<h5 class="card-title">${item.itemName}</h5>
 							</div>
 							<div class="card-body">
-								{{!-- Practical 09 Exercise 02 --}}
 								<div class="row">
 									<div class="col-sm-12 col-md-12 col-lg-2">
-										<a href="${item.posterURL}" data-title="${item.itemName}" data-toggle="lightbox">
-											<img src="${item.posterURL}" alt="Poster unavailable" class="img-thumbnail img-fluid">
-										</a>
+										<a href='../item/displayItemDesciption/${item.id}'>
+           									 <img class="listing-img" src="${item.posterURL}" />
+        								</a>
 									</div>
 									<div class="col-sm-12 col-md-12 col-lg-8">
 										<div class="row"> {{!-- subtitles, language... --}}
@@ -388,8 +386,8 @@
 		})
 
 
-		$(document).ready(function (){
-			$(".time").click(function(){
+		$(document).ready(function () {
+			$(".time").click(function () {
 				var time = $(this).val();
 				$.ajax({
 					url: "/item/search/ajax/" + time + "/filter4",
@@ -403,12 +401,11 @@
 								<h5 class="card-title">${item.itemName}</h5>
 							</div>
 							<div class="card-body">
-								{{!-- Practical 09 Exercise 02 --}}
 								<div class="row">
 									<div class="col-sm-12 col-md-12 col-lg-2">
-										<a href="${item.posterURL}" data-title="${item.itemName}" data-toggle="lightbox">
-											<img src="${item.posterURL}" alt="Poster unavailable" class="img-thumbnail img-fluid">
-										</a>
+										<a href='../item/displayItemDesciption/${item.id}'>
+           									 <img class="listing-img" src="${item.posterURL}" />
+        								</a>
 									</div>
 									<div class="col-sm-12 col-md-12 col-lg-8">
 										<div class="row"> {{!-- subtitles, language... --}}
@@ -476,14 +473,14 @@
 							$("#card").append(row);
 						})
 					}
-					
+
 				})
 			})
 		})
 
 
-		$(document).ready(function (){
-			$(".location").click(function(){
+		$(document).ready(function () {
+			$(".location").click(function () {
 				var location = $(this).val();
 				$.ajax({
 					url: "/item/search/ajax/" + location + "/filter5",
@@ -497,12 +494,11 @@
 								<h5 class="card-title">${item.itemName}</h5>
 							</div>
 							<div class="card-body">
-								{{!-- Practical 09 Exercise 02 --}}
 								<div class="row">
 									<div class="col-sm-12 col-md-12 col-lg-2">
-										<a href="${item.posterURL}" data-title="${item.itemName}" data-toggle="lightbox">
-											<img src="${item.posterURL}" alt="Poster unavailable" class="img-thumbnail img-fluid">
-										</a>
+										<a href='../item/displayItemDesciption/${item.id}'>
+           									 <img class="listing-img" src="${item.posterURL}" />
+        								</a>
 									</div>
 									<div class="col-sm-12 col-md-12 col-lg-8">
 										<div class="row"> {{!-- subtitles, language... --}}
@@ -570,7 +566,7 @@
 							$("#card").append(row);
 						})
 					}
-					
+
 				})
 			})
 		})

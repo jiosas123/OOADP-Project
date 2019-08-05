@@ -9,6 +9,37 @@ const upload = require('../helpers/imageUpload');
 const Cart = require('../models/cart');
 
 const History = require('../models/history');
+
+
+
+
+router.get('/like/:id', ensureAuthenticated, (req, res) => {
+    var itemID = req.params.id;
+    console.log("hi me")
+    Item.findOne({
+        where: {
+            id: itemID
+        }
+    }).then((LKEME) => {
+        console.log(LKEME.liked)
+        console.log(itemID)
+        Item.update({
+            liked: LKEME.liked + 1
+            // likes:1
+        }, {
+                where: {
+                    id: itemID
+
+                }
+
+            }).then(() => {
+                res.redirect('/home')
+            })
+    })
+
+
+})
+
 router.get('/addItem', ensureAuthenticated, (req, res) => {
 
     const testung = req.user.id;
@@ -316,7 +347,7 @@ router.get('/ShowAllCart', ensureAuthenticated, (req, res) => {
    
                 var numnum = dd.indexOf(' ')
                 var newdate = dd.substring(0, numnum)
-                if (date > newdate || date == newdate) {
+                if (date > parseInt(newdate) || date == parseInt(newdate)) {
                     Item.update({
                         existed: ''
                     }, {
@@ -646,7 +677,7 @@ router.get('/boughtItem/:id', (req, res) => {
 
             var numnum = dd.indexOf(' ')
             var newdate = dd.substring(0, numnum)
-            if (date > newdate || date == newdate) {
+            if (date > parseInt(newdate) || date == parseInt(newdate)) {
                 Item.update({
                     existed: ''
                 }, {
@@ -788,7 +819,7 @@ router.get('/buyAll', ensureAuthenticated, (req, res) => {
             var dd = cartAll[i].DaysAvailable
             var numnum = dd.indexOf(' ')
             var newdate = dd.substring(0, numnum)
-            if (date > newdate || date == newdate) {
+            if (date > parseInt(newdate) || date == parseInt(newdate)) {
                 Item.update({
                     existed: ''
                 }, {
@@ -814,80 +845,14 @@ router.get('/buyAll', ensureAuthenticated, (req, res) => {
         }).then((cart) => {
             if (cart) {
                 for (var p = 0; p < cart.length; p++) {
-                    Item.findOne({
-                        where: {
-                            id: cart[p].itemID
-                        }
-                    }).then((itemEd) => {
-                        for (var t = 0; t < cart.length; t++) {
-                            var test1 = cart[t].id
-                            if (cart[t].Quantity <= itemEd.Quantity) {
-                                var final = itemEd.Quantity - cart[t].Quantity
-                                Item.update({
-                                    Quantity: final,
-                                    existed: ''
-
-                                }, {
-                                        where: {
-                                            id: cart[t].itemID
-                                        }
-                                    })
-
-                                Cart.findOne({
-                                    where: {
-                                        id: cart[t].id
-                                    }
-                                }).then((found) => {
-                      
-                                    var totalcost = found.itemPrice
-                                    var today = new Date();
-
-                                    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-                                    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-                                    // var dateTime = date + ' ' + time;
-                                    let itemName = found.itemName;
-                                    let QuantityBought = found.Quantity;
-                                    let datePurchased = date;
-                                    let posterURL = found.posterURL;
-                                    let itemPrice = totalcost;
-                                    let currentUser = req.user.name;
-                                    let dateTime = time;
-                                    History.create({
-                                        itemName,
-                                        QuantityBought,
-                                        datePurchased,
-                                        itemPrice,
-                                        posterURL,
-                                        currentUser,
-                                        dateTime
-                                    })
-                                    for (var g = 0; g < cart.length; g++) {
-                                        Cart.destroy({
-                                            where: {
-                                                id: cart[g].id
-                                            }
-                                        })
-                                    }
-                                    done = true;
-
-
-                                })
-                            } else {
-                                alertMessage(res, 'danger', 'Not enough Stock')
-                                res.redirect('/item/showAllCart')
-                            }
-                        }
-
-
-                    })
+                    tryme(cart[p])
                 }
                 function test111(arg) {
 
 
-                    if (done == true) {
                         alertMessage(res, 'success', 'All orders has been sent')
                         res.redirect('/item/showAllCart')
-                    }
+                    
                 }
                 setTimeout(test111, '500', 'funcky')
 
@@ -898,10 +863,74 @@ router.get('/buyAll', ensureAuthenticated, (req, res) => {
         })
 
     }
+
+
+
+    function tryme(arrayme) {
+        Item.findOne({
+            where: {
+                id: arrayme.itemID
+            }
+        }).then((itemEd) => {
+
+            var test1 = itemEd.id
+            if (arrayme.Quantity <= itemEd.Quantity) {
+                var final = itemEd.Quantity - arrayme.Quantity
+                Item.update({
+                    Quantity: final,
+                    existed: ''
+
+                }, {
+                        where: {
+                            id: arrayme.itemID
+                        }
+                    })
+
+                Cart.findOne({
+                    where: {
+                        id: arrayme.id
+                    }
+                }).then((found) => {
+
+                    var totalcost = found.itemPrice
+                    var today = new Date();
+
+                    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+                    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                    // var dateTime = date + ' ' + time;
+                    let itemName = found.itemName;
+                    let QuantityBought = found.Quantity;
+                    let datePurchased = date;
+                    let posterURL = found.posterURL;
+                    let itemPrice = totalcost;
+                    let currentUser = req.user.name;
+                    let dateTime = time;
+                    History.create({
+                        itemName,
+                        QuantityBought,
+                        datePurchased,
+                        itemPrice,
+                        posterURL,
+                        currentUser,
+                        dateTime
+                    })
+                    Cart.destroy({
+                        where: {
+                            id: arrayme.id
+                        }
+                    })
+
+
+                })
+            } else {
+                alertMessage(res, 'danger', 'Not enough Stock')
+                res.redirect('/item/showAllCart')
+            }
+        })
+    }
     setTimeout(workOUT, 500, 'funcky')
 
 })
-
 router.get('/clear', ensureAuthenticated, (req, res) => {
     Cart.findAll({
         where: {

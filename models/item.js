@@ -30,8 +30,11 @@ const Item = db.define('item', {
         type: Sequelize.STRING
     },
     likes: {
-        type: Sequelize.STRING
-    },     
+        type: Sequelize.INTEGER
+    },   
+    liked: {
+        type: Sequelize.INTEGER
+    } , 
     DaysAvailable:{
         type: Sequelize.STRING
     },

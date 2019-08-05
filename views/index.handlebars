@@ -33,8 +33,12 @@
             <a href='../item/displayItemDesciption/{{this.id}}'>
             <img class="listing-img" src="{{{this.posterURL}}}" />
             </a>
-            <input type="image" class="unfav" src="unfav.png" onclick="favC(this)" onmouseover="unfavH(this)"
-                onmouseout="unfavUH(this)">
+          <a href="../item/like/{{this.id}}">
+                <input type="image" class="unfav" src="unfav.png" onclick="favC(this)" onmouseover="unfavH(this)"
+                    onmouseout="unfavUH(this)">
+            </a>
+
+
             {{#unless this.Quantity}}
             <div class="amount out">0x</div>
             {{else}}
