@@ -12,19 +12,12 @@
     <div id="sorts">
         <button  id="sortAlphA" class="asc sorts">Alphabetically<br>(Ascending)</button>
         <button id="sortAlphD" class="desce sorts">Alphabetically<br>(Descending)</button>
-        <button id="sortIDA" class="asc sorts">ID<br>(Ascending)</button>
-        <button id="sortIDD" class="desce sorts">ID<br>(Descending)</button>
+        <button id="sortIDA" class="asc sorts">Date Added<br>(Ascending)</button>
+        <button id="sortIDD" class="desce sorts">Date Added<br>(Descending)</button>
         <button id="sortPriceA" class="asc sorts">Price<br>(Ascending)</button>
         <button id="sortPriceD" class="desce sorts">Price<br>(Descending)</button>
     </div>
     <div id="filts">
-        {{!-- <button id="filtChi" class="filts" onclick="filtCuisineChinese(this)">Chinese (included)</button>
-        <button id="filtMal" class="filts" onclick="filtCuisineMalay(this)">Malay (included)</button>
-        <button id="filtInd" class="filts" onclick="filtCuisineIndian(this)">Indian (included)</button>
-        <button id="filtWes" class="filts" onclick="filtCuisineWestern(this)">Western (included)</button>
-        <button id="filtKor" class="filts" onclick="filtCuisineKorean(this)">Korean (included)</button>
-        <button id="filtJap" class="filts" onclick="filtCuisineJapanese(this)">Japanese (included)</button> --}}
-        
         <button id="filt0s" class="filts" onclick="filtout(this)">Out-of-stock listings (included)</button>
     </div>
         {{#each listing}}
