@@ -1,97 +1,101 @@
 <div class="container">
-	<input id="query"></input>
-	<input id="search" type="button" value="search" class="btn-primary" />
-
-
 	<div class='row'>
-		<div class='col-sm-12 col-md-12 col-lg-12'>
-			<label> Cuisine Type </label>
-		</div>
-		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='Chinese' class='cuisine btn-primary'> </input>
-		</div>
-		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='Malay' class='cuisine btn-primary'> </input>
-		</div>
-		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='Indian' class='cuisine btn-primary'> </input>
-		</div>
-		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='Western' class='cuisine btn-primary'> </input>
-		</div>
-		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='Japanese' class='cuisine btn-primary'> </input>
-		</div>
-		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='Korean' class='cuisine btn-primary'> </input>
+		<div class='col-sm-12 col-md-12 col-lg-12 filterbtn'>
+			<input id="query" placeholder="Enter Search Query Here"></input>
+			<input id="search" type="button" value="search" class="btn-primary" />
 		</div>
 	</div>
+	<label id="filterhead"><b>QUICK FILTERS</b></label>
+	<div class="filterbody">
+		<div class='row'>
+			<div class='col-sm-12 col-md-12 col-lg-12 '>
+				<label> <b>Cuisine Type</b> </label>
+			</div>
+			<div class='col-sm-12 col-md-6 col-lg-4'>
+				<input type="button" value='Chinese' class='cuisine btn-primary'> </input>
+			</div>
+			<div class='col-sm-12 col-md-6 col-lg-4'>
+				<input type="button" value='Malay' class='cuisine btn-primary'> </input>
+			</div>
+			<div class='col-sm-12 col-md-6 col-lg-4'>
+				<input type="button" value='Indian' class='cuisine btn-primary'> </input>
+			</div>
+			<div class='col-sm-12 col-md-6 col-lg-4'>
+				<input type="button" value='Western' class='cuisine btn-primary'> </input>
+			</div>
+			<div class='col-sm-12 col-md-6 col-lg-4'>
+				<input type="button" value='Japanese' class='cuisine btn-primary'> </input>
+			</div>
+			<div class='col-sm-12 col-md-6 col-lg-4'>
+				<input type="button" value='Korean' class='cuisine btn-primary'> </input>
+			</div>
+		</div>
 
-	<div class='row'>
-		<div class='col-sm-12 col-md-12 col-lg-12'>
-			<label> Days Available </label>
+		<div class='row'>
+			<div class='col-sm-12 col-md-12 col-lg-12'>
+				<label> <b>Days Available </b> </label>
+			</div>
+			<div class='col-sm-12 col-md-6 col-lg-4'>
+				<input type="button" value='Monday' class='day btn-primary'> </input>
+			</div>
+			<div class='col-sm-12 col-md-6 col-lg-4'>
+				<input type="button" value='Tuesday' class='day btn-primary'> </input>
+			</div>
+			<div class='col-sm-12 col-md-6 col-lg-4'>
+				<input type="button" value='Wednesday' class='day btn-primary'> </input>
+			</div>
+			<div class='col-sm-12 col-md-6 col-lg-4'>
+				<input type="button" value='Thursday' class='day btn-primary'> </input>
+			</div>
+			<div class='col-sm-12 col-md-6 col-lg-4'>
+				<input type="button" value='Friday' class='day btn-primary'> </input>
+			</div>
+			<div class='col-sm-12 col-md-6 col-lg-4'>
+				<input type="button" value='Saturday' class='day btn-primary'> </input>
+			</div>
+			<div class='col-sm-12 col-md-6 col-lg-4'>
+				<input type="button" value='Sunday' class='day btn-primary'> </input>
+			</div>
 		</div>
-		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='Monday' class='day btn-primary'> </input>
+
+		<div class='row'>
+			<div class='col-sm-12 col-md-12 col-lg-12'>
+				<label> <b>Time </b></label>
+			</div>
+			<div class='col-sm-12 col-md-6 col-lg-4'>
+				<input type="button" value='morning' class='time btn-primary'> </input>
+			</div>
+			<div class='col-sm-12 col-md-6 col-lg-4'>
+				<input type="button" value='afternoon' class='time btn-primary'> </input>
+			</div>
+			<div class='col-sm-12 col-md-6 col-lg-4'>
+				<input type="button" value='evening' class='time btn-primary'> </input>
+			</div>
+
 		</div>
-		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='Tuesday' class='day btn-primary'> </input>
-		</div>
-		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='Wednesday' class='day btn-primary'> </input>
-		</div>
-		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='Thursday' class='day btn-primary'> </input>
-		</div>
-		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='Friday' class='day btn-primary'> </input>
-		</div>
-		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='Saturday' class='day btn-primary'> </input>
-		</div>
-		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='Sunday' class='day btn-primary'> </input>
+
+		<div class='row'>
+			<div class='col-sm-12 col-md-12 col-lg-12'>
+				<label><b> Location</b> </label>
+			</div>
+			<div class='col-sm-12 col-md-6 col-lg-4'>
+				<input type="button" value='North' class='location btn-primary'> </input>
+			</div>
+			<div class='col-sm-12 col-md-6 col-lg-4'>
+				<input type="button" value='South' class='location btn-primary'> </input>
+			</div>
+			<div class='col-sm-12 col-md-6 col-lg-4'>
+				<input type="button" value='East' class='location btn-primary'> </input>
+			</div>
+			<div class='col-sm-12 col-md-6 col-lg-4'>
+				<input type="button" value='West' class='location btn-primary'> </input>
+			</div>
+			<div class='col-sm-12 col-md-6 col-lg-4'>
+				<input type="button" value='Central' class='location btn-primary'> </input>
+			</div>
+
 		</div>
 	</div>
-
-	<div class='row'>
-		<div class='col-sm-12 col-md-12 col-lg-12'>
-			<label> Time </label>
-		</div>
-		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='morning' class='time btn-primary'> </input>
-		</div>
-		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='afternoon' class='time btn-primary'> </input>
-		</div>
-		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='evening' class='time btn-primary'> </input>
-		</div>
-
-	</div>
-
-	<div class='row'>
-		<div class='col-sm-12 col-md-12 col-lg-12'>
-			<label> Location </label>
-		</div>
-		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='North' class='location btn-primary'> </input>
-		</div>
-		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='South' class='location btn-primary'> </input>
-		</div>
-		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='East' class='location btn-primary'> </input>
-		</div>
-		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='West' class='location btn-primary'> </input>
-		</div>
-		<div class='col-sm-12 col-md-6 col-lg-4'>
-			<input type="button" value='Central' class='location btn-primary'> </input>
-		</div>
-
-	</div>
-
 
 	<div class="card card-body">
 		<h3 class="text-primary">Food Listings</h3>
@@ -101,6 +105,11 @@
 	</div>
 
 	<script>
+		$(document).ready(function () {
+			$("#filterhead").click(function () {
+				$(".filterbody").slideToggle();
+			});
+		});
 		$(document).ready(function () {
 			$(".day").click(function () {
 				var day = $(this).val();

@@ -267,3 +267,29 @@ opacity: 0.5;
 color:blue;
   text-decoration: none;
 }
+
+.filterbtn {
+  text-align:center;
+
+}
+
+#query{
+  height:50px;
+  width: 800px;
+  font-size:14pt;
+}
+
+#search{
+  height: 50px;
+  width: 120px;
+  font-size:14pt;
+}
+
+.filterbtn2 {
+  background-color: gray;
+  color: white;
+}
+
+.filterbody{
+  display: none;
+}
